@@ -63,7 +63,7 @@ export default {
         this.$router.push("projects");
       } catch (error) {
         this.isLoading = false;
-        console.error("👎🏻", error.message);
+        this.$store.dispatch("handleNewError", error.message);
       }
     },
   },

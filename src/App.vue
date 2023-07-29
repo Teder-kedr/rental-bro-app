@@ -3,7 +3,7 @@
     <spinner-fullscreen :model-value="showSpinner" />
     <app-sidebar v-if="isUser" />
     <v-main>
-      <router-view style="max-width: 900px" class="pa-4 mx-auto" />
+      <router-view style="max-width: 1000px" class="pa-4 mx-auto" />
     </v-main>
   </v-app>
 </template>

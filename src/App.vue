@@ -47,6 +47,9 @@ export default {
   },
   created() {
     initAuthState();
+    if (this.isAuthStateReady === true) {
+      this.showSpinner = false;
+    }
   },
 };
 </script>

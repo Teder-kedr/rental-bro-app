@@ -37,11 +37,13 @@ const routes = [
       {
         path: "login",
         name: "Login",
+        meta: { requiresNoUser: true },
         component: () => import("@/views/LogIn.vue"),
       },
       {
         path: "signup",
         name: "Signup",
+        meta: { requiresNoUser: true },
         component: () => import("@/views/SignUp.vue"),
       },
     ],
@@ -58,11 +60,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  // 1. Check if auth state is known
   if (!store.state.isAuthStateReady) {
     await Promise.race([
-      new Promise((resolve) => {
+      new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve;
+          reject("couldn't get auth state :(");
         }, 5000);
       }),
       new Promise((resolve) => {
@@ -78,6 +81,7 @@ router.beforeEach(async (to, from, next) => {
     ]);
   }
 
+  // 2. Check if user is logged in
   const isLoggedIn = store.state.user ? true : false;
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
@@ -87,9 +91,15 @@ router.beforeEach(async (to, from, next) => {
     } else {
       next();
     }
-  } else if ((to.path === "/login" || to.path === "/signup") && isLoggedIn) {
-    next("/projects");
+  } else if (to.matched.some((record) => record.meta.requiresNoUser)) {
+    // If the route requires user to be null, redirect to projects if there is a user
+    if (isLoggedIn) {
+      next("/projects");
+    } else {
+      next();
+    }
   } else {
+    // If route protection is not specified, proceed
     next();
   }
 });

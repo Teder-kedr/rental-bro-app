@@ -11,10 +11,12 @@
 </template>
 
 <script>
+import { logOut } from "@/services/auth";
+
 export default {
   methods: {
     async handleLogOut() {
-      await this.$store.dispatch("logOut");
+      await logOut();
       this.$router.push("/login");
     },
   },

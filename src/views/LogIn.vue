@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { logIn } from "@/services/auth";
+
 export default {
   data() {
     return {
@@ -19,7 +21,7 @@ export default {
       try {
         const email = this.email;
         const password = this.password;
-        await this.$store.dispatch("logIn", { email, password });
+        await logIn(email, password);
         this.$router.push("projects");
       } catch (error) {
         console.error("👎🏻", error.message);

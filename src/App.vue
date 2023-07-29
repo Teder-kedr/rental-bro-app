@@ -21,6 +21,8 @@
 import AppSidebar from "./components/AppSidebar.vue";
 import SpinnerFullscreen from "./components/SpinnerFullscreen.vue";
 
+import { initAuthState } from "./services/auth";
+
 export default {
   components: { AppSidebar, SpinnerFullscreen },
   data() {
@@ -42,6 +44,9 @@ export default {
         this.showSpinner = false;
       }
     },
+  },
+  created() {
+    initAuthState();
   },
 };
 </script>

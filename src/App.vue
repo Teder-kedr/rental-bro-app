@@ -48,6 +48,10 @@ export default {
     },
   },
   created() {
+    if (localStorage.getItem("preferredLocale")) {
+      this.$vuetify.locale.current = localStorage.getItem("preferredLocale");
+    }
+
     initAuthState();
     if (this.isAuthStateReady === true) {
       this.showSpinner = false;

@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     changeLang(locale) {
+      localStorage.setItem("preferredLocale", locale);
       this.$vuetify.locale.current = locale;
     },
   },

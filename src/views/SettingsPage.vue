@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Settings</h1>
-    <p>{{ $t("hello") }}</p>
     <p>
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cum deleniti
       laboriosam sunt, voluptas rerum, possimus iste dolorum ipsa excepturi

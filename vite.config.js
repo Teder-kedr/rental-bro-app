@@ -2,7 +2,6 @@
 import vue from "@vitejs/plugin-vue";
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-import path from "path";
 
 // Utilities
 import { defineConfig } from "vite";
@@ -21,9 +20,7 @@ export default defineConfig({
         configFile: "src/styles/settings.scss",
       },
     }),
-    VueI18nPlugin({
-      include: [path.resolve(__dirname, "./src/locales/**")],
-    }),
+    VueI18nPlugin(),
   ],
   define: { "process.env": {} },
   resolve: {

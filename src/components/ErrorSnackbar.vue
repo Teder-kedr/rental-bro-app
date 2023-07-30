@@ -1,20 +1,51 @@
 <template>
-  <v-snackbar color="error" multi-line :timeout="timeout">
+  <v-snackbar v-model="isOpen" :timeout="-1" color="error" multi-line>
     <p><b>An error occured:</b></p>
-    <slot></slot>
+    {{ errorMessage }}
     <template v-slot:actions>
-      <v-btn variant="text" @click="$emit('close')" icon="mdi-close"></v-btn>
+      <v-btn variant="text" icon="mdi-close" @click="handleClose"></v-btn>
     </template>
   </v-snackbar>
 </template>
 
 <script>
 export default {
+  TIMEOUT: 5000,
+
   data() {
     return {
-      timeout: 5000,
+      isOpen: false,
+      timerId: null,
     };
   },
-  emits: ["close"],
+  computed: {
+    errorMessage() {
+      return this.$store.state.error;
+    },
+    errorCount() {
+      return this.$store.state.errorCount;
+    },
+  },
+  watch: {
+    errorCount() {
+      this.isOpen = true;
+      this.startTimer();
+    },
+  },
+  methods: {
+    startTimer() {
+      if (this.timerId) {
+        clearTimeout(this.timerId);
+      }
+      this.timerId = setTimeout(() => {
+        this.isOpen = false;
+        this.timerId = null;
+      }, this.$options.TIMEOUT);
+    },
+
+    handleClose() {
+      this.isOpen = false;
+    },
+  },
 };
 </script>

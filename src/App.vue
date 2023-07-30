@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <spinner-fullscreen :model-value="showSpinner" />
-    <error-snackbar v-model="isError" @close="handleErrorClose">
-      {{ error }}
-    </error-snackbar>
+    <error-snackbar />
     <app-sidebar v-if="isUser" />
     <v-main>
       <router-view style="max-width: 1000px" class="pa-4 mx-auto" />
@@ -32,13 +30,7 @@ export default {
   data() {
     return {
       showSpinner: true,
-      isError: false,
     };
-  },
-  methods: {
-    handleErrorClose() {
-      this.isError = false;
-    },
   },
   computed: {
     isUser() {
@@ -47,21 +39,12 @@ export default {
     isAuthStateReady() {
       return this.$store.state.isAuthStateReady;
     },
-    error() {
-      return this.$store.state.error;
-    },
-    errorCount() {
-      return this.$store.state.errorCount;
-    },
   },
   watch: {
     isAuthStateReady() {
       if (this.isAuthStateReady === true) {
         this.showSpinner = false;
       }
-    },
-    errorCount() {
-      this.isError = true;
     },
   },
   created() {

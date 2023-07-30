@@ -8,6 +8,6 @@ import i18n from "./i18n";
 
 const app = createApp(App);
 
-app.use(router).use(store).use(vuetify).use(i18n);
+app.use(router).use(store).use(i18n).use(vuetify);
 
 app.mount("#app");

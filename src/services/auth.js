@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { app } from "./firebase";
 import store from "@/store";
+import { getReadableError } from "./firebaseReadableErrors";
 
 const auth = getAuth(app);
 
@@ -26,22 +27,7 @@ export async function signUp(name, email, password) {
       store.commit("setUser", res.user);
     }
   } catch (error) {
-    if (error.message === "Firebase: Error (auth/invalid-email).") {
-      throw new Error("Invalid email");
-    }
-    if (error.message === "Firebase: Error (auth/email-already-exists).") {
-      throw new Error("This email already exists");
-    }
-    if (error.message === "Firebase: Error (auth/invalid-display-name).") {
-      throw new Error("Invalid name");
-    }
-    if (
-      error.message ===
-      "Firebase: Password should be at least 6 characters (auth/weak-password)."
-    ) {
-      throw new Error("Password should be at least 6 characters");
-    }
-    throw new Error(error.message);
+    throw new Error(getReadableError(error.message));
   }
 }
 
@@ -52,16 +38,7 @@ export async function logIn(email, password) {
       store.commit("setUser", res.user);
     }
   } catch (error) {
-    if (error.message === "Firebase: Error (auth/invalid-email).") {
-      throw new Error("Invalid email");
-    }
-    if (error.message === "Firebase: Error (auth/user-not-found).") {
-      throw new Error("Invalid email or password");
-    }
-    if (error.message === "Firebase: Error (auth/wrong-password).") {
-      throw new Error("Invalid email or password");
-    }
-    throw new Error(error.message);
+    throw new Error(getReadableError(error.message));
   }
 }
 
@@ -70,6 +47,6 @@ export async function logOut() {
     await signOut(auth);
     store.commit("setUser", null);
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(getReadableError(error.message));
   }
 }

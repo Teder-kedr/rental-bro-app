@@ -1,19 +1,19 @@
 <template>
   <div class="h-screen d-flex justify-center align-center">
     <v-card class="mx-auto mb-4 px-6 py-8" width="350">
-      <h2 class="mb-4">Log In</h2>
+      <h2 class="mb-4">{{ $t("login.title") }}</h2>
       <v-form @submit.prevent="handleLogIn">
         <v-text-field
           required
           :readonly="isLoading"
-          label="Email"
+          :label="$t('login.email')"
           type="email"
           v-model="email"
         ></v-text-field>
         <v-text-field
           required
           :readonly="isLoading"
-          label="Password"
+          :label="$t('login.password')"
           type="password"
           v-model="password"
         ></v-text-field>
@@ -23,14 +23,15 @@
           :disabled="!form"
           :loading="isLoading"
           type="submit"
-          >Log in</v-btn
+          >{{ $t("login.action") }}</v-btn
         >
       </v-form>
 
       <v-divider class="my-4"></v-divider>
 
       <p class="text-center hint-text">
-        Don't have an account? <router-link to="signup">Sign up!</router-link>
+        {{ $t("login.donthave") }}
+        <router-link to="signup">{{ $t("login.signuplink") }}</router-link>
       </p>
     </v-card>
   </div>

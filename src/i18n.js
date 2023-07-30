@@ -1,8 +1,8 @@
 import { createI18n } from "vue-i18n";
 
 const i18n = createI18n({
-  locale: "ru", // set locale
-  fallbackLocale: "en", // set fallback locale,
+  locale: "ru",
+  fallbackLocale: "en",
 });
 
 const languages = ["en", "ru"];

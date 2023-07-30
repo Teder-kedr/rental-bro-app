@@ -33,6 +33,10 @@
         {{ $t("login.donthave") }}
         <router-link to="signup">{{ $t("login.signuplink") }}</router-link>
       </p>
+
+      <v-divider class="my-4"></v-divider>
+
+      <lang-switcher />
     </v-card>
   </div>
 </template>
@@ -45,8 +49,12 @@
 
 <script>
 import { logIn } from "@/services/auth";
+import LangSwitcher from "@/components/LangSwitcher.vue";
 
 export default {
+  components: {
+    LangSwitcher,
+  },
   data() {
     return {
       email: null,

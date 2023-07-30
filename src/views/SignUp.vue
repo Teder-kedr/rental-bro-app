@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     form() {
-      if (this.email && this.password) return true;
+      if (this.fullName && this.email && this.password) return true;
       return false;
     },
   },

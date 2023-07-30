@@ -9,5 +9,6 @@ const messageMap = {
   "Firebase: Password should be at least 6 characters (auth/weak-password).":
     "Password should be at least 6 characters",
   "Firebase: Error (auth/email-already-exists).": "This email is already taken",
+  "Firebase: Error (auth/email-already-in-use).": "This email is already taken",
   "Firebase: Error (auth/invalid-display-name).": "Invalid username",
 };

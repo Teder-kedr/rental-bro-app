@@ -9,15 +9,6 @@
   </v-app>
 </template>
 
-<style>
-:root {
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
-}
-.gradient-background {
-  background: linear-gradient(90deg, hsl(286, 47%, 88%), hsl(192, 51%, 88%));
-}
-</style>
-
 <script>
 import AppSidebar from "./components/AppSidebar.vue";
 import SpinnerFullscreen from "./components/SpinnerFullscreen.vue";

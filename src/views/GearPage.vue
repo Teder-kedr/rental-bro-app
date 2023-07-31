@@ -1,16 +1,17 @@
 <template>
   <div>
-    <h1 class="mb-8">Gear</h1>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem
-      mollitia iste quibusdam. Optio eos dolores atque dicta consequatur quod
-      placeat sed corrupti voluptatibus cumque debitis perferendis quos nostrum,
-      aut nobis?
-    </p>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cum deleniti
-      laboriosam sunt, voluptas rerum, possimus iste dolorum ipsa excepturi
-      itaque dolor sint veniam error in dolores voluptatum sequi quisquam alias?
-    </p>
+    <h1 class="mb-4">Gear</h1>
+    <v-btn class="mb-6" color="primary" prepend-icon="mdi-plus">Add new</v-btn>
+    <GearList />
   </div>
 </template>
+
+<script>
+import GearList from "@/components/GearList.vue";
+
+export default {
+  components: {
+    GearList,
+  },
+};
+</script>

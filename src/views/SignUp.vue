@@ -1,27 +1,33 @@
 <template>
   <div class="h-screen d-flex justify-center align-center">
-    <v-card class="mx-auto mb-4 px-6 py-8" width="350">
-      <h2 class="mb-4">Create account</h2>
+    <v-card class="mx-auto mb-4 px-6 pt-8 pb-6" width="350">
+      <h2 class="mb-4">{{ $t("signup.title") }}</h2>
       <v-form @submit.prevent="handleSignUp">
         <v-text-field
-          placeholder="Firstname Lastname"
           required
           :readonly="isLoading"
-          label="Full name"
+          :label="$t('signup.first')"
           type="text"
-          v-model="fullName"
+          v-model="firstName"
         ></v-text-field>
         <v-text-field
           required
           :readonly="isLoading"
-          label="Email"
+          :label="$t('signup.last')"
+          type="text"
+          v-model="lastName"
+        ></v-text-field>
+        <v-text-field
+          required
+          :readonly="isLoading"
+          :label="$t('signup.email')"
           type="email"
           v-model="email"
         ></v-text-field>
         <v-text-field
           required
           :readonly="isLoading"
-          label="Password"
+          :label="$t('signup.password')"
           type="password"
           v-model="password"
         ></v-text-field>
@@ -31,15 +37,20 @@
           :disabled="!form"
           :loading="isLoading"
           type="submit"
-          >Sign up</v-btn
+          >{{ $t("signup.action") }}</v-btn
         >
       </v-form>
 
       <v-divider class="my-4"></v-divider>
 
       <p class="text-center hint-text">
-        Already have an account? <router-link to="login">Log in!</router-link>
+        {{ $t("signup.already") }}
+        <router-link to="login">{{ $t("signup.loginlink") }}</router-link>
       </p>
+
+      <v-divider class="my-4"></v-divider>
+
+      <lang-switcher />
     </v-card>
   </div>
 </template>
@@ -51,12 +62,15 @@
 </style>
 
 <script>
+import LangSwitcher from "@/components/LangSwitcher.vue";
 import { signUp } from "@/services/auth";
 
 export default {
+  components: { LangSwitcher },
   data() {
     return {
-      fullName: null,
+      firstName: null,
+      lastName: null,
       email: null,
       password: null,
       isLoading: false,
@@ -78,8 +92,12 @@ export default {
     },
   },
   computed: {
+    fullName() {
+      return this.firstName.trim() + " " + this.lastName.trim();
+    },
     form() {
-      if (this.fullName && this.email && this.password) return true;
+      if (this.firstName && this.lastName && this.email && this.password)
+        return true;
       return false;
     },
   },

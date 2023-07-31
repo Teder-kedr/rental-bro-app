@@ -6,7 +6,7 @@ const i18n = createI18n({
 });
 
 const languages = ["en", "ru"];
-const pages = ["projects", "login"];
+const pages = ["projects", "login", "signup"];
 
 languages.forEach((lang) => {
   pages.forEach((page) => {

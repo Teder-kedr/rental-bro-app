@@ -1,0 +1,10 @@
+{
+  "title": "Create account",
+  "first": "First name",
+  "last": "Last name",
+  "email": "Email",
+  "password": "Password",
+  "action": "Sign Up",
+  "already": "Already have an account?",
+  "loginlink": "Log in!"
+}

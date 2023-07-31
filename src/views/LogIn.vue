@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen d-flex justify-center align-center">
-    <v-card class="mx-auto mb-4 px-6 py-8" width="350">
+    <v-card class="mx-auto mb-4 px-6 pt-8 pb-6" width="350">
       <h2 class="mb-4">{{ $t("login.title") }}</h2>
       <v-form @submit.prevent="handleLogIn">
         <v-text-field

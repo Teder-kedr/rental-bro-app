@@ -6,19 +6,15 @@
       laboriosam sunt, voluptas rerum, possimus iste dolorum ipsa excepturi
       itaque dolor sint veniam error in dolores voluptatum sequi quisquam alias?
     </p>
-    <v-btn flat prepend-icon="mdi-logout" @click="handleLogOut">LOG OUT</v-btn>
+
+    <LogoutButton />
   </div>
 </template>
 
 <script>
-import { logOut } from "@/services/auth";
+import LogoutButton from "@/components/LogoutButton.vue";
 
 export default {
-  methods: {
-    async handleLogOut() {
-      await logOut();
-      this.$router.push("/login");
-    },
-  },
+  components: { LogoutButton },
 };
 </script>

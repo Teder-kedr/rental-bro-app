@@ -4,7 +4,7 @@
     prepend-icon="mdi-logout"
     :loading="isLoading"
     @click="handleLogOut"
-    >LOG OUT</v-btn
+    >{{ $t("settings.logoutaction") }}</v-btn
   >
 </template>
 <script>

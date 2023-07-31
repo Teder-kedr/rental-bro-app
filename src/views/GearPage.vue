@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Gear</h1>
+    <h1 class="mb-8">Gear</h1>
     <p>
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem
       mollitia iste quibusdam. Optio eos dolores atque dicta consequatur quod

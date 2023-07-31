@@ -6,11 +6,11 @@
       </v-list-item>
       <v-list-item to="projects">
         <v-icon icon="mdi-movie-open-outline" color="black" start></v-icon>
-        <span class="ml-1 text-black">Проекты</span>
+        <span class="ml-1 text-black">{{ $t("sidebar.projects") }}</span>
       </v-list-item>
       <v-list-item to="calendar">
         <v-icon icon="mdi-calendar-month-outline" color="black" start></v-icon>
-        <span class="ml-1 text-black">Календарь</span>
+        <span class="ml-1 text-black">{{ $t("sidebar.calendar") }}</span>
       </v-list-item>
       <v-list-item to="gear">
         <v-icon
@@ -19,7 +19,7 @@
           color="black"
           start
         ></v-icon>
-        <span class="ml-1 text-black">Оборудование</span>
+        <span class="ml-1 text-black">{{ $t("sidebar.gear") }}</span>
       </v-list-item>
     </v-list>
     <template v-slot:append>
@@ -27,7 +27,7 @@
         <SidebarUserInfo />
         <v-list-item to="settings">
           <v-icon icon="mdi-cog-outline" color="black" start></v-icon>
-          <span class="ml-1 text-black">Настройки</span>
+          <span class="ml-1 text-black">{{ $t("sidebar.settings") }}</span>
         </v-list-item>
       </v-list>
     </template>

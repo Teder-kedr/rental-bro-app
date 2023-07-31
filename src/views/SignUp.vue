@@ -50,7 +50,9 @@
 
       <v-divider class="my-4"></v-divider>
 
-      <lang-switcher />
+      <div class="d-flex justify-center">
+        <lang-switcher />
+      </div>
     </v-card>
   </div>
 </template>

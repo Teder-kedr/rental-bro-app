@@ -1,20 +1,29 @@
 <template>
   <div>
-    <h1>Settings</h1>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cum deleniti
-      laboriosam sunt, voluptas rerum, possimus iste dolorum ipsa excepturi
-      itaque dolor sint veniam error in dolores voluptatum sequi quisquam alias?
-    </p>
+    <h1 class="mb-8">Settings</h1>
+    <div
+      class="d-flex flex-column flex-sm-row justify-space-between align-sm-center"
+    >
+      <p class="my-2">Change language:</p>
+      <LangSwitcher />
+    </div>
 
-    <LogoutButton />
+    <v-divider class="my-4" color="grey-darken-1"></v-divider>
+
+    <div
+      class="d-flex flex-column flex-sm-row justify-space-between align-sm-center"
+    >
+      <p class="my-2">Log out from your account:</p>
+      <LogoutButton />
+    </div>
   </div>
 </template>
 
 <script>
 import LogoutButton from "@/components/LogoutButton.vue";
+import LangSwitcher from "@/components/LangSwitcher.vue";
 
 export default {
-  components: { LogoutButton },
+  components: { LogoutButton, LangSwitcher },
 };
 </script>

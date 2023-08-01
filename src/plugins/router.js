@@ -3,7 +3,7 @@ import store from "./store";
 import LogIn from "@/views/LogIn.vue";
 import ProjectsPage from "@/views/ProjectsPage.vue";
 import SettingsPage from "@/views/SettingsPage.vue";
-import FourOFour from "./views/FourOFour.vue";
+import FourOFour from "@/views/FourOFour.vue";
 
 const routes = [
   {

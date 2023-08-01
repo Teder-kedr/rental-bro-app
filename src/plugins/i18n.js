@@ -10,7 +10,7 @@ const pages = ["projects", "login", "signup", "settings", "sidebar"];
 
 languages.forEach((lang) => {
   pages.forEach((page) => {
-    import(`./locales/${lang}.${page}.json`).then((translations) => {
+    import(`@/locales/${lang}.${page}.json`).then((translations) => {
       i18n.global.mergeLocaleMessage(lang, { [page]: translations });
     });
   });

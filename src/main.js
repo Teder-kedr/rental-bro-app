@@ -1,10 +1,10 @@
 import App from "./App.vue";
 
 import { createApp } from "vue";
-import router from "./router";
-import vuetify from "./vuetify";
-import store from "./store";
-import i18n from "./i18n";
+import router from "./plugins/router";
+import vuetify from "./plugins/vuetify";
+import store from "./plugins/store";
+import i18n from "./plugins/i18n";
 
 const app = createApp(App);
 

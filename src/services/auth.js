@@ -7,7 +7,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "./firebase";
-import store from "@/store";
+import store from "@/plugins/store";
 import { getReadableError } from "./firebaseReadableErrors";
 
 const auth = getAuth(app);

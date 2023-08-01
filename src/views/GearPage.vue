@@ -7,11 +7,15 @@
 </template>
 
 <script>
-import GearList from "@/components/GearList.vue";
+import { defineAsyncComponent } from "vue";
+import ContentLoader from "@/components/ContentLoader.vue";
 
 export default {
   components: {
-    GearList,
+    GearList: defineAsyncComponent({
+      loader: () => import("@/components/GearList.vue"),
+      loadingComponent: ContentLoader,
+    }),
   },
 };
 </script>

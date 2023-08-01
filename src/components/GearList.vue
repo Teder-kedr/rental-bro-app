@@ -13,21 +13,24 @@
                 {{ item.type }}
               </span>
             </v-col>
-            <v-col cols="4" sm="2" class="d-sm-flex align-center"
-              ><span> {{ item.priceday }} ₽ </span></v-col
-            >
-            <v-col cols="4" sm="2" class="d-sm-flex align-center"
-              ><span>{{ item.qty }} шт. </span></v-col
-            >
+            <v-col cols="4" sm="2" class="d-sm-flex align-center">
+              <span> {{ item.priceday }} ₽ </span>
+            </v-col>
+            <v-col cols="4" sm="2" class="d-sm-flex align-center">
+              <span>{{ item.qty }} шт. </span>
+            </v-col>
           </v-row>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
           <p>Hello!</p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quo
-            laudantium corrupti laboriosam quae facere omnis reiciendis vel
-            aspernatur consectetur.
-          </p>
+          <v-btn
+            prepend-icon="mdi-pencil"
+            color="primary"
+            class="float-right"
+            variant="text"
+          >
+            Edit
+          </v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>

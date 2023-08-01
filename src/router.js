@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "./store";
+import LogIn from "@/views/LogIn.vue";
+import ProjectsPage from "@/views/ProjectsPage.vue";
+import SettingsPage from "@/views/SettingsPage.vue";
 import FourOFour from "./views/FourOFour.vue";
 
 const routes = [
@@ -14,7 +17,7 @@ const routes = [
         path: "projects",
         name: "Projects",
         meta: { requiresAuth: true },
-        component: () => import("@/views/ProjectsPage.vue"),
+        component: ProjectsPage,
       },
       {
         path: "calendar",
@@ -29,16 +32,22 @@ const routes = [
         component: () => import("@/views/GearPage.vue"),
       },
       {
+        path: "gear/edit/:id",
+        name: "edit-gear",
+        meta: { requiresAuth: true },
+        component: () => import("@/views/EditGear.vue"),
+      },
+      {
         path: "settings",
         name: "Settings",
         meta: { requiresAuth: true },
-        component: () => import("@/views/SettingsPage.vue"),
+        component: SettingsPage,
       },
       {
         path: "login",
         name: "Login",
         meta: { requiresNoUser: true },
-        component: () => import("@/views/LogIn.vue"),
+        component: LogIn,
       },
       {
         path: "signup",

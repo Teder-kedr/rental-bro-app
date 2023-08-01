@@ -28,6 +28,7 @@
             color="primary"
             class="float-right"
             variant="text"
+            :to="'/gear/edit/' + item.id"
           >
             Edit
           </v-btn>

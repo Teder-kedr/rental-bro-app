@@ -4,15 +4,15 @@
       <v-list-item>
         <p class="sidebar-app-title">RENTAL BRO APP</p>
       </v-list-item>
-      <v-list-item to="projects">
+      <v-list-item to="/projects">
         <v-icon icon="mdi-movie-open-outline" color="black" start></v-icon>
         <span class="ml-1 text-black">{{ $t("sidebar.projects") }}</span>
       </v-list-item>
-      <v-list-item to="calendar">
+      <v-list-item to="/calendar">
         <v-icon icon="mdi-calendar-month-outline" color="black" start></v-icon>
         <span class="ml-1 text-black">{{ $t("sidebar.calendar") }}</span>
       </v-list-item>
-      <v-list-item to="gear">
+      <v-list-item to="/gear">
         <v-icon
           class="rotated-icon"
           icon="mdi-audio-input-xlr"
@@ -25,7 +25,7 @@
     <template v-slot:append>
       <v-list active-class="gradient-background" color="white">
         <SidebarUserInfo />
-        <v-list-item to="settings">
+        <v-list-item to="/settings">
           <v-icon icon="mdi-cog-outline" color="black" start></v-icon>
           <span class="ml-1 text-black">{{ $t("sidebar.settings") }}</span>
         </v-list-item>

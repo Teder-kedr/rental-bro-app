@@ -1,13 +1,11 @@
 <template>
-  <v-card>
-    <v-container>
-      <v-list v-if="items.length">
-        <v-list-item nav v-for="item in items" :key="item.id" :value="item.id">
+  <v-container class="pa-0">
+    <v-expansion-panels variant="accordion" v-if="items.length">
+      <v-expansion-panel v-for="item in items" :key="item.id">
+        <v-expansion-panel-title>
           <v-row no-gutters>
-            <v-col cols="12" sm="8">
-              <v-icon :size="iconSize" class="mb-1">
-                mdi-microphone-variant
-              </v-icon>
+            <v-col cols="12" sm="8" class="mb-2 d-sm-flex align-center">
+              <v-icon :size="iconSize"> mdi-microphone-variant </v-icon>
               <span class="item-model ml-1">
                 {{ item.model }}
               </span>
@@ -15,15 +13,26 @@
                 {{ item.type }}
               </span>
             </v-col>
-            <v-col cols="4" sm="2"> {{ item.priceday }} ₽ </v-col>
-            <v-col cols="4" sm="2">{{ item.qty }} шт. </v-col>
-            <v-divider class="mb-1"></v-divider>
+            <v-col cols="4" sm="2" class="d-sm-flex align-center"
+              ><span> {{ item.priceday }} ₽ </span></v-col
+            >
+            <v-col cols="4" sm="2" class="d-sm-flex align-center"
+              ><span>{{ item.qty }} шт. </span></v-col
+            >
           </v-row>
-        </v-list-item>
-      </v-list>
-      <p v-else class="text-center text-grey-darken-1">No items</p>
-    </v-container>
-  </v-card>
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <p>Hello!</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quo
+            laudantium corrupti laboriosam quae facere omnis reiciendis vel
+            aspernatur consectetur.
+          </p>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
+    <p v-else class="text-center text-grey-darken-1">No items</p>
+  </v-container>
 </template>
 
 <style scoped>

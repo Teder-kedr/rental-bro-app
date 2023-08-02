@@ -22,7 +22,7 @@
           </v-row>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
-          <p>Hello!</p>
+          <p>id: {{ item.id }}</p>
           <v-btn
             prepend-icon="mdi-pencil"
             color="primary"
@@ -50,53 +50,12 @@
 </style>
 
 <script>
+import { getGearList } from "@/services/firestore";
+
 export default {
   data() {
     return {
-      items: [
-        {
-          model: "Sennheiser MKE-416",
-          type: "Shotgun mic",
-          priceday: 1600,
-          qty: 3,
-          id: 1,
-        },
-        {
-          model: "Sennheiser MKE-2",
-          type: "Lav mic",
-          priceday: 800,
-          qty: 32,
-          id: 2,
-        },
-        {
-          model: "Sennheiser MKE-416",
-          type: "Shotgun mic",
-          priceday: 1600,
-          qty: 3,
-          id: 3,
-        },
-        {
-          model: "Sennheiser MKE-2",
-          type: "Lav mic",
-          priceday: 800,
-          qty: 32,
-          id: 4,
-        },
-        {
-          model: "Sennheiser MKE-416",
-          type: "Shotgun mic",
-          priceday: 1600,
-          qty: 3,
-          id: 5,
-        },
-        {
-          model: "Sennheiser MKE-2",
-          type: "Lav mic",
-          priceday: 800,
-          qty: 32,
-          id: 6,
-        },
-      ],
+      items: [],
     };
   },
   computed: {
@@ -104,6 +63,9 @@ export default {
       if (this.$vuetify.display.mobile) return "small";
       return "large";
     },
+  },
+  async mounted() {
+    this.items = await getGearList();
   },
 };
 </script>

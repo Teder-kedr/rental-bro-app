@@ -34,6 +34,7 @@ export default createVuetify({
           primary: "#1E183B",
           secondary: "#1867C0",
           background: "#ebebeb",
+          success: "228c22",
         },
       },
     },

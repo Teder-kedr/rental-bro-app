@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0">
-    <edit-gear-popup :item="itemOpen" v-model="isDialog" />
+    <edit-gear-popup :item="itemEditing" v-model="isDialog" />
     <v-row no-gutters>
       <v-col class="pr-md-2" cols="12" md="6">
         <v-text-field
@@ -92,7 +92,7 @@ export default {
       typeFilter: [],
       isLoaded: false,
       isDialog: false,
-      itemOpen: null,
+      itemEditing: null,
     };
   },
   computed: {
@@ -151,8 +151,8 @@ export default {
       this.isLoaded = true;
     },
     handleEditClick(item) {
+      this.itemEditing = item;
       this.isDialog = true;
-      this.itemOpen = item;
     },
   },
 };

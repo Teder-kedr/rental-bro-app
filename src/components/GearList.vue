@@ -1,6 +1,10 @@
 <template>
   <v-container class="pa-0">
-    <edit-gear-popup :item="itemEditing" v-model="isDialog" />
+    <edit-gear-popup
+      :item="itemEditing"
+      :types="presentTypes"
+      v-model="isDialog"
+    />
     <v-row no-gutters>
       <v-col class="pr-md-2" cols="12" md="6">
         <v-text-field

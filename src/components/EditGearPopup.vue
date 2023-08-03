@@ -20,9 +20,21 @@
             <p class="mb-1">Type:</p>
             <v-text-field
               v-model="changedItem.type"
+              hide-details
               density="compact"
               variant="outlined"
             />
+            <div class="mt-1 mb-3 d-flex flex-wrap">
+              <v-chip
+                v-for="opt of types"
+                :key="opt"
+                size="small"
+                class="ma-1"
+                @click="changedItem.type = opt"
+              >
+                {{ opt }}
+              </v-chip>
+            </div>
           </v-col>
         </v-row>
         <v-row no-gutters>
@@ -140,7 +152,7 @@
 
 <script>
 export default {
-  props: { item: Object },
+  props: { item: Object, types: Array },
   data() {
     return {
       isConfirmationOpen: false,

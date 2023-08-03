@@ -1,6 +1,13 @@
 <template>
   <v-dialog fullscreen transition="dialog-bottom-transition" :scrim="false">
     <v-card class="pa-8">
+      <v-btn
+        variant="text"
+        position="absolute"
+        icon="mdi-close"
+        class="my-close-button"
+        @click="handleCancel"
+      />
       <v-card-title class="card-title">Edit item</v-card-title>
       <v-card-subtitle>id: {{ item.id }}</v-card-subtitle>
       <v-card-text class="pa-4">
@@ -134,6 +141,9 @@
 </template>
 
 <style scoped>
+.my-close-button {
+  right: 2rem;
+}
 .card-title {
   font-size: 2rem;
 }

@@ -32,12 +32,6 @@ const routes = [
         component: () => import("@/views/GearPage.vue"),
       },
       {
-        path: "gear/edit/:id",
-        name: "edit-gear",
-        meta: { requiresAuth: true },
-        component: () => import("@/views/EditGear.vue"),
-      },
-      {
         path: "settings",
         name: "Settings",
         meta: { requiresAuth: true },

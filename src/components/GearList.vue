@@ -1,5 +1,6 @@
 <template>
   <v-container class="pa-0">
+    <edit-gear-popup :item="itemOpen" v-model="isDialog" />
     <v-row no-gutters>
       <v-col class="pr-md-2" cols="12" md="6">
         <v-text-field
@@ -52,7 +53,7 @@
             color="primary"
             class="float-right"
             variant="text"
-            :to="'/gear/edit/' + item.id"
+            @click="handleEditClick(item)"
           >
             Edit
           </v-btn>
@@ -77,10 +78,12 @@
 <script>
 import { getGearList } from "@/services/firestore";
 import ContentLoader from "./ContentLoader.vue";
+import EditGearPopup from "./EditGearPopup.vue";
 
 export default {
   components: {
     ContentLoader,
+    EditGearPopup,
   },
   data() {
     return {
@@ -88,6 +91,8 @@ export default {
       searchFilter: "",
       typeFilter: [],
       isLoaded: false,
+      isDialog: false,
+      itemOpen: null,
     };
   },
   computed: {
@@ -138,6 +143,17 @@ export default {
   async mounted() {
     this.items = await getGearList();
     this.isLoaded = true;
+  },
+  methods: {
+    async update() {
+      this.isLoaded = false;
+      this.items = await getGearList();
+      this.isLoaded = true;
+    },
+    handleEditClick(item) {
+      this.isDialog = true;
+      this.itemOpen = item;
+    },
   },
 };
 </script>

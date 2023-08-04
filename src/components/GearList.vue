@@ -3,7 +3,7 @@
     <edit-gear-popup
       :item="itemEditing"
       :types="presentTypes"
-      v-model="isDialog"
+      v-model="isEditing"
     />
     <v-row no-gutters>
       <v-col class="pr-md-2" cols="12" md="6">
@@ -95,7 +95,7 @@ export default {
       searchFilter: "",
       typeFilter: [],
       isLoaded: false,
-      isDialog: false,
+      isEditing: false,
       itemEditing: null,
     };
   },
@@ -156,7 +156,7 @@ export default {
     },
     handleEditClick(item) {
       this.itemEditing = item;
-      this.isDialog = true;
+      this.isEditing = true;
     },
   },
 };

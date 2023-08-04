@@ -1,10 +1,19 @@
 <template>
   <v-container class="pa-0">
+    <v-btn
+      class="mb-6"
+      color="primary"
+      prepend-icon="mdi-plus"
+      @click="isAddingNew = true"
+    >
+      Add new
+    </v-btn>
     <edit-gear-popup
       :item="itemEditing"
       :types="presentTypes"
       v-model="isEditing"
     />
+    <add-gear-popup :types="presentTypes" v-model="isAddingNew" />
     <v-row no-gutters>
       <v-col class="pr-md-2" cols="12" md="6">
         <v-text-field
@@ -83,11 +92,13 @@
 import { getGearList } from "@/services/firestore";
 import ContentLoader from "./ContentLoader.vue";
 import EditGearPopup from "./EditGearPopup.vue";
+import AddGearPopup from "./AddGearPopup.vue";
 
 export default {
   components: {
     ContentLoader,
     EditGearPopup,
+    AddGearPopup,
   },
   data() {
     return {
@@ -97,6 +108,7 @@ export default {
       isLoaded: false,
       isEditing: false,
       itemEditing: null,
+      isAddingNew: false,
     };
   },
   computed: {

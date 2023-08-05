@@ -10,14 +10,42 @@
           @click="handleCancel"
         />
         <v-card-title class="card-title">Add gear</v-card-title>
+        <v-card-subtitle v-if="items.length > 1">
+          adding {{ items.length }} items
+        </v-card-subtitle>
 
-        <gear-form
-          v-model:model="item.model"
-          v-model:type="item.type"
-          v-model:priceday="item.priceday"
-          v-model:qty="item.qty"
-          :types="types"
-        />
+        <div v-for="item of items" :key="item">
+          <gear-form
+            v-model:model="item.model"
+            v-model:type="item.type"
+            v-model:priceday="item.priceday"
+            v-model:qty="item.qty"
+            :types="types"
+          />
+          <v-btn
+            v-if="items.length > 1"
+            block
+            class="mb-4"
+            color="error"
+            variant="text"
+            prepend-icon="mdi-minus"
+            @click="handleSplice(items.indexOf(item))"
+          >
+            Remove
+          </v-btn>
+          <v-divider class="mb-4"></v-divider>
+        </div>
+
+        <v-btn
+          block
+          class="my-4"
+          variant="text"
+          prepend-icon="mdi-plus"
+          @click="handleAddMore"
+          :disabled="items.length >= $options.ITEMS_LIMIT"
+        >
+          Add more
+        </v-btn>
 
         <v-card-actions class="py-0 d-flex flex-wrap">
           <v-btn
@@ -52,12 +80,24 @@
 .card-title {
   font-size: 2rem;
 }
+.item-index-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
 </style>
 
 <script>
 import GearForm from "./GearForm.vue";
 
 export default {
+  ITEMS_LIMIT: 8,
+  DEFAULT_ITEM: {
+    model: "",
+    type: "",
+    price: 0,
+    qty: 1,
+  },
+
   props: {
     types: Array,
   },
@@ -66,12 +106,7 @@ export default {
   },
   data() {
     return {
-      item: {
-        model: "",
-        type: "",
-        price: 0,
-        qty: 1,
-      },
+      items: [{ ...this.$options.DEFAULT_ITEM }],
     };
   },
   methods: {
@@ -79,28 +114,19 @@ export default {
       this.$emit("update:modelValue", false);
       this.resetValues();
     },
+    handleAddMore() {
+      this.items.push({ ...this.$options.DEFAULT_ITEM });
+    },
+    handleSplice(index) {
+      this.items.splice(index, 1);
+    },
     resetValues() {
-      this.item = {
-        model: "",
-        type: "",
-        price: 0,
-        qty: 1,
-      };
+      this.items = [{ ...this.$options.DEFAULT_ITEM }];
     },
   },
   computed: {
     isScreenSmall() {
       return !this.$vuetify.display.smAndUp;
-    },
-  },
-  watch: {
-    item() {
-      if (this.item.qty <= 0) {
-        this.item.qty = 1;
-      }
-      if (this.item.priceday < 0) {
-        this.item.priceday = 0;
-      }
     },
   },
 };

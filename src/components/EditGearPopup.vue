@@ -20,7 +20,7 @@
           :types="types"
         />
 
-        <v-card-actions class="py-0 d-flex flex-wrap">
+        <v-card-actions class="py-2 d-flex flex-wrap">
           <v-btn
             variant="outlined"
             :block="isScreenSmall"

@@ -1,5 +1,5 @@
 <template>
-  <v-card-text class="pa-4">
+  <v-card-text>
     <v-row no-gutters>
       <v-col>
         <p class="mb-1">Model:</p>
@@ -28,7 +28,7 @@
           density="compact"
           variant="outlined"
         />
-        <div class="mt-1 mb-3 d-flex flex-wrap">
+        <div class="mt-2 mb-4 d-flex flex-wrap">
           <v-chip
             v-for="opt of typeSuggestions"
             :key="opt"
@@ -62,6 +62,7 @@
           @input="$emit('update:qty', parseInt($event.target.value))"
           class="hide-spinners ms-sm-2"
           type="number"
+          hide-details
           @keydown.up.prevent
           @keydown.down.prevent
           density="compact"

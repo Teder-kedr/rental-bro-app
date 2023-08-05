@@ -6,7 +6,6 @@
         <v-text-field
           :value="model"
           @input="$emit('update:model', $event.target.value)"
-          @click:clear="$emit('update:model', '')"
           spellcheck="false"
           placeholder="example: Sennheiser MKE-2"
           density="compact"
@@ -23,7 +22,6 @@
         <v-text-field
           :value="type"
           @input="$emit('update:type', $event.target.value)"
-          @click:clear="$emit('update:type', '')"
           hide-details
           placeholder="example: lavalier mic"
           density="compact"

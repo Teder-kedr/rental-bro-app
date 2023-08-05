@@ -9,64 +9,67 @@
           class="my-close-button"
           @click="handleCancel"
         />
-        <v-card-title class="card-title">Add gear</v-card-title>
-        <v-card-subtitle v-if="items.length > 1">
-          adding {{ items.length }} items
-        </v-card-subtitle>
+        <v-form v-model="isFormValid" @submit.prevent>
+          <v-card-title class="card-title">Add gear</v-card-title>
+          <v-card-subtitle v-if="items.length > 1">
+            adding {{ items.length }} items
+          </v-card-subtitle>
 
-        <div v-for="item of items" :key="item">
-          <gear-form
-            v-model:model="item.model"
-            v-model:type="item.type"
-            v-model:priceday="item.priceday"
-            v-model:qty="item.qty"
-            :types="types"
-          />
+          <div v-for="item of items" :key="item">
+            <gear-form
+              v-model:model="item.model"
+              v-model:type="item.type"
+              v-model:priceday="item.priceday"
+              v-model:qty="item.qty"
+              :types="types"
+            />
+            <v-btn
+              v-if="items.length > 1"
+              block
+              class="mb-4"
+              color="error"
+              variant="text"
+              prepend-icon="mdi-minus"
+              @click="handleSplice(items.indexOf(item))"
+            >
+              Remove
+            </v-btn>
+            <v-divider class="mb-4"></v-divider>
+          </div>
+
           <v-btn
-            v-if="items.length > 1"
             block
-            class="mb-4"
-            color="error"
+            class="my-4"
             variant="text"
-            prepend-icon="mdi-minus"
-            @click="handleSplice(items.indexOf(item))"
+            prepend-icon="mdi-plus"
+            @click="handleAddMore"
+            :disabled="items.length >= $options.ITEMS_LIMIT"
           >
-            Remove
+            Add more
           </v-btn>
-          <v-divider class="mb-4"></v-divider>
-        </div>
 
-        <v-btn
-          block
-          class="my-4"
-          variant="text"
-          prepend-icon="mdi-plus"
-          @click="handleAddMore"
-          :disabled="items.length >= $options.ITEMS_LIMIT"
-        >
-          Add more
-        </v-btn>
-
-        <v-card-actions class="py-0 d-flex flex-wrap">
-          <v-btn
-            variant="outlined"
-            :block="isScreenSmall"
-            class="ma-1 me-auto px-3"
-            @click="handleCancel"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            variant="outlined"
-            :block="isScreenSmall"
-            class="ma-1 px-3"
-            color="success"
-            @click="handleCancel"
-            append-icon="mdi-check"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
+          <v-card-actions class="py-0 d-flex flex-wrap">
+            <v-btn
+              variant="outlined"
+              :block="isScreenSmall"
+              class="ma-1 me-auto px-3"
+              @click="handleCancel"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              variant="outlined"
+              :block="isScreenSmall"
+              class="ma-1 px-3"
+              color="success"
+              type="submit"
+              @click="handleSubmit"
+              append-icon="mdi-check"
+            >
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-form>
       </div>
     </v-card>
   </v-dialog>
@@ -95,7 +98,7 @@ export default {
     model: "",
     type: "",
     price: 0,
-    qty: 1,
+    qty: 0,
   },
 
   props: {
@@ -107,12 +110,20 @@ export default {
   data() {
     return {
       items: [{ ...this.$options.DEFAULT_ITEM }],
+      isFormValid: false,
     };
   },
   methods: {
     handleCancel() {
       this.$emit("update:modelValue", false);
-      this.resetValues();
+      this.resetInputs();
+    },
+    handleSubmit() {
+      if (!this.isFormValid) {
+        console.log("🙂 form invalid");
+        return;
+      }
+      this.$emit("update:modelValue", false);
     },
     handleAddMore() {
       this.items.push({ ...this.$options.DEFAULT_ITEM });
@@ -120,7 +131,7 @@ export default {
     handleSplice(index) {
       this.items.splice(index, 1);
     },
-    resetValues() {
+    resetInputs() {
       this.items = [{ ...this.$options.DEFAULT_ITEM }];
     },
   },

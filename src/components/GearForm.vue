@@ -6,12 +6,14 @@
         <v-text-field
           :value="model"
           @input="$emit('update:model', $event.target.value)"
-          clearable
           @click:clear="$emit('update:model', '')"
           spellcheck="false"
           placeholder="example: Sennheiser MKE-2"
           density="compact"
           variant="outlined"
+          :validation-value="model"
+          :rules="[$options.gearFormRules.hasValue]"
+          validate-on="input"
         />
       </v-col>
     </v-row>
@@ -21,12 +23,14 @@
         <v-text-field
           :value="type"
           @input="$emit('update:type', $event.target.value)"
-          clearable
           @click:clear="$emit('update:type', '')"
           hide-details
           placeholder="example: lavalier mic"
           density="compact"
           variant="outlined"
+          :validation-value="type"
+          :rules="[$options.gearFormRules.hasValue]"
+          validate-on="input"
         />
         <div class="mt-2 mb-4 d-flex flex-wrap">
           <v-chip
@@ -53,6 +57,9 @@
           @keydown.down.prevent
           density="compact"
           variant="outlined"
+          :validation-value="priceday"
+          :rules="[$options.gearFormRules.price]"
+          validate-on="input"
         />
       </v-col>
       <v-col cols="12" sm="6">
@@ -67,6 +74,8 @@
           @keydown.down.prevent
           density="compact"
           variant="outlined"
+          :validation-value="qty"
+          :rules="[$options.gearFormRules.qty]"
         >
           <template v-slot:prepend>
             <v-btn
@@ -105,7 +114,10 @@
 </style>
 
 <script>
+import gearFormRules from "@/services/gearFormRules";
+
 export default {
+  gearFormRules,
   props: {
     model: String,
     type: String,

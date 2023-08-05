@@ -9,47 +9,49 @@
           class="my-close-button"
           @click="handleCancel"
         />
-        <v-card-title class="card-title">Edit item</v-card-title>
-        <v-card-subtitle>id: {{ item.id }}</v-card-subtitle>
+        <v-form v-model="isFormValid" @submit.prevent>
+          <v-card-title class="card-title">Edit item</v-card-title>
+          <v-card-subtitle>id: {{ item.id }}</v-card-subtitle>
 
-        <gear-form
-          v-model:model="changedItem.model"
-          v-model:type="changedItem.type"
-          v-model:priceday="changedItem.priceday"
-          v-model:qty="changedItem.qty"
-          :types="types"
-        />
+          <gear-form
+            v-model:model="changedItem.model"
+            v-model:type="changedItem.type"
+            v-model:priceday="changedItem.priceday"
+            v-model:qty="changedItem.qty"
+            :types="types"
+          />
 
-        <v-card-actions class="py-2 d-flex flex-wrap">
-          <v-btn
-            variant="outlined"
-            :block="isScreenSmall"
-            class="ma-1 me-auto px-3"
-            color="error"
-            append-icon="mdi-close"
-            @click="handleDelete"
-          >
-            Delete item
-          </v-btn>
-          <v-btn
-            variant="outlined"
-            :block="isScreenSmall"
-            class="ma-1 px-3"
-            @click="handleCancel"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            variant="outlined"
-            :block="isScreenSmall"
-            class="ma-1 px-3"
-            color="success"
-            @click="handleCancel"
-            append-icon="mdi-check"
-          >
-            Save changes
-          </v-btn>
-        </v-card-actions>
+          <v-card-actions class="py-2 d-flex flex-wrap">
+            <v-btn
+              variant="outlined"
+              :block="isScreenSmall"
+              class="ma-1 me-auto px-3"
+              color="error"
+              append-icon="mdi-close"
+              @click="handleDelete"
+            >
+              Delete item
+            </v-btn>
+            <v-btn
+              variant="outlined"
+              :block="isScreenSmall"
+              class="ma-1 px-3"
+              @click="handleCancel"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              variant="outlined"
+              :block="isScreenSmall"
+              class="ma-1 px-3"
+              color="success"
+              @click="handleSave"
+              append-icon="mdi-check"
+            >
+              Save changes
+            </v-btn>
+          </v-card-actions>
+        </v-form>
       </div>
     </v-card>
 
@@ -89,6 +91,7 @@ export default {
     return {
       isConfirmationOpen: false,
       changedItem: null,
+      isFormValid: false,
     };
   },
   methods: {
@@ -98,6 +101,13 @@ export default {
     handleCancel() {
       this.$emit("update:modelValue", false);
       this.resetInputs();
+    },
+    handleSave() {
+      if (!this.isFormValid) {
+        console.log("🙂 form invalid");
+        return;
+      }
+      this.$emit("update:modelValue", false);
     },
     handleDelete() {
       this.isConfirmationOpen = true;

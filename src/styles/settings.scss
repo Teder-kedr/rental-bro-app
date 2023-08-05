@@ -23,3 +23,7 @@ h1 {
 .gradient-background {
   background: linear-gradient(90deg, hsl(286, 47%, 88%), hsl(192, 51%, 88%));
 }
+
+.v-field--error {
+  background-color: rgba($color: #ff0000, $alpha: 0.08);
+}

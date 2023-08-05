@@ -23,30 +23,34 @@
               v-model:qty="item.qty"
               :types="types"
             />
-            <v-btn
-              v-if="items.length > 1"
-              block
-              class="mb-4"
-              color="error"
-              variant="text"
-              prepend-icon="mdi-minus"
-              @click="handleSplice(items.indexOf(item))"
-            >
-              Remove
-            </v-btn>
+
+            <div class="d-flex justify-center">
+              <v-btn
+                v-if="items.length > 1"
+                class="mb-4"
+                color="error"
+                variant="text"
+                prepend-icon="mdi-minus"
+                @click="handleSplice(items.indexOf(item))"
+              >
+                Remove
+              </v-btn>
+            </div>
+
             <v-divider class="mb-4"></v-divider>
           </div>
 
-          <v-btn
-            block
-            class="my-4"
-            variant="text"
-            prepend-icon="mdi-plus"
-            @click="handleAddMore"
-            :disabled="items.length >= $options.ITEMS_LIMIT"
-          >
-            Add more
-          </v-btn>
+          <div class="d-flex justify-center">
+            <v-btn
+              class="mb-4"
+              variant="text"
+              prepend-icon="mdi-plus"
+              @click="handleAddMore"
+              :disabled="items.length >= $options.ITEMS_LIMIT"
+            >
+              Add more
+            </v-btn>
+          </div>
 
           <v-card-actions class="py-0 d-flex flex-wrap">
             <v-btn

@@ -4,7 +4,10 @@
     <error-snackbar />
     <app-sidebar v-if="isUser" />
     <v-main>
-      <router-view style="max-width: 1000px" class="pa-4 mx-auto" />
+      <router-view
+        style="max-width: 1000px"
+        class="px-4 pb-4 pt-md-4 mx-auto"
+      />
     </v-main>
   </v-app>
 </template>

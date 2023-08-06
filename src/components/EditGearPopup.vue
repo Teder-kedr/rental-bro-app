@@ -80,6 +80,7 @@
 import GearForm from "./GearForm.vue";
 import ConfirmDeletePopup from "./ConfirmDeletePopup.vue";
 import { editGearItem, deleteGearItem } from "@/services/firestore";
+import { formatGearFields } from "@/services/gearFormRules";
 
 export default {
   props: {
@@ -112,7 +113,9 @@ export default {
       if (!this.isFormValid) return;
       try {
         this.isAwaitingResponse = true;
-        const { model, type, priceday, qty } = this.changedItem;
+        const { model, type, priceday, qty } = formatGearFields(
+          this.changedItem
+        );
         const isNameDifferent = model !== this.item.model;
         await editGearItem(this.changedItem.id, { model, type, priceday, qty });
         this.$emit("update:modelValue", false);

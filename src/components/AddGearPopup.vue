@@ -15,7 +15,7 @@
             adding {{ items.length }} items
           </v-card-subtitle>
 
-          <div v-for="item of items" :key="item">
+          <div v-for="item of items" :key="item.id">
             <gear-form
               v-model:model="item.model"
               v-model:type="item.type"
@@ -97,6 +97,7 @@
 <script>
 import GearForm from "./GearForm.vue";
 import { addGearItems } from "@/services/firestore";
+import { formatGearFields } from "@/services/gearFormRules";
 
 export default {
   ITEMS_LIMIT: 8,
@@ -130,7 +131,7 @@ export default {
       if (!this.isFormValid) return;
       try {
         this.isAwaitingResponse = true;
-        await addGearItems(this.items);
+        await addGearItems(formatGearFields(this.items));
         this.$emit("update:modelValue", false);
         this.$emit("pushUpdate", "update");
         setTimeout(() => {

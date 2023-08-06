@@ -128,14 +128,19 @@ export default {
     },
     async handleSubmit() {
       if (!this.isFormValid) return;
-      this.isAwaitingResponse = true;
-      await addGearItems(this.items);
-      this.$emit("update:modelValue", false);
-      this.$emit("pushUpdate", "update");
-      this.isAwaitingResponse = false;
-      setTimeout(() => {
-        this.resetInputs();
-      }, 300);
+      try {
+        this.isAwaitingResponse = true;
+        await addGearItems(this.items);
+        this.$emit("update:modelValue", false);
+        this.$emit("pushUpdate", "update");
+        setTimeout(() => {
+          this.resetInputs();
+        }, 300);
+      } catch (error) {
+        this.$store.dispatch("handleNewError", error.message);
+      } finally {
+        this.isAwaitingResponse = false;
+      }
     },
     handleAddMore() {
       this.items.push({ ...this.$options.DEFAULT_ITEM });

@@ -110,28 +110,38 @@ export default {
     },
     async handleSave() {
       if (!this.isFormValid) return;
-      this.isAwaitingResponse = true;
-      const { model, type, priceday, qty } = this.changedItem;
-      const isNameDifferent = model !== this.item.model;
-      await editGearItem(this.changedItem.id, { model, type, priceday, qty });
-      this.$emit("update:modelValue", false);
-      if (isNameDifferent) {
-        this.$emit("pushUpdate", "updateDiffName");
-      } else {
-        this.$emit("pushUpdate", "update");
+      try {
+        this.isAwaitingResponse = true;
+        const { model, type, priceday, qty } = this.changedItem;
+        const isNameDifferent = model !== this.item.model;
+        await editGearItem(this.changedItem.id, { model, type, priceday, qty });
+        this.$emit("update:modelValue", false);
+        if (isNameDifferent) {
+          this.$emit("pushUpdate", "updateDiffName");
+        } else {
+          this.$emit("pushUpdate", "update");
+        }
+      } catch (error) {
+        this.$store.dispatch("handleNewError", error.message);
+      } finally {
+        this.isAwaitingResponse = false;
       }
-      this.isAwaitingResponse = false;
     },
     handleDelete() {
       this.isConfirmationOpen = true;
     },
     async handleConfirmDelete() {
-      this.isConfirmationOpen = false;
-      this.isAwaitingDelete = true;
-      await deleteGearItem(this.changedItem.id);
-      this.$emit("update:modelValue", false);
-      this.$emit("pushUpdate", "delete");
-      this.isAwaitingDelete = false;
+      try {
+        this.isConfirmationOpen = false;
+        this.isAwaitingDelete = true;
+        await deleteGearItem(this.changedItem.id);
+        this.$emit("update:modelValue", false);
+        this.$emit("pushUpdate", "delete");
+      } catch (error) {
+        this.$store.dispatch("handleNewError", error.message);
+      } finally {
+        this.isAwaitingDelete = false;
+      }
     },
   },
   computed: {

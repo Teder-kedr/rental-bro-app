@@ -1,5 +1,11 @@
 <template>
-  <v-snackbar v-model="isOpen" :timeout="-1" color="error" multi-line>
+  <v-snackbar
+    class="my-snackbar"
+    v-model="isOpen"
+    :timeout="-1"
+    color="error"
+    multi-line
+  >
     <p><b>An error occured:</b></p>
     {{ errorMessage }}
     <template v-slot:actions>
@@ -7,6 +13,12 @@
     </template>
   </v-snackbar>
 </template>
+
+<style scoped>
+.my-snackbar {
+  word-break: break-all;
+}
+</style>
 
 <script>
 export default {

@@ -39,7 +39,11 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-expansion-panels variant="accordion" v-if="sortedFilteredItems.length">
+    <v-expansion-panels
+      v-model="openItems"
+      variant="accordion"
+      v-if="sortedFilteredItems.length"
+    >
       <v-expansion-panel v-for="item in sortedFilteredItems" :key="item.id">
         <v-expansion-panel-title>
           <v-row no-gutters>
@@ -110,6 +114,7 @@ export default {
       isEditing: false,
       itemEditing: null,
       isAddingNew: false,
+      openItems: [],
     };
   },
   computed: {
@@ -162,7 +167,10 @@ export default {
     this.isLoaded = true;
   },
   methods: {
-    async update() {
+    async update(action) {
+      if (action === "delete" || action === "updateDiffName") {
+        this.openItems = undefined;
+      }
       this.isLoaded = false;
       this.items = await getGearList();
       this.isLoaded = true;

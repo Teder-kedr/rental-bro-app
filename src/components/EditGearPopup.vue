@@ -29,6 +29,7 @@
               color="error"
               append-icon="mdi-close"
               @click="handleDelete"
+              :loading="isAwaitingDelete"
             >
               Delete item
             </v-btn>
@@ -78,7 +79,7 @@
 <script>
 import GearForm from "./GearForm.vue";
 import ConfirmDeletePopup from "./ConfirmDeletePopup.vue";
-import { editGearItem } from "@/services/firestore";
+import { editGearItem, deleteGearItem } from "@/services/firestore";
 
 export default {
   props: {
@@ -96,6 +97,7 @@ export default {
       changedItem: null,
       isFormValid: false,
       isAwaitingResponse: false,
+      isAwaitingDelete: false,
     };
   },
   methods: {
@@ -110,17 +112,26 @@ export default {
       if (!this.isFormValid) return;
       this.isAwaitingResponse = true;
       const { model, type, priceday, qty } = this.changedItem;
+      const isNameDifferent = model !== this.item.model;
       await editGearItem(this.changedItem.id, { model, type, priceday, qty });
       this.$emit("update:modelValue", false);
-      this.$emit("pushUpdate");
+      if (isNameDifferent) {
+        this.$emit("pushUpdate", "updateDiffName");
+      } else {
+        this.$emit("pushUpdate", "update");
+      }
       this.isAwaitingResponse = false;
     },
     handleDelete() {
       this.isConfirmationOpen = true;
     },
-    handleConfirmDelete() {
+    async handleConfirmDelete() {
       this.isConfirmationOpen = false;
-      // ...
+      this.isAwaitingDelete = true;
+      await deleteGearItem(this.changedItem.id);
+      this.$emit("update:modelValue", false);
+      this.$emit("pushUpdate", "delete");
+      this.isAwaitingDelete = false;
     },
   },
   computed: {

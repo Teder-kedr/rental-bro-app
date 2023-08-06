@@ -14,7 +14,11 @@
       v-model="isEditing"
       @push-update="update"
     />
-    <add-gear-popup :types="presentTypes" v-model="isAddingNew" />
+    <add-gear-popup
+      :types="presentTypes"
+      v-model="isAddingNew"
+      @push-update="update"
+    />
     <v-row no-gutters>
       <v-col class="pr-md-2" cols="12" md="6">
         <v-text-field

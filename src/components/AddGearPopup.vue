@@ -69,6 +69,7 @@
               type="submit"
               @click="handleSubmit"
               append-icon="mdi-check"
+              :loading="isAwaitingResponse"
             >
               Save
             </v-btn>
@@ -95,6 +96,7 @@
 
 <script>
 import GearForm from "./GearForm.vue";
+import { addGearItems } from "@/services/firestore";
 
 export default {
   ITEMS_LIMIT: 8,
@@ -108,6 +110,7 @@ export default {
   props: {
     types: Array,
   },
+  emits: ["update:modelValue", "pushUpdate"],
   components: {
     GearForm,
   },
@@ -115,6 +118,7 @@ export default {
     return {
       items: [{ ...this.$options.DEFAULT_ITEM }],
       isFormValid: false,
+      isAwaitingResponse: false,
     };
   },
   methods: {
@@ -122,12 +126,16 @@ export default {
       this.$emit("update:modelValue", false);
       this.resetInputs();
     },
-    handleSubmit() {
-      if (!this.isFormValid) {
-        console.log("🙂 form invalid");
-        return;
-      }
+    async handleSubmit() {
+      if (!this.isFormValid) return;
+      this.isAwaitingResponse = true;
+      await addGearItems(this.items);
       this.$emit("update:modelValue", false);
+      this.$emit("pushUpdate", "update");
+      this.isAwaitingResponse = false;
+      setTimeout(() => {
+        this.resetInputs();
+      }, 300);
     },
     handleAddMore() {
       this.items.push({ ...this.$options.DEFAULT_ITEM });

@@ -4,7 +4,7 @@ import {
   getDocs,
   updateDoc,
   doc,
-  setDoc,
+  addDoc,
   deleteDoc,
 } from "firebase/firestore";
 import { app } from "./firebase";
@@ -30,6 +30,6 @@ export async function deleteGearItem(id) {
 
 export async function addGearItems(items) {
   await items.forEach((item) => {
-    setDoc(doc(db, "gear"), item);
+    addDoc(collection(db, "gear"), item);
   });
 }

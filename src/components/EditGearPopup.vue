@@ -47,6 +47,7 @@
               color="success"
               @click="handleSave"
               append-icon="mdi-check"
+              :loading="isAwaitingResponse"
             >
               Save changes
             </v-btn>
@@ -77,12 +78,14 @@
 <script>
 import GearForm from "./GearForm.vue";
 import ConfirmDeletePopup from "./ConfirmDeletePopup.vue";
+import { editGearItem } from "@/services/firestore";
 
 export default {
   props: {
     item: Object,
     types: Array,
   },
+  emits: ["update:modelValue", "pushUpdate"],
   components: {
     GearForm,
     ConfirmDeletePopup,
@@ -92,6 +95,7 @@ export default {
       isConfirmationOpen: false,
       changedItem: null,
       isFormValid: false,
+      isAwaitingResponse: false,
     };
   },
   methods: {
@@ -102,12 +106,14 @@ export default {
       this.$emit("update:modelValue", false);
       this.resetInputs();
     },
-    handleSave() {
-      if (!this.isFormValid) {
-        console.log("🙂 form invalid");
-        return;
-      }
+    async handleSave() {
+      if (!this.isFormValid) return;
+      this.isAwaitingResponse = true;
+      const { model, type, priceday, qty } = this.changedItem;
+      await editGearItem(this.changedItem.id, { model, type, priceday, qty });
       this.$emit("update:modelValue", false);
+      this.$emit("pushUpdate");
+      this.isAwaitingResponse = false;
     },
     handleDelete() {
       this.isConfirmationOpen = true;

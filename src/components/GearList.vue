@@ -12,6 +12,7 @@
       :item="itemEditing"
       :types="presentTypes"
       v-model="isEditing"
+      @push-update="update"
     />
     <add-gear-popup :types="presentTypes" v-model="isAddingNew" />
     <v-row no-gutters>

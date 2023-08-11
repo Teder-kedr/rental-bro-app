@@ -2,6 +2,7 @@
   <v-container class="pa-0">
     <v-btn
       class="mb-6"
+      flat
       color="primary"
       prepend-icon="mdi-plus"
       @click="isAddingNew = true"

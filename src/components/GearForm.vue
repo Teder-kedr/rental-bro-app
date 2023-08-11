@@ -77,6 +77,7 @@
         >
           <template v-slot:prepend>
             <v-btn
+              density="compact"
               variant="text"
               icon="mdi-minus"
               @click="decrementQty"
@@ -85,6 +86,7 @@
           </template>
           <template v-slot:append>
             <v-btn
+              density="compact"
               variant="text"
               icon="mdi-plus"
               @click="incrementQty"

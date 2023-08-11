@@ -11,12 +11,18 @@ import { app } from "./firebase";
 
 const db = getFirestore(app);
 
-export async function getGearList() {
+let cachedGearList = null;
+
+export async function getGearList(forceUpdate) {
+  if (cachedGearList && !forceUpdate) {
+    return cachedGearList;
+  }
   const result = [];
   const querySnapshot = await getDocs(collection(db, "gear"));
   querySnapshot.forEach((doc) => {
     result.push({ ...doc.data(), id: doc.id });
   });
+  cachedGearList = result;
   return result;
 }
 

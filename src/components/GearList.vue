@@ -177,7 +177,7 @@ export default {
         this.openItems = undefined;
       }
       this.isLoaded = false;
-      this.items = await getGearList();
+      this.items = await getGearList(true);
       this.isLoaded = true;
     },
     handleEditClick(item) {

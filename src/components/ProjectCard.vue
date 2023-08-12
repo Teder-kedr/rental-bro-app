@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel class="my-2">
+  <v-expansion-panel class="my-2" :value="panelUniqueIndex">
     <v-expansion-panel-title>
       <v-card-title class="my-card-title pa-0">
         <v-icon size="x-small" class="me-1">mdi-movie-open</v-icon>
@@ -82,6 +82,10 @@ export default {
   props: {
     project: {
       type: Object,
+      required: true,
+    },
+    panelUniqueIndex: {
+      type: String,
       required: true,
     },
   },

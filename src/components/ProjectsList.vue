@@ -1,19 +1,21 @@
 <template>
-  <p class="mb-2">Projects: {{ projects.length }}</p>
-  <v-btn flat color="primary" prepend-icon="mdi-plus"> New Project </v-btn>
-  <div
-    v-for="(date, idx) of Object.entries(projectsMappedToDates)"
-    :key="date[1].id"
-  >
-    <p class="mt-12">{{ date[0] }}</p>
-    <v-expansion-panels v-model="expanded">
-      <project-card
-        v-for="project of date[1]"
-        :project="project"
-        :key="project.id"
-        :panelUniqueIndex="project.id + idx.toString()"
-      />
-    </v-expansion-panels>
+  <div class="pb-12">
+    <p class="mb-2">Projects: {{ projects.length }}</p>
+    <v-btn flat color="primary" prepend-icon="mdi-plus"> New Project </v-btn>
+    <div
+      v-for="(date, idx) of Object.entries(projectsMappedToDates)"
+      :key="date[1].id"
+    >
+      <p class="mt-12">{{ date[0] }}</p>
+      <v-expansion-panels v-model="expanded">
+        <project-card
+          v-for="project of date[1]"
+          :project="project"
+          :key="project.id"
+          :panelUniqueIndex="project.id + idx.toString()"
+        />
+      </v-expansion-panels>
+    </div>
   </div>
 </template>
 

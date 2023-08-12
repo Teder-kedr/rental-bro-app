@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ms-lg-2">
     <p class="mb-2">
       <span class="detail-title">Engineer:</span>
       {{ project.engineer.name }} {{ project.engineer.tel }}

@@ -98,7 +98,7 @@ export async function getProjectsList() {
       id: "2",
     },
     {
-      title: "Outdoor Music Festival",
+      title: "Outdoor Music Festival Hello Title",
       dates: ["2023-09-10", "2023-09-11"],
       gearList: {
         "Midas M32": 1,

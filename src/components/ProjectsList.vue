@@ -2,12 +2,14 @@
   <p class="mb-2">Projects: {{ projects.length }}</p>
   <v-btn flat color="primary" prepend-icon="mdi-plus"> New Project </v-btn>
   <div v-for="date of Object.entries(projectsMappedToDates)" :key="date[1].id">
-    <p class="mt-16">{{ date[0] }}</p>
-    <project-card
-      v-for="project of date[1]"
-      :project="project"
-      :key="project.id"
-    />
+    <p class="mt-12">{{ date[0] }}</p>
+    <v-expansion-panels>
+      <project-card
+        v-for="project of date[1]"
+        :project="project"
+        :key="project.id"
+      />
+    </v-expansion-panels>
   </div>
 </template>
 
@@ -22,6 +24,7 @@ export default {
   data() {
     return {
       projects: [],
+      expanded: [],
     };
   },
   computed: {

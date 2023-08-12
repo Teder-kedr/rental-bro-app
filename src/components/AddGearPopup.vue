@@ -104,7 +104,7 @@ export default {
   DEFAULT_ITEM: {
     model: "",
     type: "",
-    price: 0,
+    priceday: 0,
     qty: 0,
   },
 

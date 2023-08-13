@@ -6,6 +6,6 @@
       color="primary"
       size="75"
       width="5"
-    ></v-progress-circular>
+    />
   </div>
 </template>

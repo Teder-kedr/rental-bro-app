@@ -1,6 +1,6 @@
 <template>
   <v-menu>
-    <template v-slot:activator="{ props }">
+    <template #activator="{ props }">
       <v-btn
         variant="flat"
         v-bind="props"

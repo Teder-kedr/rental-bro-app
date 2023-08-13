@@ -16,7 +16,7 @@
             cols="12"
             sm="8"
             lg="6"
-            class="my-card-text py-2 d-lg-flex align-center"
+            class="my-card-text py-5 d-lg-flex align-center"
           >
             <ProjectCardDetails :project="project" />
           </v-col>

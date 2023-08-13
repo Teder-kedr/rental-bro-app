@@ -158,8 +158,13 @@ export default {
     },
   },
   async mounted() {
-    this.items = await getGearList();
-    this.isLoaded = true;
+    try {
+      this.items = await getGearList();
+    } catch (error) {
+      this.$store.dispatch("handleNewError", error.message);
+    } finally {
+      this.isLoaded = true;
+    }
   },
   methods: {
     async update(action) {
@@ -167,8 +172,13 @@ export default {
         this.openItems = undefined;
       }
       this.isLoaded = false;
-      this.items = await getGearList(true);
-      this.isLoaded = true;
+      try {
+        this.items = await getGearList(true);
+      } catch (error) {
+        this.$store.dispatch("handleNewError", error.message);
+      } finally {
+        this.isLoaded = true;
+      }
     },
     handleEditClick(item) {
       this.itemEditing = item;

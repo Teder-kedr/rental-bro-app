@@ -3,16 +3,18 @@
     <p class="mb-2">Projects: {{ projects.length }}</p>
     <v-btn flat color="primary" prepend-icon="mdi-plus"> New Project </v-btn>
     <div
-      v-for="(date, idx) of Object.entries(projectsMappedToDates)"
-      :key="date[1].id"
+      v-for="(projectsArray, dateString) in datesProjectsMap"
+      :key="dateString"
     >
-      <p class="mt-12">{{ date[0] }}</p>
-      <v-expansion-panels v-model="expanded">
-        <project-card
-          v-for="project of date[1]"
-          :project="project"
+      <p class="mt-12">
+        {{ dateString }}
+      </p>
+      <v-expansion-panels v-model="expandedProject">
+        <ProjectCard
+          v-for="project of projectsArray"
           :key="project.id"
-          :panelUniqueIndex="project.id + idx.toString()"
+          :project="project"
+          :panel-unique-index="project.id + '_' + dateString"
         />
       </v-expansion-panels>
     </div>
@@ -30,31 +32,21 @@ export default {
   data() {
     return {
       projects: [],
-      expanded: undefined,
+      expandedProject: undefined,
     };
   },
-  methods: {
-    saveOpenedPanel(val) {
-      console.log(val);
-    },
-  },
   computed: {
-    projectsMappedToDates() {
+    datesProjectsMap() {
       const result = {};
       this.projects.forEach((project) => {
-        for (let date of project.dates) {
+        project.dates.forEach((date) => {
           if (!result[date]) {
             result[date] = [];
           }
           result[date].push(project);
-        }
+        });
       });
       return result;
-    },
-  },
-  watch: {
-    expanded() {
-      console.log(this.expanded);
     },
   },
   async mounted() {

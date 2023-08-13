@@ -37,7 +37,7 @@
               </v-btn>
             </div>
 
-            <v-divider class="mb-4"></v-divider>
+            <v-divider class="mb-4" />
           </div>
 
           <div class="d-flex justify-center">
@@ -45,8 +45,8 @@
               class="mb-4"
               variant="text"
               prepend-icon="mdi-plus"
-              @click="handleAddMore"
               :disabled="items.length >= $options.ITEMS_LIMIT"
+              @click="handleAddMore"
             >
               Add more
             </v-btn>
@@ -67,9 +67,9 @@
               class="ma-1 px-3"
               color="success"
               type="submit"
-              @click="handleSubmit"
               append-icon="mdi-check"
               :loading="isAwaitingResponse"
+              @click="handleSubmit"
             >
               Save
             </v-btn>
@@ -79,20 +79,6 @@
     </v-card>
   </v-dialog>
 </template>
-
-<style scoped>
-.my-close-button {
-  top: 2rem;
-  right: 2rem;
-}
-.card-title {
-  font-size: 2rem;
-}
-.item-index-text {
-  font-size: 1.25rem;
-  font-weight: 500;
-}
-</style>
 
 <script>
 import GearForm from "./GearForm.vue";
@@ -107,20 +93,25 @@ export default {
     priceday: 0,
     qty: 0,
   },
+  components: {
+    GearForm,
+  },
 
   props: {
     types: Array,
   },
   emits: ["update:modelValue", "pushUpdate"],
-  components: {
-    GearForm,
-  },
   data() {
     return {
       items: [{ ...this.$options.DEFAULT_ITEM }],
       isFormValid: false,
       isAwaitingResponse: false,
     };
+  },
+  computed: {
+    isScreenSmall() {
+      return !this.$vuetify.display.smAndUp;
+    },
   },
   methods: {
     handleCancel() {
@@ -153,10 +144,19 @@ export default {
       this.items = [{ ...this.$options.DEFAULT_ITEM }];
     },
   },
-  computed: {
-    isScreenSmall() {
-      return !this.$vuetify.display.smAndUp;
-    },
-  },
 };
 </script>
+
+<style scoped>
+.my-close-button {
+  top: 2rem;
+  right: 2rem;
+}
+.card-title {
+  font-size: 2rem;
+}
+.item-index-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+</style>

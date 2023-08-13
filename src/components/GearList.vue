@@ -10,29 +10,30 @@
       Add new
     </v-btn>
     <edit-gear-popup
+      v-model="isEditing"
       :item="itemEditing"
       :types="presentTypes"
-      v-model="isEditing"
       @push-update="update"
     />
     <add-gear-popup
-      :types="presentTypes"
       v-model="isAddingNew"
+      :types="presentTypes"
       @push-update="update"
     />
     <v-row no-gutters>
       <v-col class="pr-md-2" cols="12" md="6">
         <v-text-field
+          v-model="searchFilter"
           :disabled="!items.length"
           density="compact"
           label="Search"
           clearable
           variant="outlined"
-          v-model="searchFilter"
         />
       </v-col>
       <v-col class="pl-md-2" cols="12" md="6">
         <v-select
+          v-model="typeFilter"
           :disabled="!items.length"
           variant="outlined"
           density="compact"
@@ -40,14 +41,13 @@
           :items="presentTypes"
           multiple
           clearable
-          v-model="typeFilter"
-        ></v-select>
+        />
       </v-col>
     </v-row>
     <v-expansion-panels
+      v-if="sortedFilteredItems.length"
       v-model="openItems"
       variant="accordion"
-      v-if="sortedFilteredItems.length"
     >
       <v-expansion-panel v-for="item in sortedFilteredItems" :key="item.id">
         <v-expansion-panel-title>
@@ -87,16 +87,6 @@
     <content-loader v-else />
   </v-container>
 </template>
-
-<style scoped>
-.item-model {
-  font-weight: 500;
-}
-.item-type {
-  font-size: 0.9rem;
-  font-style: italic;
-}
-</style>
 
 <script>
 import { getGearList } from "@/services/firestore";
@@ -187,3 +177,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.item-model {
+  font-weight: 500;
+}
+.item-type {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+</style>

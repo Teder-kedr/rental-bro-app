@@ -28,8 +28,8 @@
               class="ma-1 me-auto px-3"
               color="error"
               append-icon="mdi-close"
-              @click="handleDelete"
               :loading="isAwaitingDelete"
+              @click="handleDelete"
             >
               Delete item
             </v-btn>
@@ -46,9 +46,9 @@
               :block="isScreenSmall"
               class="ma-1 px-3"
               color="success"
-              @click="handleSave"
               append-icon="mdi-check"
               :loading="isAwaitingResponse"
+              @click="handleSave"
             >
               Save changes
             </v-btn>
@@ -58,23 +58,13 @@
     </v-card>
 
     <confirm-delete-popup
-      :itemToDelete="item.model"
       v-model="isConfirmationOpen"
+      :item-to-delete="item.model"
       @close="isConfirmationOpen = false"
       @confirm="handleConfirmDelete"
     />
   </v-dialog>
 </template>
-
-<style scoped>
-.my-close-button {
-  top: 2rem;
-  right: 2rem;
-}
-.card-title {
-  font-size: 2rem;
-}
-</style>
 
 <script>
 import GearForm from "./GearForm.vue";
@@ -83,15 +73,15 @@ import { editGearItem, deleteGearItem } from "@/services/firestore";
 import { formatGearFields } from "@/services/gearFormRules";
 
 export default {
+  components: {
+    GearForm,
+    ConfirmDeletePopup,
+  },
   props: {
     item: Object,
     types: Array,
   },
   emits: ["update:modelValue", "pushUpdate"],
-  components: {
-    GearForm,
-    ConfirmDeletePopup,
-  },
   data() {
     return {
       isConfirmationOpen: false,
@@ -100,6 +90,16 @@ export default {
       isAwaitingResponse: false,
       isAwaitingDelete: false,
     };
+  },
+  computed: {
+    isScreenSmall() {
+      return !this.$vuetify.display.smAndUp;
+    },
+  },
+  watch: {
+    item() {
+      this.resetInputs();
+    },
   },
   methods: {
     resetInputs() {
@@ -147,15 +147,15 @@ export default {
       }
     },
   },
-  computed: {
-    isScreenSmall() {
-      return !this.$vuetify.display.smAndUp;
-    },
-  },
-  watch: {
-    item() {
-      this.resetInputs();
-    },
-  },
 };
 </script>
+
+<style scoped>
+.my-close-button {
+  top: 2rem;
+  right: 2rem;
+}
+.card-title {
+  font-size: 2rem;
+}
+</style>

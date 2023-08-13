@@ -22,5 +22,6 @@ export default {
   props: {
     itemToDelete: String,
   },
+  emits: ["close", "confirm"],
 };
 </script>

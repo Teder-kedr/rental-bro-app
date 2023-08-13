@@ -13,7 +13,7 @@
           <v-card-title class="card-title">Edit item</v-card-title>
           <v-card-subtitle>id: {{ item.id }}</v-card-subtitle>
 
-          <gear-form
+          <GearForm
             v-model:model="changedItem.model"
             v-model:type="changedItem.type"
             v-model:priceday="changedItem.priceday"
@@ -57,7 +57,7 @@
       </div>
     </v-card>
 
-    <confirm-delete-popup
+    <ConfirmDeletePopup
       v-model="isConfirmationOpen"
       :item-to-delete="item.model"
       @close="isConfirmationOpen = false"
@@ -68,7 +68,7 @@
 
 <script>
 import GearForm from "./GearForm.vue";
-import ConfirmDeletePopup from "./ConfirmDeletePopup.vue";
+import ConfirmDeletePopup from "@/components/ConfirmDeletePopup.vue";
 import { editGearItem, deleteGearItem } from "@/services/firestore";
 import { formatGearFields } from "@/services/gearFormRules";
 

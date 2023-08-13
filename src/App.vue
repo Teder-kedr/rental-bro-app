@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <spinner-fullscreen :model-value="showSpinner" />
-    <error-snackbar />
-    <app-sidebar v-if="isUser" />
+    <SpinnerFullscreen :model-value="showSpinner" />
+    <ErrorSnackbar />
+    <AppSidebar v-if="isUser" />
     <v-main>
       <router-view
         style="max-width: 1000px"

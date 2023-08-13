@@ -36,7 +36,7 @@
 
       <v-divider class="my-4" />
       <div class="d-flex justify-center">
-        <lang-switcher />
+        <LangSwitcher />
       </div>
     </v-card>
   </div>

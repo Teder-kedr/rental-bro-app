@@ -12,7 +12,7 @@ import ContentLoader from "@/components/ContentLoader.vue";
 export default {
   components: {
     GearList: defineAsyncComponent({
-      loader: () => import("@/components/GearList.vue"),
+      loader: () => import("@/components/gear/GearList.vue"),
       loadingComponent: ContentLoader,
     }),
   },

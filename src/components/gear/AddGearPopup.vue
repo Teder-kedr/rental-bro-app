@@ -16,7 +16,7 @@
           </v-card-subtitle>
 
           <div v-for="item of items" :key="item.id">
-            <gear-form
+            <GearForm
               v-model:model="item.model"
               v-model:type="item.type"
               v-model:priceday="item.priceday"
@@ -90,7 +90,7 @@ export default {
   DEFAULT_ITEM: {
     model: "",
     type: "",
-    priceday: 0,
+    priceday: NaN,
     qty: 0,
   },
   components: {

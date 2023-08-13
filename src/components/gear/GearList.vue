@@ -9,13 +9,13 @@
     >
       Add new
     </v-btn>
-    <edit-gear-popup
+    <EditGearPopup
       v-model="isEditing"
       :item="itemEditing"
       :types="presentTypes"
       @push-update="update"
     />
-    <add-gear-popup
+    <AddGearPopup
       v-model="isAddingNew"
       :types="presentTypes"
       @push-update="update"
@@ -84,13 +84,13 @@
       </v-expansion-panel>
     </v-expansion-panels>
     <p v-else-if="isLoaded" class="text-center text-grey-darken-1">No items</p>
-    <content-loader v-else />
+    <ContentLoader v-else />
   </v-container>
 </template>
 
 <script>
 import { getGearList } from "@/services/firestore";
-import ContentLoader from "./ContentLoader.vue";
+import ContentLoader from "@/components/ContentLoader.vue";
 import EditGearPopup from "./EditGearPopup.vue";
 import AddGearPopup from "./AddGearPopup.vue";
 

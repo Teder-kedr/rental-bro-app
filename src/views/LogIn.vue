@@ -4,19 +4,19 @@
       <h2 class="mb-4">{{ $t("login.title") }}</h2>
       <v-form @submit.prevent="handleLogIn">
         <v-text-field
+          v-model="email"
           required
           :readonly="isLoading"
           :label="$t('login.email')"
           type="email"
-          v-model="email"
-        ></v-text-field>
+        />
         <v-text-field
+          v-model="password"
           required
           :readonly="isLoading"
           :label="$t('login.password')"
           type="password"
-          v-model="password"
-        ></v-text-field>
+        />
         <v-btn
           color="primary"
           block
@@ -27,26 +27,20 @@
         >
       </v-form>
 
-      <v-divider class="my-4"></v-divider>
+      <v-divider class="my-4" />
 
       <p class="text-center hint-text">
         {{ $t("login.donthave") }}
         <router-link to="signup">{{ $t("login.signuplink") }}</router-link>
       </p>
 
-      <v-divider class="my-4"></v-divider>
+      <v-divider class="my-4" />
       <div class="d-flex justify-center">
         <lang-switcher />
       </div>
     </v-card>
   </div>
 </template>
-
-<style scoped>
-.hint-text {
-  font-size: 0.9rem;
-}
-</style>
 
 <script>
 import { logIn } from "@/services/auth";
@@ -63,6 +57,12 @@ export default {
       isLoading: false,
     };
   },
+  computed: {
+    form() {
+      if (this.email && this.password) return true;
+      return false;
+    },
+  },
   methods: {
     async handleLogIn() {
       try {
@@ -77,11 +77,11 @@ export default {
       }
     },
   },
-  computed: {
-    form() {
-      if (this.email && this.password) return true;
-      return false;
-    },
-  },
 };
 </script>
+
+<style scoped>
+.hint-text {
+  font-size: 0.9rem;
+}
+</style>

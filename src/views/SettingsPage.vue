@@ -8,7 +8,7 @@
       <LangSwitcher />
     </div>
 
-    <v-divider class="my-4" color="grey-darken-1"></v-divider>
+    <v-divider class="my-4" color="grey-darken-1" />
 
     <div
       class="d-flex flex-column flex-sm-row justify-space-between align-sm-center"

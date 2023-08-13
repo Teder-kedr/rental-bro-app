@@ -4,33 +4,33 @@
       <h2 class="mb-4">{{ $t("signup.title") }}</h2>
       <v-form @submit.prevent="handleSignUp">
         <v-text-field
+          v-model="firstName"
           required
           :readonly="isLoading"
           :label="$t('signup.first')"
           type="text"
-          v-model="firstName"
-        ></v-text-field>
+        />
         <v-text-field
+          v-model="lastName"
           required
           :readonly="isLoading"
           :label="$t('signup.last')"
           type="text"
-          v-model="lastName"
-        ></v-text-field>
+        />
         <v-text-field
+          v-model="email"
           required
           :readonly="isLoading"
           :label="$t('signup.email')"
           type="email"
-          v-model="email"
-        ></v-text-field>
+        />
         <v-text-field
+          v-model="password"
           required
           :readonly="isLoading"
           :label="$t('signup.password')"
           type="password"
-          v-model="password"
-        ></v-text-field>
+        />
         <v-btn
           color="primary"
           block
@@ -41,14 +41,14 @@
         >
       </v-form>
 
-      <v-divider class="my-4"></v-divider>
+      <v-divider class="my-4" />
 
       <p class="text-center hint-text">
         {{ $t("signup.already") }}
         <router-link to="login">{{ $t("signup.loginlink") }}</router-link>
       </p>
 
-      <v-divider class="my-4"></v-divider>
+      <v-divider class="my-4" />
 
       <div class="d-flex justify-center">
         <lang-switcher />
@@ -56,12 +56,6 @@
     </v-card>
   </div>
 </template>
-
-<style scoped>
-.hint-text {
-  font-size: 0.9rem;
-}
-</style>
 
 <script>
 import LangSwitcher from "@/components/LangSwitcher.vue";
@@ -78,6 +72,16 @@ export default {
       isLoading: false,
     };
   },
+  computed: {
+    fullName() {
+      return this.firstName.trim() + " " + this.lastName.trim();
+    },
+    form() {
+      if (this.firstName && this.lastName && this.email && this.password)
+        return true;
+      return false;
+    },
+  },
   methods: {
     async handleSignUp() {
       try {
@@ -93,15 +97,11 @@ export default {
       }
     },
   },
-  computed: {
-    fullName() {
-      return this.firstName.trim() + " " + this.lastName.trim();
-    },
-    form() {
-      if (this.firstName && this.lastName && this.email && this.password)
-        return true;
-      return false;
-    },
-  },
 };
 </script>
+
+<style scoped>
+.hint-text {
+  font-size: 0.9rem;
+}
+</style>

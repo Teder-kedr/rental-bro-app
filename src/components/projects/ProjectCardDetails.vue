@@ -20,8 +20,8 @@
     <p v-if="info.contacts.length" class="mb-2">
       <span class="detail-title">Contacts: </span>
       <span v-for="(person, idx) of info.contacts" :key="idx">
-        <span v-if="person.name"> {{ person.name }} </span>
-        <span v-if="person.tel" class="text-tel"> {{ " " + person.tel }} </span>
+        <span v-if="person.name"> {{ person.name + " " }} </span>
+        <span v-if="person.tel" class="text-tel"> {{ person.tel }} </span>
         <span v-if="person.role"> ({{ person.role }}) </span
         ><span v-if="info.contacts.length > 1"><br /></span>
       </span>

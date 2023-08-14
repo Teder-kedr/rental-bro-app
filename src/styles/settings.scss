@@ -27,3 +27,34 @@ h1 {
 .v-field--error {
   background-color: rgba($color: #ff0000, $alpha: 0.08);
 }
+
+.v-expansion-panel-title--active>.v-expansion-panel-title__overlay,
+.v-expansion-panel-title>.v-expansion-panel-title__overlay {
+  background-color: white;
+  opacity: 0;
+}
+
+.v-expansion-panel-title--active>.v-expansion-panel-title__overlay:hover,
+.v-expansion-panel-title>.v-expansion-panel-title__overlay:hover {
+  opacity: 0;
+}
+
+.v-expansion-panel-title--active,
+.v-expansion-panel-title[aria-haspopup=menu][aria-expanded=true] {
+  background: linear-gradient(90deg, hsl(286, 47%, 93%), hsl(192, 51%, 93%));
+}
+
+.v-expansion-panel-title--active:hover,
+.v-expansion-panel-title[aria-haspopup=menu][aria-expanded=true]:hover {
+  background: linear-gradient(90deg, hsl(286, 47%, 93%), hsl(192, 51%, 93%));
+}
+
+.v-expansion-panel-title:hover,
+.v-expansion-panel-title[aria-expanded=false]:hover {
+  background: linear-gradient(90deg, hsl(286, 47%, 93%), hsl(192, 51%, 93%));
+}
+
+.v-expansion-panel-title--active,
+.v-expansion-panel-title[aria-haspopup=menu][aria-expanded=true] {
+  background: white;
+}

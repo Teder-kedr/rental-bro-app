@@ -151,7 +151,8 @@ export default {
     },
 
     sortedFilteredItems() {
-      return this.filteredItems.toSorted((a, b) => {
+      const array = this.filteredItems;
+      return array.sort((a, b) => {
         if (a.model > b.model) return 1;
         return -1;
       });
@@ -165,6 +166,14 @@ export default {
     } finally {
       this.isLoaded = true;
     }
+  },
+  watch: {
+    searchFilter() {
+      this.openItems = [];
+    },
+    typeFilter() {
+      this.openItems = [];
+    },
   },
   methods: {
     async update(action) {

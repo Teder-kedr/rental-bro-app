@@ -1,34 +1,38 @@
 <template>
   <div class="ms-lg-2">
-    <p v-if="project.engineer" class="mb-2">
+    <p v-if="info.engineer" class="mb-2">
       <span class="detail-title">Engineer:</span>
-      {{ project.engineer.name }}
-      <span class="text-tel">{{ project.engineer.tel }}</span>
+      {{ info.engineer.name }}
+      <span v-if="info.engineer.tel" class="text-tel">{{
+        info.engineer.tel
+      }}</span>
     </p>
 
-    <p v-if="project.helpers.length" class="mb-2">
+    <p v-if="info.helpers.length" class="mb-2">
       <span class="detail-title">Helpers: </span>
-      <span v-for="(person, idx) of project.helpers" :key="person.tel">
-        {{ person.name }} <span class="text-tel">{{ person.tel }}</span
-        ><span v-if="idx !== project.helpers.length - 1">, </span>
+      <span v-for="(person, idx) of info.helpers" :key="idx">
+        {{ person.name }}
+        <span v-if="person.tel" class="text-tel">{{ person.tel }}</span
+        ><span v-if="idx !== info.helpers.length - 1">, </span>
       </span>
     </p>
 
-    <p v-if="project.contacts.length" class="mb-2">
+    <p v-if="info.contacts.length" class="mb-2">
       <span class="detail-title">Contacts: </span>
-      <span v-for="person of project.contacts" :key="person.tel">
-        {{ person.name }} <span class="text-tel">{{ person.tel }}</span> ({{
-          person.role
-        }})<span v-if="project.contacts.length > 1"><br /></span>
+      <span v-for="(person, idx) of info.contacts" :key="idx">
+        <span v-if="person.name"> {{ person.name }} </span>
+        <span v-if="person.tel" class="text-tel"> {{ " " + person.tel }} </span>
+        <span v-if="person.role"> ({{ person.role }}) </span
+        ><span v-if="info.contacts.length > 1"><br /></span>
       </span>
     </p>
 
-    <p v-if="project.location" class="mb-2">
+    <p v-if="info.location" class="mb-2">
       <span class="detail-title">Location: </span>
-      {{ project.location }}
+      {{ info.location }}
     </p>
 
-    <p v-if="project.notes" class="my-notes">{{ project.notes }}</p>
+    <p v-if="info.notes" class="my-notes">{{ info.notes }}</p>
   </div>
 </template>
 
@@ -38,6 +42,11 @@ export default {
     project: {
       required: true,
       type: Object,
+    },
+  },
+  computed: {
+    info() {
+      return this.project.details;
     },
   },
 };

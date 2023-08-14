@@ -1,5 +1,9 @@
 <template>
-  <v-table density="compact" class="my-card-table me-lg-2">
+  <v-table
+    v-if="project.gearList.length && project.extras.length"
+    density="compact"
+    class="my-card-table me-lg-2"
+  >
     <thead>
       <tr>
         <th class="px-0">Item</th>
@@ -7,9 +11,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(qty, item) in project.gearList" :key="item">
-        <td class="px-0">{{ item }}</td>
-        <td class="text-right">{{ qty }}</td>
+      <tr v-for="item of project.gearList" :key="item.id">
+        <td class="px-0">{{ item.model }}</td>
+        <td class="text-right">{{ item.qty }}</td>
+      </tr>
+
+      <tr v-for="(item, idx) of project.extras" :key="idx">
+        <td class="px-0">{{ item.name }}</td>
+        <td class="text-right">{{ item.qty || "-" }}</td>
       </tr>
     </tbody>
   </v-table>

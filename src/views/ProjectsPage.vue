@@ -1,6 +1,15 @@
 <template>
   <div>
     <h1 class="mb-4">{{ $t("projects.title") }}</h1>
+    <v-btn
+      flat
+      color="primary"
+      class="mb-4"
+      to="new-project"
+      prepend-icon="mdi-plus"
+    >
+      New Project
+    </v-btn>
     <ProjectsList />
   </div>
 </template>

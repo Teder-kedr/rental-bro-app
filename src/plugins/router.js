@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import store from "./store";
 import LogIn from "@/views/LogIn.vue";
 import ProjectsPage from "@/views/ProjectsPage.vue";
+import NewProjectPage from "@/views/NewProjectPage.vue";
 import SettingsPage from "@/views/SettingsPage.vue";
 import FourOFour from "@/views/FourOFour.vue";
 
@@ -18,6 +19,12 @@ const routes = [
         name: "Projects",
         meta: { requiresAuth: true },
         component: ProjectsPage,
+      },
+      {
+        path: "new-project",
+        name: "NewProject",
+        meta: { requiresAuth: true },
+        component: NewProjectPage,
       },
       {
         path: "calendar",

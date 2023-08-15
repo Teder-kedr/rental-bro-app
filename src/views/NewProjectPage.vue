@@ -4,21 +4,15 @@
     <v-form>
       <p class="mb-1">Project title:</p>
       <v-text-field
+        v-model="title"
         flat
         variant="solo"
         placeholder="example: Podcast recording"
       />
       <v-row>
-        <v-col cols="6">
+        <v-col cols="12">
           <p class="mb-1">Project date:</p>
-          <VDatePicker v-if="calMode === 'multiple'" v-model.range="range" />
-          <VDatePicker v-else v-model="date" />
-        </v-col>
-        <v-col cols="6" class="d-flex align-center">
-          <v-radio-group inline v-model="calMode">
-            <v-radio label="One day" value="single"></v-radio>
-            <v-radio label="Multiple days" value="multiple"></v-radio>
-          </v-radio-group>
+          <MyDatePicker @change="updateDatesArray" />
         </v-col>
       </v-row>
     </v-form>
@@ -26,23 +20,24 @@
 </template>
 
 <script>
-// import { format } from "date-fns";
+import MyDatePicker from "@/components/MyDatePicker.vue";
 
 export default {
+  components: { MyDatePicker },
   data() {
     return {
-      date: new Date(),
-      range: {
-        start: new Date(),
-        end: new Date(),
-      },
-      calMode: "single",
+      title: null,
+      datesArray: null,
     };
   },
+  methods: {
+    updateDatesArray(newValue) {
+      this.datesArray = newValue;
+    },
+  },
   watch: {
-    date() {
-      this.range.start = this.date;
-      this.range.end = this.date;
+    datesArray() {
+      console.log(this.datesArray);
     },
   },
 };

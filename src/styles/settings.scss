@@ -58,3 +58,7 @@ h1 {
 .v-expansion-panel-title[aria-haspopup=menu][aria-expanded=true] {
   background: white;
 }
+
+v-date-picker {
+  font-family: inherit;
+}

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-wrap align-center">
+  <div class="my-6 d-flex flex-wrap justify-sm-center align-center">
     <VDatePicker
       v-if="calMode === 'multiple'"
       v-model.range="range"
@@ -17,9 +17,19 @@
       color="gray"
     />
 
-    <v-radio-group v-model="calMode" class="mx-4 mt-4">
-      <v-radio label="One day" value="single"></v-radio>
-      <v-radio label="Multiple days" value="multiple"></v-radio>
+    <v-radio-group v-model="calMode" class="mx-4 mt-4" style="flex-grow: 0">
+      <v-radio
+        label="One day"
+        inline
+        value="single"
+        style="width: fit-content"
+      />
+      <v-radio
+        label="Multiple days"
+        inline
+        value="multiple"
+        style="width: fit-content"
+      />
     </v-radio-group>
   </div>
 </template>

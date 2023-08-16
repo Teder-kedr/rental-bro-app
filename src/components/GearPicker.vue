@@ -5,7 +5,9 @@
       color="background"
       class="mx-auto"
       elevation="10"
-      min-width="70%"
+      min-width="320px"
+      width="80%"
+      max-width="750px"
     >
       <v-card-title class="pb-0">Gear</v-card-title>
       <v-card-subtitle class="pb-2" style="border-bottom: 1px solid #ddd"
@@ -18,7 +20,8 @@
             <v-row no-gutters>
               <v-col cols="12" sm="8" class="d-flex flex-column justify-center">
                 <v-list-item-title>
-                  {{ item.model }} - {{ item.type }}
+                  <span style="font-weight: 500">{{ item.model }}</span> -
+                  {{ item.type }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   {{ item.priceday }} ₽/day - Available: {{ item.qty }}

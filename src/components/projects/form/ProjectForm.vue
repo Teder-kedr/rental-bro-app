@@ -51,9 +51,8 @@
           size="large"
           color="success"
           append-icon="mdi-check"
-          variant="outlined"
+          variant="text"
           flat
-          class="px-4"
           @click="console.log(form)"
         >
           Submit

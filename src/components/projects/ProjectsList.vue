@@ -6,13 +6,19 @@
         <p class="mt-12">
           {{ dateString }}
         </p>
-        <v-expansion-panels v-model="expandedProject" color="white">
-          <ProjectCard
+        <v-expansion-panels
+          v-model="expandedProjects[dateString]"
+          multiple
+          color="white"
+        >
+          <v-expansion-panel
             v-for="project of datesProjectsMap[dateString]"
             :key="project.id"
-            :project="project"
-            :panel-unique-index="project.id + '_' + dateString"
-          />
+            class="my-2"
+            :value="project.id + '_' + dateString"
+          >
+            <ProjectCard :project="project" />
+          </v-expansion-panel>
         </v-expansion-panels>
       </div>
     </template>
@@ -31,7 +37,7 @@ export default {
   data() {
     return {
       projects: [],
-      expandedProject: undefined,
+      expandedProjects: {},
     };
   },
   computed: {

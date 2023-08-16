@@ -106,7 +106,7 @@ const dummyData = [
   },
   {
     title: "Studio Interview",
-    dates: ["2023-08-20"],
+    dates: ["2023-08-15"],
     details: {
       notes: "Bring backup camera\nPrepare interview questions",
       location: "Studio 4A, SoundStage Studios",

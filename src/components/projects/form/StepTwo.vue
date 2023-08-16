@@ -24,13 +24,16 @@
         />
       </v-col>
     </v-row>
-    <p v-if="helpers.length" class="my-label">Helpers:</p>
+    <p v-if="myHelpers.length" class="my-label">Helpers:</p>
     <v-row
       v-for="(person, idx) of myHelpers"
       :key="idx"
       no-gutters
       class="mb-6 mb-sm-0"
     >
+      <v-col cols="12">
+        <p class="small-count" v-if="myHelpers.length > 1">{{ idx + 1 }}.</p>
+      </v-col>
       <v-col cols="12" sm="6">
         <v-text-field
           v-model="person.name"
@@ -40,9 +43,6 @@
           label="Name"
           class="me-sm-4"
         >
-          <template #prepend v-if="myHelpers.length > 1"
-            >{{ idx + 1 }}.
-          </template>
         </v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -85,6 +85,9 @@
       no-gutters
       class="mb-6 mb-sm-0"
     >
+      <v-col cols="12">
+        <p class="small-count" v-if="myContacts.length > 1">{{ idx + 1 }}.</p>
+      </v-col>
       <v-col cols="12" sm="6" md="4">
         <v-text-field
           v-model="person.name"
@@ -94,9 +97,6 @@
           label="Name"
           class="me-sm-4 me-md-2"
         >
-          <template #prepend v-if="myContacts.length > 1"
-            >{{ idx + 1 }}.</template
-          >
         </v-text-field>
       </v-col>
       <v-col cols="12" sm="6" md="4">
@@ -174,3 +174,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.small-count {
+  font-size: 0.825rem;
+  color: grey;
+  padding-block: 0.5rem;
+}
+</style>

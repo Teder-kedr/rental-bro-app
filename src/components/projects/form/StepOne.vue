@@ -28,6 +28,7 @@
       density="compact"
       flat
       variant="solo"
+      placeholder="example: Penny Lane, 26/2"
       @input="$emit('update:location', $event.target.value)"
     />
   </div>

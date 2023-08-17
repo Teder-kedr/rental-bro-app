@@ -4,7 +4,7 @@
       <h1 class="mb-2">{{ title || "New project" }}</h1>
       <p class="mb-6 my-subtext">Step {{ currentStep }} of 4</p>
       <v-form>
-        <v-window v-model="currentStep">
+        <v-window v-model="currentStep" :touch="{ left: null, right: null }">
           <v-window-item :value="1">
             <StepOne
               v-model:title="title"

@@ -2,7 +2,7 @@
   <div>
     <p class="my-label">Gear:</p>
 
-    <v-table v-if="gearList.length" density="compact" class="my-table py-md-2">
+    <v-table v-if="gearList.length" density="compact" class="my-table py-sm-2">
       <thead>
         <tr>
           <th class="px-0">Item</th>
@@ -57,7 +57,6 @@ export default {
 <style scoped>
 .my-table {
   background-color: transparent;
-  max-width: 500px;
   margin-bottom: 1rem;
   font-size: 0.9rem;
 }

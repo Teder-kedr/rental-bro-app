@@ -13,11 +13,49 @@
       <v-card-subtitle class="pb-2" style="border-bottom: 1px solid #ddd">
         Picked items: {{ pickedItemsCount }}
       </v-card-subtitle>
+      <v-btn
+        flat
+        size="small"
+        variant="text"
+        color="error"
+        @click="handleClearAll"
+      >
+        Remove all
+      </v-btn>
 
       <v-list v-if="isLoaded">
         <v-container class="pa-0">
+          <v-row no-gutters>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="searchFilter"
+                class="mx-2 mt-2 mt-sm-0"
+                :disabled="!items.length"
+                density="compact"
+                label="Search"
+                clearable
+                hide-details
+                variant="outlined"
+              />
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-select
+                v-model="typeFilter"
+                ref="myTypeFilterEl"
+                class="mx-2 mt-4 mt-sm-0"
+                :disabled="!items.length"
+                variant="outlined"
+                density="compact"
+                label="Filter by type"
+                :items="presentTypes"
+                clearable
+                @click:clear="$refs.myTypeFilterEl.blur()"
+              />
+            </v-col>
+          </v-row>
+
           <v-list-item
-            v-for="item of items"
+            v-for="item of sortedFilteredItems"
             :key="item.id"
             @click.prevent
             :class="{
@@ -67,7 +105,7 @@
 
       <v-card-actions style="border-top: 1px solid #ddd">
         <v-btn @click="handleCancel">Cancel</v-btn>
-        <v-btn class="ms-auto" @click="handleConfirm">Confirm</v-btn>
+        <v-btn class="ms-auto" @click="handleConfirm">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -84,6 +122,8 @@ export default {
     return {
       items: [],
       isLoaded: false,
+      searchFilter: "",
+      typeFilter: null,
     };
   },
   computed: {
@@ -96,10 +136,52 @@ export default {
       });
       return count;
     },
+
+    presentTypes() {
+      const result = [];
+      this.items.forEach((item) => {
+        if (!result.includes(item.type)) {
+          result.push(item.type);
+        }
+      });
+      return result;
+    },
+
+    filteredItems() {
+      if (!this.searchFilter && !this.typeFilter) return this.items;
+      if (!this.searchFilter) {
+        return this.items.filter((item) => {
+          return this.typeFilter === item.type;
+        });
+      }
+      if (!this.typeFilter) {
+        return this.items.filter((item) => {
+          return item.model
+            .toLowerCase()
+            .includes(this.searchFilter.toLowerCase());
+        });
+      }
+      return this.items.filter((item) => {
+        return (
+          this.typeFilter === item.type &&
+          item.model.toLowerCase().includes(this.searchFilter.toLowerCase())
+        );
+      });
+    },
+
+    sortedFilteredItems() {
+      const array = this.filteredItems;
+      return array.sort((a, b) => {
+        if (a.model > b.model) return 1;
+        return -1;
+      });
+    },
   },
   watch: {
     async modelValue(newValue) {
       if (newValue === true) {
+        this.searchFilter = "";
+        this.typeFilter = null;
         this.isLoaded = false;
         this.items = await getGearList();
         this.isLoaded = true;
@@ -120,6 +202,11 @@ export default {
     handleMinus(item) {
       if (!item.qtyPicked || item.qtyPicked === 0) return;
       item.qtyPicked--;
+    },
+    handleClearAll() {
+      this.items.forEach((item) => (item.qtyPicked = 0));
+      this.typeFilter = null;
+      this.searchFilter = "";
     },
     handleCancel() {
       this.$emit("update:modelValue", false);

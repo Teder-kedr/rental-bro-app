@@ -16,7 +16,14 @@
 
       <v-list v-if="isLoaded">
         <v-container class="pa-0">
-          <v-list-item v-for="item of items" :key="item.id" @click.prevent>
+          <v-list-item
+            v-for="item of items"
+            :key="item.id"
+            @click.prevent
+            :class="{
+              'my-gradient': item.qtyPicked && item.qtyPicked > 0,
+            }"
+          >
             <v-row no-gutters>
               <v-col cols="12" sm="8" class="d-flex flex-column justify-center">
                 <v-list-item-title>
@@ -139,3 +146,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.my-gradient {
+  background: linear-gradient(90deg, hsl(286, 47%, 95%), hsl(192, 51%, 95%));
+}
+</style>

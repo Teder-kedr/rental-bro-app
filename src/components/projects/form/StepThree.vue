@@ -2,7 +2,7 @@
   <div>
     <p class="my-label">Gear:</p>
 
-    <v-table v-if="gearList.length" density="compact" class="my-table">
+    <v-table v-if="gearList.length" density="compact" class="my-table py-md-2">
       <thead>
         <tr>
           <th class="px-0">Item</th>

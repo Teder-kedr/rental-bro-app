@@ -3,7 +3,7 @@
     <v-container class="pa-0">
       <h1 class="mb-2">{{ title || "New project" }}</h1>
       <p class="mb-6 my-subtext">Step {{ currentStep }} of 4</p>
-      <v-form>
+      <v-form v-model="isFormValid" ref="myForm">
         <v-window v-model="currentStep" :touch="{ left: null, right: null }">
           <v-window-item :value="1">
             <StepOne
@@ -85,6 +85,7 @@ export default {
       extras: [],
       id: null,
       currentStep: 1,
+      isFormValid: false,
     };
   },
   computed: {
@@ -102,10 +103,8 @@ export default {
   },
   methods: {
     handleNext() {
-      if (!this.title && this.currentStep === 1) {
-        this.$store.dispatch("handleNewError", "Title is required!");
-        return;
-      }
+      this.$refs.myForm.validate();
+      if (!this.isFormValid) return;
       this.currentStep++;
     },
   },

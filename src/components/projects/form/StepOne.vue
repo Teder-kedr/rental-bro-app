@@ -12,6 +12,7 @@
       variant="solo"
       spellcheck="false"
       placeholder="example: Podcast recording"
+      :rules="[isNotEmpty]"
       @input="$emit('update:title', $event.target.value)"
     />
 
@@ -45,6 +46,10 @@ export default {
   methods: {
     updateDates(newValue) {
       this.$emit("update:dates", newValue);
+    },
+    isNotEmpty(val) {
+      if (val && val.trim() === "") return false;
+      return !!val;
     },
   },
 };

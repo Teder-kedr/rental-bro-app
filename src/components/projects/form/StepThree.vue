@@ -11,7 +11,15 @@
       </thead>
       <tbody>
         <tr v-for="item of gearList" :key="item.id">
-          <td class="px-0">{{ item.model }}</td>
+          <td
+            class="px-0"
+            :class="{
+              'crossed-out': !checkItemStillExists(item),
+              'text-error': !checkItemStillExists(item),
+            }"
+          >
+            {{ item.model }}
+          </td>
           <td class="text-right">{{ item.qty }}</td>
         </tr>
         <tr>
@@ -103,6 +111,7 @@
 
 <script>
 import GearPicker from "@/components/GearPicker.vue";
+import { getGearList } from "@/services/firestore";
 
 export default {
   components: { GearPicker },
@@ -111,6 +120,7 @@ export default {
     return {
       isGearPickerOpen: false,
       myExtras: [],
+      myInventory: [],
     };
   },
   computed: {
@@ -140,6 +150,12 @@ export default {
     handleUpdateGearList(newList) {
       this.$emit("update:gearList", newList);
     },
+    checkItemStillExists(item) {
+      return this.myInventory.find((i) => i.id === item.id);
+    },
+  },
+  async created() {
+    this.myInventory = await getGearList();
   },
 };
 </script>
@@ -158,6 +174,9 @@ export default {
   font-size: 0.825rem;
   color: grey;
   padding-block: 0.5rem;
+}
+.crossed-out {
+  text-decoration: line-through;
 }
 .hide-spinners ::-webkit-inner-spin-button,
 .hide-spinners ::-webkit-outer-spin-button {

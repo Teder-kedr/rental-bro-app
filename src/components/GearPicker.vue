@@ -198,7 +198,9 @@ export default {
         this.isLoaded = true;
         this.gearList.forEach((pickedItem) => {
           const theItem = this.items.find((item) => item.id === pickedItem.id);
-          theItem.qtyPicked = pickedItem.qty;
+          if (theItem) {
+            theItem.qtyPicked = pickedItem.qty;
+          }
         });
       }
     },

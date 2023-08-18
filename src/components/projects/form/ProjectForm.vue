@@ -43,7 +43,7 @@
           v-if="currentStep < 4"
           size="large"
           append-icon="mdi-arrow-right"
-          @click="currentStep++"
+          @click="handleNext"
           >next</v-btn
         >
         <v-btn
@@ -98,6 +98,15 @@ export default {
         gearList: this.gearList,
         extras: this.extras,
       };
+    },
+  },
+  methods: {
+    handleNext() {
+      if (!this.title && this.currentStep === 1) {
+        this.$store.dispatch("handleNewError", "Title is required!");
+        return;
+      }
+      this.currentStep++;
     },
   },
 };

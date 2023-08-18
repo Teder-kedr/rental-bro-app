@@ -10,6 +10,7 @@
       :value="title"
       flat
       variant="solo"
+      spellcheck="false"
       placeholder="example: Podcast recording"
       @input="$emit('update:title', $event.target.value)"
     />
@@ -28,6 +29,7 @@
       density="compact"
       flat
       variant="solo"
+      spellcheck="false"
       placeholder="example: Penny Lane, 24/2"
       @input="$emit('update:location', $event.target.value)"
     />

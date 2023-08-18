@@ -11,7 +11,7 @@
     >
       <v-card-title class="pb-0">Gear</v-card-title>
       <v-card-subtitle class="pb-2" style="border-bottom: 1px solid #ddd">
-        Picked items: {{ pickedItemsCount }}
+        Picked items: {{ pickedItemsCount }}, total: {{ pickedItemsTotal }}₽
       </v-card-subtitle>
       <v-btn
         flat
@@ -32,6 +32,7 @@
                 class="mx-2 mt-2 mt-sm-0"
                 :disabled="!items.length"
                 density="compact"
+                spellcheck="false"
                 label="Search"
                 clearable
                 hide-details
@@ -135,6 +136,16 @@ export default {
         }
       });
       return count;
+    },
+
+    pickedItemsTotal() {
+      let total = 0;
+      this.items.forEach((item) => {
+        if (item.qtyPicked && item.qtyPicked > 0) {
+          total += item.qtyPicked * item.priceday;
+        }
+      });
+      return total;
     },
 
     presentTypes() {

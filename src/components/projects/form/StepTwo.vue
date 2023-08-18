@@ -25,12 +25,7 @@
       </v-col>
     </v-row>
     <p v-if="myHelpers.length" class="my-label">Helpers:</p>
-    <v-row
-      v-for="(person, idx) of myHelpers"
-      :key="idx"
-      no-gutters
-      class="mb-6 mb-sm-0"
-    >
+    <v-row v-for="(person, idx) of myHelpers" :key="idx" no-gutters>
       <v-col cols="12">
         <p class="small-count" v-if="myHelpers.length > 1">{{ idx + 1 }}.</p>
       </v-col>
@@ -79,12 +74,7 @@
     </v-btn>
 
     <p class="my-label mt-4">Contacts:</p>
-    <v-row
-      v-for="(person, idx) of myContacts"
-      :key="idx"
-      no-gutters
-      class="mb-6 mb-sm-0"
-    >
+    <v-row v-for="(person, idx) of myContacts" :key="idx" no-gutters>
       <v-col cols="12">
         <p class="small-count" v-if="myContacts.length > 1">{{ idx + 1 }}.</p>
       </v-col>

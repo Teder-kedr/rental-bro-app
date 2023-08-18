@@ -1,10 +1,9 @@
 <template>
   <div class="pb-12">
-    <p class="mb-2">Projects: {{ projects.length }}</p>
     <template v-if="projects.length">
       <div v-for="dateString of sortedDates" :key="dateString">
-        <p class="mt-12">
-          {{ dateString }}
+        <p class="mt-12 my-date-text">
+          {{ formatDateString(dateString) }}
         </p>
         <v-expansion-panels
           v-model="expandedProjects[dateString]"
@@ -27,6 +26,8 @@
 </template>
 
 <script>
+import { format, isToday, isTomorrow, parseISO } from "date-fns";
+import { ru } from "date-fns/locale";
 import { getProjectsList } from "@/services/firestore";
 import ProjectCard from "./ProjectCard.vue";
 
@@ -59,8 +60,40 @@ export default {
       );
     },
   },
+  methods: {
+    formatDateString(str) {
+      const locale = this.$vuetify.locale.current === "ru" ? ru : undefined;
+      const date = parseISO(str);
+      if (isToday(date)) {
+        return (
+          (locale === ru ? "Сегодня, " : "Today, ") +
+          format(date, "dd MMM yyyy", {
+            locale: locale,
+          })
+        );
+      } else if (isTomorrow(date)) {
+        return (
+          (locale === ru ? "Завтра, " : "Tomorrow, ") +
+          format(date, "dd MMM yyyy", {
+            locale: locale,
+          })
+        );
+      } else {
+        return format(date, "eeee, dd MMM yyyy", {
+          locale: locale,
+        });
+      }
+    },
+  },
   async mounted() {
     this.projects = await getProjectsList();
   },
 };
 </script>
+
+<style scoped>
+.my-date-text {
+  color: grey;
+  font-weight: 500;
+}
+</style>

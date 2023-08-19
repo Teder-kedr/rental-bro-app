@@ -44,7 +44,7 @@
 import { format, isToday, isTomorrow, isYesterday, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 import { getProjectsList } from "@/services/firestore";
-import ProjectCard from "./ProjectCard.vue";
+import ProjectCard from "./card/ProjectCard.vue";
 
 export default {
   components: {
@@ -70,18 +70,19 @@ export default {
       });
       return result;
     },
-    sortedDates() {
-      return Object.keys(this.datesProjectsMap).sort((a, b) =>
+    datesUpcoming() {
+      const sorted = Object.keys(this.datesProjectsMap).sort((a, b) =>
         a.localeCompare(b)
       );
-    },
-    datesUpcoming() {
-      return this.sortedDates.filter(
+      return sorted.filter(
         (dateString) => new Date(dateString).getDate() >= new Date().getDate()
       );
     },
     datesArchived() {
-      return this.sortedDates.filter(
+      const sorted = Object.keys(this.datesProjectsMap).sort((a, b) =>
+        b.localeCompare(a)
+      );
+      return sorted.filter(
         (dateString) => new Date(dateString).getDate() < new Date().getDate()
       );
     },

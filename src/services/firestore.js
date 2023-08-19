@@ -59,6 +59,10 @@ export async function getSingleProject(id) {
   return { ...snapshot.data() };
 }
 
+export async function editProject(id, data) {
+  await updateDoc(doc(db, "projects", id), data);
+}
+
 export async function deleteProject(id) {
   await deleteDoc(doc(db, "projects", id));
 }

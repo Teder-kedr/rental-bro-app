@@ -13,7 +13,7 @@ export default {
   methods: {
     async submit(form) {
       await createProject(form);
-      this.$router.push("projects");
+      this.$router.push("/projects");
     },
   },
 };

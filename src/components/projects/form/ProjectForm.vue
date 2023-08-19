@@ -56,7 +56,8 @@
           append-icon="mdi-check"
           variant="text"
           flat
-          @click="$emit('submit', form)"
+          :loading="isAwaitingSubmit"
+          @click="handleSubmitClick"
         >
           Submit
         </v-btn>
@@ -95,6 +96,7 @@ export default {
       currentStep: 1,
       isFormValid: false,
       isLoading: false,
+      isAwaitingSubmit: false,
     };
   },
   computed: {
@@ -119,6 +121,10 @@ export default {
       this.$refs.myForm.validate();
       if (!this.isFormValid) return;
       this.currentStep++;
+    },
+    handleSubmitClick() {
+      this.isAwaitingSubmit = true;
+      this.$emit("submit", this.form);
     },
     removeUnusedFields(arr) {
       return arr.filter((item) => item.name || item.tel || item.role);

@@ -1,6 +1,6 @@
 <template>
   <div class="ms-lg-2">
-    <p v-if="info.engineer" class="mb-2">
+    <p v-if="info.engineer.name" class="mb-2">
       <span class="detail-title">Engineer:</span>
       {{ info.engineer.name }}
       <span v-if="info.engineer.tel" class="text-tel">{{

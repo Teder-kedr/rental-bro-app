@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-12">
+  <div v-if="isLoaded" class="pb-12">
     <v-btn-toggle
       v-model="archiveFilter"
       mandatory
@@ -49,6 +49,7 @@
     </template>
     <p v-else class="text-grey text-center">no projects to display</p>
   </div>
+  <ContentLoader v-else class="mt-4" />
 </template>
 
 <script>
@@ -56,16 +57,19 @@ import { format, isToday, isTomorrow, isYesterday, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 import { getProjectsList } from "@/services/firestore";
 import ProjectCard from "./card/ProjectCard.vue";
+import ContentLoader from "@/components/ContentLoader.vue";
 
 export default {
   components: {
     ProjectCard,
+    ContentLoader,
   },
   data() {
     return {
       projects: [],
       expandedProjects: {},
       archiveFilter: "upcoming",
+      isLoaded: false,
     };
   },
   computed: {
@@ -139,6 +143,7 @@ export default {
   },
   async mounted() {
     this.projects = await getProjectsList();
+    this.isLoaded = true;
   },
 };
 </script>

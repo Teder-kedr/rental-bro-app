@@ -90,7 +90,7 @@ export default {
         a.localeCompare(b)
       );
       return sorted.filter(
-        (dateString) => new Date(dateString).getDate() >= new Date().getDate()
+        (dateString) => dateString >= format(new Date(), "yyyy-MM-dd")
       );
     },
     datesArchived() {
@@ -98,7 +98,7 @@ export default {
         b.localeCompare(a)
       );
       return sorted.filter(
-        (dateString) => new Date(dateString).getDate() < new Date().getDate()
+        (dateString) => dateString < format(new Date(), "yyyy-MM-dd")
       );
     },
     selectedList() {

@@ -1,6 +1,6 @@
 <template>
   <v-table
-    v-if="project.gearList.length && project.extras.length"
+    v-if="project.gearList.length || project.extras.length"
     density="compact"
     class="my-card-table me-lg-2"
   >

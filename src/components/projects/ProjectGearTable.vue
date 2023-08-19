@@ -1,5 +1,8 @@
 <template>
-  <v-container class="py-4 ps-0 pe-16 pe-md-0 my-8">
+  <v-container
+    v-if="project.gearList.length || project.extras.length"
+    class="py-4 ps-0 pe-16 pe-md-0 my-8"
+  >
     <v-row v-for="item of project.gearList" :key="item.id">
       <v-col cols="12" md="6" class="pb-2">
         <span style="font-weight: 500">{{ item.model }}</span>
@@ -60,7 +63,7 @@
         <v-divider />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="allItemsTotal > 0">
       <v-col cols="6">
         <p>Total:</p>
       </v-col>

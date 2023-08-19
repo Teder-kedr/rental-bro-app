@@ -6,6 +6,7 @@ import {
   doc,
   addDoc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import { app } from "./firebase";
 
@@ -51,4 +52,13 @@ export async function getProjectsList() {
 
 export async function createProject(project) {
   await addDoc(collection(db, "projects"), project);
+}
+
+export async function getSingleProject(id) {
+  const snapshot = await getDoc(doc(db, "projects", id));
+  return { ...snapshot.data() };
+}
+
+export async function deleteProject(id) {
+  await deleteDoc(doc(db, "projects", id));
 }

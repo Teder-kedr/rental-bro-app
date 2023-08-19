@@ -15,7 +15,13 @@
     <ProjectGearTable :project="project" />
 
     <div class="mt-12 d-flex flex-wrap justify-space-between">
-      <v-btn flat variant="text" color="error" @click="handleDelete">
+      <v-btn
+        flat
+        variant="text"
+        color="error"
+        :loading="isAwaitingDelete"
+        @click="handleDelete"
+      >
         Delete project
         <template #prepend>
           <v-icon size="small">mdi-trash-can-outline</v-icon>
@@ -38,6 +44,7 @@
       v-model="isConfirmPopup"
       :itemToDelete="project.title"
       @close="isConfirmPopup = false"
+      @confirm="handleConfirmDelete"
     />
   </div>
   <ContentLoader v-else class="mt-4" />
@@ -46,6 +53,7 @@
 <script>
 import { format, parseISO } from "date-fns";
 import ru from "date-fns/locale/ru";
+import { getSingleProject, deleteProject } from "@/services/firestore";
 import ContentLoader from "@/components/ContentLoader.vue";
 import ConfirmDeletePopup from "@/components/ConfirmDeletePopup.vue";
 import ProjectDetailsText from "@/components/projects/ProjectDetailsText.vue";
@@ -61,65 +69,8 @@ export default {
   data() {
     return {
       isConfirmPopup: false,
-      project: {
-        title: "Interview scene",
-        dates: ["2023-08-15", "2023-08-16"],
-        details: {
-          notes: "Don't forget batteries\nPassport is required!",
-          location: "Bolshaya Novodmitrovskaya, 2",
-          contacts: [
-            { name: "Oleg", role: "producer", tel: "+79121234567" },
-            { role: "admin", tel: "+79121234567" },
-          ],
-          engineer: { name: "Mikhail", tel: "+79998463971" },
-          helpers: [
-            { name: "Zhenya", tel: "+79998463971" },
-            { name: "Zhenya", tel: "+79998463971" },
-          ],
-        },
-        gearList: [
-          {
-            model: "Sennheiser EW 122P-G3 (rx)",
-            type: "wireless",
-            priceday: 400,
-            qty: 4,
-            id: "VMQGWB0Wjcek6n72xMhj",
-          },
-          {
-            model: "Sennheiser EW 122P-G3 (tx)",
-            type: "wireless",
-            priceday: 400,
-            qty: 4,
-            id: "ZJKF1jXMQgFdzbJ75xcD",
-          },
-          {
-            model: "Sennheiser MKE-2 Gold",
-            type: "lavalier mic",
-            priceday: 650,
-            qty: 3,
-            id: "on6BJWf0ykE1nH93KSRZ",
-          },
-          {
-            model: "Zoom F8",
-            type: "field recorder",
-            priceday: 1700,
-            qty: 4,
-            id: "r2XGcN1FbqMkuyP5hEHT",
-          },
-        ],
-        extras: [
-          {
-            name: "Engineer",
-            price: 8000,
-          },
-          {
-            name: "Lighting equipment",
-            qty: 2,
-            price: 1000,
-          },
-        ],
-        id: "12345",
-      },
+      project: null,
+      isAwaitingDelete: false,
     };
   },
   computed: {
@@ -149,6 +100,15 @@ export default {
     handleDelete() {
       this.isConfirmPopup = true;
     },
+    async handleConfirmDelete() {
+      this.isConfirmPopup = false;
+      this.isAwaitingDelete = true;
+      await deleteProject(this.$route.params.id);
+      this.$router.push("/projects");
+    },
+  },
+  async created() {
+    this.project = await getSingleProject(this.$route.params.id);
   },
 };
 </script>

@@ -91,6 +91,7 @@ export default {
     } else {
       this.calMode = "single";
     }
+    this.emitChange();
   },
 };
 </script>

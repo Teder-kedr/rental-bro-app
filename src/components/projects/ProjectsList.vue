@@ -4,14 +4,25 @@
       v-model="archiveFilter"
       mandatory
       density="compact"
-      border
       style="width: 100%"
       class="mb-4 d-flex"
     >
-      <v-btn value="archived" variant="text" class="flex-grow-1">
+      <v-btn
+        value="archived"
+        color="grey-darken-2"
+        variant="tonal"
+        class="flex-grow-1"
+        append-icon="mdi-arrow-down"
+      >
         {{ isScreenSmall ? "Archived" : "Archived projects" }}
       </v-btn>
-      <v-btn value="upcoming" variant="text" class="flex-grow-1">
+      <v-btn
+        value="upcoming"
+        color="grey-darken-2"
+        variant="tonal"
+        class="flex-grow-1"
+        append-icon="mdi-arrow-up"
+      >
         {{ isScreenSmall ? "Upcoming" : "Upcoming projects" }}
       </v-btn>
     </v-btn-toggle>

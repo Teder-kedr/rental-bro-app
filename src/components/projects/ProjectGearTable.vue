@@ -1,12 +1,13 @@
 <template>
-  <v-container class="py-4 ps-0 pe-4 my-8">
+  <v-container class="py-4 ps-0 pe-16 pe-md-0 my-8">
     <v-row v-for="item of project.gearList" :key="item.id">
-      <v-col cols="12" md="6" class="pb-0">
+      <v-col cols="12" md="6" class="pb-2">
         <span style="font-weight: 500">{{ item.model }}</span>
       </v-col>
       <v-col
         cols="4"
         md="2"
+        class="pt-0 pt-md-2"
         :class="{ 'text-right': $vuetify.display.mdAndUp }"
       >
         {{ item.priceday }} ₽
@@ -14,6 +15,7 @@
       <v-col
         cols="4"
         md="2"
+        class="pt-0 pt-md-2"
         :class="{
           'text-right': $vuetify.display.mdAndUp,
           'text-center': $vuetify.display.smAndDown,
@@ -21,7 +23,7 @@
       >
         {{ item.qty }} pcs.
       </v-col>
-      <v-col cols="4" md="2" class="text-right">
+      <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
         = {{ item.priceday * item.qty }} ₽
       </v-col>
       <v-col>
@@ -29,12 +31,13 @@
       </v-col>
     </v-row>
     <v-row v-for="item of project.extras" :key="item.id">
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="6" class="pb-2">
         <span style="font-weight: 500">{{ item.name }}</span>
       </v-col>
       <v-col
         cols="4"
         md="2"
+        class="pt-0 pt-md-2"
         :class="{ 'text-right': $vuetify.display.mdAndUp }"
       >
         {{ item.price ? item.price + " ₽" : "-" }}
@@ -42,6 +45,7 @@
       <v-col
         cols="4"
         md="2"
+        class="pt-0 pt-md-2"
         :class="{
           'text-right': $vuetify.display.mdAndUp,
           'text-center': $vuetify.display.smAndDown,
@@ -49,7 +53,7 @@
       >
         {{ item.qty ? "* " + item.qty : "-" }}
       </v-col>
-      <v-col cols="4" md="2" class="text-right">
+      <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
         {{ item.price ? "= " + item.price * (item.qty || 1) + " ₽" : "-" }}
       </v-col>
       <v-col>

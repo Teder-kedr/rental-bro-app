@@ -115,6 +115,7 @@
 <script>
 import { getGearList } from "@/services/firestore";
 import ContentLoader from "./ContentLoader.vue";
+import deepCopy from "@/services/deepCopy";
 
 export default {
   components: { ContentLoader },
@@ -189,20 +190,19 @@ export default {
     },
   },
   watch: {
-    async modelValue(newValue) {
-      if (newValue === true) {
-        this.searchFilter = "";
-        this.typeFilter = null;
-        this.isLoaded = false;
-        this.items = await getGearList();
-        this.isLoaded = true;
-        this.gearList.forEach((pickedItem) => {
-          const theItem = this.items.find((item) => item.id === pickedItem.id);
-          if (theItem) {
-            theItem.qtyPicked = pickedItem.qty;
-          }
-        });
-      }
+    async modelValue() {
+      this.searchFilter = "";
+      this.typeFilter = null;
+      this.isLoaded = false;
+      const snapshot = await getGearList();
+      this.items = deepCopy(snapshot);
+      this.isLoaded = true;
+      this.gearList.forEach((pickedItem) => {
+        const theItem = this.items.find((item) => item.id === pickedItem.id);
+        if (theItem) {
+          theItem.qtyPicked = pickedItem.qty;
+        }
+      });
     },
   },
   methods: {

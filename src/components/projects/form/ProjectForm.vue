@@ -112,7 +112,7 @@ export default {
           contacts: this.removeUnusedFields(this.project.details.contacts),
         },
         gearList: this.project.gearList,
-        extras: this.project.extras,
+        extras: this.removeUnusedFields(this.project.extras),
       };
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProjectForm v-if="project" :project-to-edit="project" />
+    <ProjectForm v-if="project" :project-to-edit="project" @submit="submit" />
     <ContentLoader v-else class="mt-4" />
   </div>
 </template>
@@ -18,6 +18,9 @@ export default {
     return {
       project: null,
     };
+  },
+  methods: {
+    submit(form) {},
   },
   async created() {
     this.project = {

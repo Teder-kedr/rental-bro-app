@@ -56,7 +56,7 @@
           append-icon="mdi-check"
           variant="text"
           flat
-          @click="console.log(form)"
+          @click="$emit('submit', form)"
         >
           Submit
         </v-btn>
@@ -90,9 +90,8 @@ export default {
         },
         gearList: [],
         extras: [],
-        id: null,
       },
-
+      projectId: null,
       currentStep: 1,
       isFormValid: false,
       isLoading: false,
@@ -103,7 +102,13 @@ export default {
       return {
         title: this.project.title,
         dates: formatProjectDate(this.project.dates),
-        details: this.project.details,
+        details: {
+          notes: this.project.details.notes,
+          location: this.project.details.location,
+          engineer: this.project.details.engineer,
+          helpers: this.removeUnusedFields(this.project.details.helpers),
+          contacts: this.removeUnusedFields(this.project.details.contacts),
+        },
         gearList: this.project.gearList,
         extras: this.project.extras,
       };
@@ -114,6 +119,9 @@ export default {
       this.$refs.myForm.validate();
       if (!this.isFormValid) return;
       this.currentStep++;
+    },
+    removeUnusedFields(arr) {
+      return arr.filter((item) => item.name || item.tel || item.role);
     },
   },
   async created() {

@@ -10,7 +10,7 @@
       <v-btn
         value="archived"
         color="grey-darken-2"
-        variant="tonal"
+        variant="text"
         class="flex-grow-1"
         append-icon="mdi-arrow-down"
       >
@@ -19,7 +19,7 @@
       <v-btn
         value="upcoming"
         color="grey-darken-2"
-        variant="tonal"
+        variant="text"
         class="flex-grow-1"
         append-icon="mdi-arrow-up"
       >

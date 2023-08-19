@@ -160,7 +160,9 @@ export default {
   created() {
     this.myEngineer = deepCopy(this.engineer);
     this.myHelpers = deepCopy(this.helpers);
-    this.myContacts = deepCopy(this.contacts);
+    if (this.contacts.length) {
+      this.myContacts = deepCopy(this.contacts);
+    }
   },
 };
 </script>

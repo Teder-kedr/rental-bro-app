@@ -1,8 +1,23 @@
 <template>
   <div class="pb-12">
-    <template v-if="projects.length">
-      <div v-for="dateString of sortedDates" :key="dateString">
-        <p class="mt-12 my-date-text">
+    <v-btn-toggle
+      v-model="archiveFilter"
+      mandatory
+      density="compact"
+      border
+      style="width: 100%"
+      class="mb-4 d-flex"
+    >
+      <v-btn value="archived" variant="text" class="flex-grow-1">
+        {{ isScreenSmall ? "Archived" : "Archived projects" }}
+      </v-btn>
+      <v-btn value="upcoming" variant="text" class="flex-grow-1">
+        {{ isScreenSmall ? "Upcoming" : "Upcoming projects" }}
+      </v-btn>
+    </v-btn-toggle>
+    <template v-if="selectedList.length">
+      <div v-for="dateString of selectedList" :key="dateString" class="mb-12">
+        <p class="mt-2 my-date-text">
           {{ formatDateString(dateString) }}
         </p>
         <v-expansion-panels
@@ -26,7 +41,7 @@
 </template>
 
 <script>
-import { format, isToday, isTomorrow, parseISO } from "date-fns";
+import { format, isToday, isTomorrow, isYesterday, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 import { getProjectsList } from "@/services/firestore";
 import ProjectCard from "./ProjectCard.vue";
@@ -39,6 +54,7 @@ export default {
     return {
       projects: [],
       expandedProjects: {},
+      archiveFilter: "upcoming",
     };
   },
   computed: {
@@ -59,6 +75,23 @@ export default {
         a.localeCompare(b)
       );
     },
+    datesUpcoming() {
+      return this.sortedDates.filter(
+        (dateString) => new Date(dateString).getDate() >= new Date().getDate()
+      );
+    },
+    datesArchived() {
+      return this.sortedDates.filter(
+        (dateString) => new Date(dateString).getDate() < new Date().getDate()
+      );
+    },
+    selectedList() {
+      if (this.archiveFilter === "archived") return this.datesArchived;
+      return this.datesUpcoming;
+    },
+    isScreenSmall() {
+      return !this.$vuetify.display.smAndUp;
+    },
   },
   methods: {
     formatDateString(str) {
@@ -74,6 +107,13 @@ export default {
       } else if (isTomorrow(date)) {
         return (
           (locale === ru ? "Завтра, " : "Tomorrow, ") +
+          format(date, "dd MMM yyyy", {
+            locale: locale,
+          })
+        );
+      } else if (isYesterday(date)) {
+        return (
+          (locale === ru ? "Вчера, " : "Yesterday, ") +
           format(date, "dd MMM yyyy", {
             locale: locale,
           })

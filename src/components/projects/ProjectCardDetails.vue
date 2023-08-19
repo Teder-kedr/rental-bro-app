@@ -52,7 +52,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .detail-title {
   font-weight: 500;
   color: grey;

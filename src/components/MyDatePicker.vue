@@ -9,7 +9,7 @@
       color="gray"
     />
     <VDatePicker
-      v-else
+      v-else-if="calMode === 'single'"
       v-model="date"
       :expanded="isScreenSmall"
       :locale="$vuetify.locale.current"
@@ -35,16 +35,16 @@
 </template>
 
 <script>
+import { parseISO } from "date-fns";
+
 export default {
+  props: ["providedDates"],
   emits: ["change"],
   data() {
     return {
       date: new Date(),
-      range: {
-        start: new Date(),
-        end: new Date(),
-      },
-      calMode: "single",
+      range: {},
+      calMode: undefined,
     };
   },
   computed: {
@@ -53,7 +53,8 @@ export default {
     },
   },
   watch: {
-    calMode(newValue) {
+    calMode(newValue, oldValue) {
+      if (oldValue === undefined) return;
       if (newValue === "multiple") {
         this.range.start = this.date;
         this.range.end = this.date;
@@ -77,8 +78,19 @@ export default {
       }
     },
   },
-  mounted() {
-    this.emitChange();
+  created() {
+    if (this.providedDates) {
+      if (this.providedDates.length === 1) {
+        this.date = parseISO(this.providedDates[0]);
+        this.calMode = "single";
+      } else {
+        this.range.start = parseISO(this.providedDates[0]);
+        this.range.end = parseISO(this.providedDates.at(-1));
+        this.calMode = "multiple";
+      }
+    } else {
+      this.calMode = "single";
+    }
   },
 };
 </script>

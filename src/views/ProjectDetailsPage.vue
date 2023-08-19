@@ -21,7 +21,12 @@
           <v-icon size="small">mdi-trash-can-outline</v-icon>
         </template>
       </v-btn>
-      <v-btn class="ms-2" flat variant="text">
+      <v-btn
+        class="ms-2"
+        flat
+        variant="text"
+        :to="'/edit-project/' + $route.params.id"
+      >
         Edit
         <template #prepend>
           <v-icon size="small">mdi-pencil</v-icon>

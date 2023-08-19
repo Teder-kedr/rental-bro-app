@@ -8,6 +8,7 @@
     </p>
     <v-text-field
       :value="title"
+      :validation-value="title"
       flat
       variant="solo"
       spellcheck="false"
@@ -22,7 +23,7 @@
         <em>(required)</em>
       </span>
     </p>
-    <MyDatePicker @change="updateDates" />
+    <MyDatePicker :provided-dates="dates" @change="updateDates" />
 
     <p class="mt-sm-4 my-label">Location:</p>
     <v-text-field

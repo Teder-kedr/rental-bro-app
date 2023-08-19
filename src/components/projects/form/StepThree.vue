@@ -14,8 +14,8 @@
           <td
             class="px-0"
             :class="{
-              'crossed-out': !checkItemStillExists(item),
-              'text-error': !checkItemStillExists(item),
+              'crossed-out': inventoryLoaded && !checkItemStillExists(item),
+              'text-error': inventoryLoaded && !checkItemStillExists(item),
             }"
           >
             {{ item.model }}
@@ -112,6 +112,7 @@
 <script>
 import GearPicker from "@/components/GearPicker.vue";
 import { getGearList } from "@/services/firestore";
+import deepCopy from "@/services/deepCopy";
 
 export default {
   components: { GearPicker },
@@ -121,6 +122,7 @@ export default {
       isGearPickerOpen: false,
       myExtras: [],
       myInventory: [],
+      inventoryLoaded: false,
     };
   },
   computed: {
@@ -155,7 +157,9 @@ export default {
     },
   },
   async created() {
+    this.myExtras = deepCopy(this.extras);
     this.myInventory = await getGearList();
+    this.inventoryLoaded = true;
   },
 };
 </script>

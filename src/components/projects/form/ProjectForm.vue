@@ -1,29 +1,32 @@
 <template>
   <v-card flat height="100%" color="transparent" style="border-radius: 0">
     <v-container class="pa-0">
-      <h1 class="mb-2">{{ title || "New project" }}</h1>
+      <h1 class="mb-2">{{ project.title || "New project" }}</h1>
       <p class="mb-6 my-subtext">Step {{ currentStep }} of 4</p>
       <v-form v-model="isFormValid" ref="myForm">
         <v-window v-model="currentStep" :touch="{ left: null, right: null }">
           <v-window-item :value="1">
             <StepOne
-              v-model:title="title"
-              v-model:dates="dates"
-              v-model:location="details.location"
+              v-model:title="project.title"
+              v-model:dates="project.dates"
+              v-model:location="project.details.location"
             />
           </v-window-item>
           <v-window-item :value="2">
             <StepTwo
-              v-model:engineer="details.engineer"
-              v-model:helpers="details.helpers"
-              v-model:contacts="details.contacts"
+              v-model:engineer="project.details.engineer"
+              v-model:helpers="project.details.helpers"
+              v-model:contacts="project.details.contacts"
             />
           </v-window-item>
           <v-window-item :value="3">
-            <StepThree v-model:gear-list="gearList" v-model:extras="extras" />
+            <StepThree
+              v-model:gear-list="project.gearList"
+              v-model:extras="project.extras"
+            />
           </v-window-item>
           <v-window-item :value="4">
-            <StepFour v-model:notes="details.notes" />
+            <StepFour v-model:notes="project.details.notes" />
           </v-window-item>
         </v-window>
       </v-form>
@@ -67,37 +70,42 @@ import StepOne from "@/components/projects/form/StepOne.vue";
 import StepTwo from "@/components/projects/form/StepTwo.vue";
 import StepThree from "@/components/projects/form/StepThree.vue";
 import StepFour from "@/components/projects/form/StepFour.vue";
+import deepCopy from "@/services/deepCopy";
+import { formatProjectDate } from "@/services/formatProjectDate";
 
 export default {
   components: { StepOne, StepTwo, StepThree, StepFour },
+  props: ["projectToEdit"],
   data() {
     return {
-      title: null,
-      dates: null,
-      details: {
-        notes: null,
-        location: null,
-        contacts: [{}],
-        engineer: {},
-        helpers: [],
+      project: {
+        title: null,
+        dates: null,
+        details: {
+          notes: null,
+          location: null,
+          contacts: [{}],
+          engineer: {},
+          helpers: [],
+        },
+        gearList: [],
+        extras: [],
+        id: null,
       },
-      gearList: [],
-      extras: [],
-      id: null,
+
       currentStep: 1,
       isFormValid: false,
+      isLoading: false,
     };
   },
   computed: {
     form() {
-      //to be removed
-      const details = this.details;
       return {
-        title: this.title,
-        dates: this.dates,
-        details,
-        gearList: this.gearList,
-        extras: this.extras,
+        title: this.project.title,
+        dates: formatProjectDate(this.project.dates),
+        details: this.project.details,
+        gearList: this.project.gearList,
+        extras: this.project.extras,
       };
     },
   },
@@ -107,6 +115,11 @@ export default {
       if (!this.isFormValid) return;
       this.currentStep++;
     },
+  },
+  async created() {
+    if (this.projectToEdit) {
+      this.project = deepCopy(this.projectToEdit);
+    }
   },
 };
 </script>

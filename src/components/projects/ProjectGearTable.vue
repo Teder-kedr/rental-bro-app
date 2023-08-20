@@ -1,7 +1,7 @@
 <template>
   <v-container
     v-if="project.gearList.length || project.extras.length"
-    class="py-4 ps-0 pe-16 pe-md-0 my-8"
+    class="py-4 ps-0 pe-0"
   >
     <v-row v-for="item of project.gearList" :key="item.id">
       <v-col cols="12" md="6" class="pb-2">

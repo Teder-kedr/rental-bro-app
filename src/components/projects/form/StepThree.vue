@@ -40,7 +40,7 @@
     </v-btn>
     <GearPicker
       v-model="isGearPickerOpen"
-      :gear-list="gearList"
+      :project-gear-list="gearList"
       @change="handleUpdateGearList"
     />
     <p class="my-label mt-8">Extra gear and expenses:</p>

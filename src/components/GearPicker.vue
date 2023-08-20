@@ -30,7 +30,7 @@
               <v-text-field
                 v-model="searchFilter"
                 class="mx-2 mt-2 mt-sm-0"
-                :disabled="!items.length"
+                :disabled="!inventoryItems.length"
                 density="compact"
                 spellcheck="false"
                 label="Search"
@@ -44,7 +44,7 @@
                 v-model="typeFilter"
                 ref="myTypeFilterEl"
                 class="mx-2 mt-4 mt-sm-0"
-                :disabled="!items.length"
+                :disabled="!inventoryItems.length"
                 variant="outlined"
                 density="compact"
                 label="Filter by type"
@@ -119,10 +119,10 @@ import deepCopy from "@/services/deepCopy";
 
 export default {
   components: { ContentLoader },
-  props: ["gearList", "modelValue"],
+  props: ["projectGearList", "modelValue"],
   data() {
     return {
-      items: [],
+      inventoryItems: [],
       isLoaded: false,
       searchFilter: "",
       typeFilter: null,
@@ -131,7 +131,7 @@ export default {
   computed: {
     pickedItemsCount() {
       let count = 0;
-      this.items.forEach((item) => {
+      this.inventoryItems.forEach((item) => {
         if (item.qtyPicked && item.qtyPicked > 0) {
           count++;
         }
@@ -141,7 +141,7 @@ export default {
 
     pickedItemsTotal() {
       let total = 0;
-      this.items.forEach((item) => {
+      this.inventoryItems.forEach((item) => {
         if (item.qtyPicked && item.qtyPicked > 0) {
           total += item.qtyPicked * item.priceday;
         }
@@ -151,7 +151,7 @@ export default {
 
     presentTypes() {
       const result = [];
-      this.items.forEach((item) => {
+      this.inventoryItems.forEach((item) => {
         if (!result.includes(item.type)) {
           result.push(item.type);
         }
@@ -160,20 +160,20 @@ export default {
     },
 
     filteredItems() {
-      if (!this.searchFilter && !this.typeFilter) return this.items;
+      if (!this.searchFilter && !this.typeFilter) return this.inventoryItems;
       if (!this.searchFilter) {
-        return this.items.filter((item) => {
+        return this.inventoryItems.filter((item) => {
           return this.typeFilter === item.type;
         });
       }
       if (!this.typeFilter) {
-        return this.items.filter((item) => {
+        return this.inventoryItems.filter((item) => {
           return item.model
             .toLowerCase()
             .includes(this.searchFilter.toLowerCase());
         });
       }
-      return this.items.filter((item) => {
+      return this.inventoryItems.filter((item) => {
         return (
           this.typeFilter === item.type &&
           item.model.toLowerCase().includes(this.searchFilter.toLowerCase())
@@ -195,10 +195,12 @@ export default {
       this.typeFilter = null;
       this.isLoaded = false;
       const snapshot = await getGearList();
-      this.items = deepCopy(snapshot);
+      this.inventoryItems = deepCopy(snapshot);
       this.isLoaded = true;
-      this.gearList.forEach((pickedItem) => {
-        const theItem = this.items.find((item) => item.id === pickedItem.id);
+      this.projectGearList.forEach((pickedItem) => {
+        const theItem = this.inventoryItems.find(
+          (item) => item.id === pickedItem.id
+        );
         if (theItem) {
           theItem.qtyPicked = pickedItem.qty;
         }
@@ -217,19 +219,17 @@ export default {
       item.qtyPicked--;
     },
     handleClearAll() {
-      this.items.forEach((item) => (item.qtyPicked = 0));
+      this.inventoryItems.forEach((item) => (item.qtyPicked = 0));
       this.typeFilter = null;
       this.searchFilter = "";
     },
     handleCancel() {
       this.$emit("update:modelValue", false);
-      setTimeout(() => {
-        this.items.forEach((item) => (item.qtyPicked = 0));
-      }, 300);
+      this.inventoryItems.forEach((item) => (item.qtyPicked = 0));
     },
     handleConfirm() {
       const itemsPicked = [];
-      this.items.forEach((item) => {
+      this.inventoryItems.forEach((item) => {
         if (item.qtyPicked > 0) {
           itemsPicked.push({
             model: item.model,

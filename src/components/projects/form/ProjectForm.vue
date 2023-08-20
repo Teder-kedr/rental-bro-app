@@ -106,18 +106,19 @@
                   class="ms-sm-4"
                 />
               </v-col>
+              <v-btn
+                v-if="project.details.helpers.length"
+                block
+                flat
+                prepend-icon="mdi-minus"
+                append-icon="mdi-account"
+                class="mb-4"
+                @click="project.details.helpers.splice(idx, 1)"
+              >
+                Remove helper
+              </v-btn>
             </v-row>
-            <v-btn
-              v-if="project.details.helpers.length"
-              block
-              flat
-              prepend-icon="mdi-minus"
-              append-icon="mdi-account"
-              class="mb-4"
-              @click="project.details.helpers.pop()"
-            >
-              Remove helper
-            </v-btn>
+
             <v-btn
               block
               flat
@@ -174,18 +175,19 @@
                   class="ms-md-2"
                 />
               </v-col>
+              <v-btn
+                v-if="project.details.contacts.length > 1"
+                block
+                flat
+                prepend-icon="mdi-minus"
+                append-icon="mdi-account"
+                class="mb-4"
+                @click="project.details.contacts.splice(idx, 1)"
+              >
+                Remove contact
+              </v-btn>
             </v-row>
-            <v-btn
-              v-if="project.details.contacts.length > 1"
-              block
-              flat
-              prepend-icon="mdi-minus"
-              append-icon="mdi-account"
-              class="mb-4"
-              @click="project.details.contacts.pop()"
-            >
-              Remove contact
-            </v-btn>
+
             <v-btn
               block
               flat
@@ -289,19 +291,20 @@
                   @keydown.down.prevent
                 />
               </v-col>
+              <v-btn
+                v-if="project.extras.length"
+                block
+                flat
+                prepend-icon="mdi-minus"
+                class="mb-4"
+                @click="project.extras.splice(idx, 1)"
+              >
+                Remove item
+              </v-btn>
             </v-row>
             <p v-if="extrasTotal !== 0" class="my-total mb-4">
               Total: {{ extrasTotal }} ₽
             </p>
-            <v-btn
-              v-if="project.extras.length"
-              block
-              flat
-              prepend-icon="mdi-minus"
-              class="mb-4"
-              @click="project.extras.pop()"
-              >Remove item</v-btn
-            >
             <v-btn
               block
               flat

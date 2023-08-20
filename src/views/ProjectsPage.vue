@@ -4,7 +4,7 @@
     <v-btn
       flat
       color="primary"
-      class="mb-6"
+      class="mb-4"
       to="new-project"
       prepend-icon="mdi-plus"
     >

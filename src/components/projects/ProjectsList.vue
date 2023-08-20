@@ -1,31 +1,26 @@
 <template>
   <div v-if="isLoaded" class="pb-12">
-    <v-btn-toggle
-      v-model="archiveFilter"
-      mandatory
-      density="compact"
-      style="width: 100%"
-      class="mb-4 d-flex"
-    >
-      <v-btn
-        value="archived"
-        color="grey-darken-2"
-        variant="text"
-        class="flex-grow-1"
-        append-icon="mdi-arrow-down"
-      >
-        {{ isScreenSmall ? "Archived" : "Archived projects" }}
-      </v-btn>
-      <v-btn
-        value="upcoming"
-        color="grey-darken-2"
-        variant="text"
-        class="flex-grow-1"
-        append-icon="mdi-arrow-up"
-      >
-        {{ isScreenSmall ? "Upcoming" : "Upcoming projects" }}
-      </v-btn>
-    </v-btn-toggle>
+    <p class="my-date-text mb-2">Filters:</p>
+    <v-btn flat class="mb-4">
+      {{ archiveFilter + " projects" }}
+      <template #append>
+        <v-icon>
+          {{ archiveFilter === "upcoming" ? "mdi-arrow-up" : "mdi-arrow-down" }}
+        </v-icon>
+      </template>
+
+      <v-menu activator="parent">
+        <v-list>
+          <v-list-item @click="archiveFilter = 'upcoming'">
+            <v-list-item-title>Upcoming</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="archiveFilter = 'archived'">
+            <v-list-item-title>Archived</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-btn>
+
     <template v-if="selectedList.length">
       <div v-for="dateString of selectedList" :key="dateString" class="mb-12">
         <p class="mt-2 my-date-text">

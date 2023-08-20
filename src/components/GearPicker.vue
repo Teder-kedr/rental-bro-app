@@ -42,14 +42,14 @@
             <v-col cols="12" sm="6">
               <v-select
                 v-model="typeFilter"
-                ref="myTypeFilterEl"
                 class="mx-2 mt-4 mt-sm-0"
                 :disabled="!inventoryItems.length"
                 variant="outlined"
                 density="compact"
                 label="Filter by type"
-                :items="presentTypes"
                 clearable
+                :items="presentTypes"
+                ref="myTypeFilterEl"
                 @click:clear="$refs.myTypeFilterEl.blur()"
               />
             </v-col>
@@ -115,7 +115,6 @@
 <script>
 import { getGearList } from "@/services/firestore";
 import ContentLoader from "./ContentLoader.vue";
-import deepCopy from "@/services/deepCopy";
 
 export default {
   components: { ContentLoader },
@@ -182,7 +181,7 @@ export default {
     },
 
     sortedFilteredItems() {
-      const array = this.filteredItems;
+      const array = [...this.filteredItems];
       return array.sort((a, b) => {
         if (a.model > b.model) return 1;
         return -1;
@@ -191,11 +190,15 @@ export default {
   },
   watch: {
     async modelValue() {
+      await this.refresh();
+    },
+  },
+  methods: {
+    async refresh() {
       this.searchFilter = "";
       this.typeFilter = null;
       this.isLoaded = false;
-      const snapshot = await getGearList();
-      this.inventoryItems = deepCopy(snapshot);
+      this.inventoryItems = await getGearList();
       this.isLoaded = true;
       this.projectGearList.forEach((pickedItem) => {
         const theItem = this.inventoryItems.find(
@@ -206,8 +209,6 @@ export default {
         }
       });
     },
-  },
-  methods: {
     handlePlus(item) {
       if (!item.qtyPicked) {
         item.qtyPicked = 0;
@@ -225,13 +226,12 @@ export default {
     },
     handleCancel() {
       this.$emit("update:modelValue", false);
-      this.inventoryItems.forEach((item) => (item.qtyPicked = 0));
     },
     handleConfirm() {
-      const itemsPicked = [];
+      const result = [];
       this.inventoryItems.forEach((item) => {
         if (item.qtyPicked > 0) {
-          itemsPicked.push({
+          result.push({
             model: item.model,
             type: item.type,
             priceday: item.priceday,
@@ -240,7 +240,7 @@ export default {
           });
         }
       });
-      this.$emit("change", itemsPicked);
+      this.$emit("update:projectGearList", result);
       this.$emit("update:modelValue", false);
     },
   },

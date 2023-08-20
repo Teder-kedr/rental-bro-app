@@ -5,13 +5,15 @@
   >
     <v-row v-for="item of project.gearList" :key="item.id">
       <v-col cols="12" md="6" class="pb-2">
-        <span style="font-weight: 500">{{ item.model }}</span>
+        <span style="font-weight: 500">
+          {{ item.model }}
+        </span>
       </v-col>
       <v-col
         cols="4"
         md="2"
         class="pt-0 pt-md-2"
-        :class="{ 'text-right': $vuetify.display.mdAndUp }"
+        :class="{ 'text-right': !isSmAndDown }"
       >
         {{ item.priceday }} ₽
       </v-col>
@@ -20,14 +22,14 @@
         md="2"
         class="pt-0 pt-md-2"
         :class="{
-          'text-right': $vuetify.display.mdAndUp,
-          'text-center': $vuetify.display.smAndDown,
+          'text-right': !isSmAndDown,
+          'text-center': isSmAndDown,
         }"
       >
         {{ item.qty }} pcs.
       </v-col>
       <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
-        = {{ item.priceday * item.qty }} ₽
+        = {{ countTotal(item.priceday, item.qty) }} ₽
       </v-col>
       <v-col>
         <v-divider />
@@ -41,7 +43,7 @@
         cols="4"
         md="2"
         class="pt-0 pt-md-2"
-        :class="{ 'text-right': $vuetify.display.mdAndUp }"
+        :class="{ 'text-right': !isSmAndDown }"
       >
         {{ item.price ? item.price + " ₽" : "-" }}
       </v-col>
@@ -50,14 +52,14 @@
         md="2"
         class="pt-0 pt-md-2"
         :class="{
-          'text-right': $vuetify.display.mdAndUp,
-          'text-center': $vuetify.display.smAndDown,
+          'text-right': !isSmAndDown,
+          'text-center': isSmAndDown,
         }"
       >
         {{ item.qty ? "* " + item.qty : "-" }}
       </v-col>
       <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
-        {{ item.price ? "= " + item.price * (item.qty || 1) + " ₽" : "-" }}
+        {{ item.price ? "= " + countTotal(item.price, item.qty) + " ₽" : "-" }}
       </v-col>
       <v-col>
         <v-divider />
@@ -89,6 +91,14 @@ export default {
           0
         )
       );
+    },
+    isSmAndDown() {
+      return this.$vuetify.display.smAndDown;
+    },
+  },
+  methods: {
+    countTotal(price, qty = 1) {
+      return price * qty;
     },
   },
 };

@@ -9,6 +9,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { app } from "./firebase";
+import deepCopy from "./deepCopy";
 
 const db = getFirestore(app);
 
@@ -16,7 +17,7 @@ let cachedGearList = null;
 
 export async function getGearList(forceUpdate) {
   if (cachedGearList && !forceUpdate) {
-    return cachedGearList;
+    return deepCopy(cachedGearList);
   }
   const result = [];
   const querySnapshot = await getDocs(collection(db, "gear"));

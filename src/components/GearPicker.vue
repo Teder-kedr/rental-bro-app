@@ -198,16 +198,20 @@ export default {
       this.searchFilter = "";
       this.typeFilter = null;
       this.isLoaded = false;
-      this.inventoryItems = await getGearList();
-      this.isLoaded = true;
-      this.projectGearList.forEach((pickedItem) => {
-        const theItem = this.inventoryItems.find(
-          (item) => item.id === pickedItem.id
-        );
-        if (theItem) {
-          theItem.qtyPicked = pickedItem.qty;
-        }
-      });
+      try {
+        this.inventoryItems = await getGearList();
+        this.isLoaded = true;
+        this.projectGearList.forEach((pickedItem) => {
+          const theItem = this.inventoryItems.find(
+            (item) => item.id === pickedItem.id
+          );
+          if (theItem) {
+            theItem.qtyPicked = pickedItem.qty;
+          }
+        });
+      } catch (error) {
+        this.$store.dispatch("handleNewError", error.message);
+      }
     },
     handlePlus(item) {
       if (!item.qtyPicked) {

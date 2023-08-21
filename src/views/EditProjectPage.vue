@@ -22,12 +22,20 @@ export default {
   },
   methods: {
     async submit(form) {
-      await editProject(this.$route.params.id, form);
-      this.$router.push("/projects");
+      try {
+        await editProject(this.$route.params.id, form);
+        this.$router.push("/projects");
+      } catch (error) {
+        this.$store.dispatch("handleNewError", error.message);
+      }
     },
   },
   async created() {
-    this.project = await getSingleProject(this.$route.params.id);
+    try {
+      this.project = await getSingleProject(this.$route.params.id);
+    } catch (error) {
+      this.$store.dispatch("handleNewError", error.message);
+    }
   },
 };
 </script>

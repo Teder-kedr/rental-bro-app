@@ -110,7 +110,11 @@ export default {
     },
   },
   async created() {
-    this.project = await getSingleProject(this.$route.params.id);
+    try {
+      this.project = await getSingleProject(this.$route.params.id);
+    } catch (error) {
+      this.$store.dispatch("handleNewError", error.message);
+    }
   },
 };
 </script>

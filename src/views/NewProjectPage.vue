@@ -12,8 +12,12 @@ export default {
   },
   methods: {
     async submit(form) {
-      await createProject(form);
-      this.$router.push("/projects");
+      try {
+        await createProject(form);
+        this.$router.push("/projects");
+      } catch (error) {
+        this.$store.dispatch("handleNewError", error.message);
+      }
     },
   },
 };

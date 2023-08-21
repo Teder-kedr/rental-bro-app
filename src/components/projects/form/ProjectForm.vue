@@ -454,8 +454,13 @@ export default {
     if (this.projectToEdit) {
       this.project = this.projectToEdit;
     }
-    this.myInventory = await getGearList();
-    this.inventoryLoaded = true;
+    try {
+      this.myInventory = await getGearList();
+    } catch (error) {
+      this.$store.dispatch("handleNewError", error.message);
+    } finally {
+      this.inventoryLoaded = true;
+    }
   },
 };
 </script>

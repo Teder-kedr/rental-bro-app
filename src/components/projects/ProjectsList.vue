@@ -137,8 +137,13 @@ export default {
     },
   },
   async mounted() {
-    this.projects = await getProjectsList();
-    this.isLoaded = true;
+    try {
+      this.projects = await getProjectsList();
+    } catch (error) {
+      this.$store.dispatch("handleNewError", error.message);
+    } finally {
+      this.isLoaded = true;
+    }
   },
 };
 </script>

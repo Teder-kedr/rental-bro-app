@@ -4,10 +4,10 @@
 
     <p class="mt-2">
       <span class="detail-title">
-        Date: <em>{{ daysCount }}</em>
+        Date: <em>{{ daysCountText }}</em>
       </span>
       <br />
-      {{ displayedDates }}
+      {{ datesText }}
     </p>
 
     <ProjectDetailsText :project="project" />
@@ -74,13 +74,15 @@ export default {
     };
   },
   computed: {
-    displayedDates() {
+    datesText() {
       const locale = this.$vuetify.locale.current === "ru" ? ru : undefined;
+
       if (this.project.dates.length === 1) {
         return format(parseISO(this.project.dates[0]), "PPPP", {
           locale: locale,
         });
       }
+
       return (
         format(parseISO(this.project.dates[0]), "PPPP", {
           locale: locale,
@@ -91,7 +93,7 @@ export default {
         })
       );
     },
-    daysCount() {
+    daysCountText() {
       if (this.project.dates.length === 1) return "";
       return `(days total: ${this.project.dates.length})`;
     },

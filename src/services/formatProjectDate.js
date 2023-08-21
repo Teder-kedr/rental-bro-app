@@ -1,4 +1,4 @@
-import format from "date-fns/format";
+import { format } from "date-fns";
 
 function getDatesBetween(start, end) {
   const result = [];
@@ -8,6 +8,7 @@ function getDatesBetween(start, end) {
     result.push(new Date(currentDate));
     currentDate.setDate(currentDate.getDate() + 1);
   }
+  return result;
 }
 
 export function formatProjectDate(data) {
@@ -15,6 +16,5 @@ export function formatProjectDate(data) {
   if (data.start && data.end) {
     const datesArray = getDatesBetween(data.start, data.end);
     return datesArray.map((date) => format(date, "yyyy-MM-dd"));
-  }
-  return [format(data, "yyyy-MM-dd")];
+  } else return [format(data, "yyyy-MM-dd")];
 }

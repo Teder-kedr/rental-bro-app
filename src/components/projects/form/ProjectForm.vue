@@ -367,7 +367,6 @@
 import MyDatePicker from "@/components/MyDatePicker.vue";
 import GearPicker from "@/components/GearPicker.vue";
 import { getGearList } from "@/services/firestore";
-import { formatProjectDate } from "@/services/formatProjectDate";
 
 export default {
   components: { MyDatePicker, GearPicker },
@@ -400,7 +399,7 @@ export default {
     form() {
       return {
         title: this.project.title,
-        dates: formatProjectDate(this.project.dates),
+        dates: this.project.dates,
         details: {
           notes: this.project.details.notes,
           location: this.project.details.location,

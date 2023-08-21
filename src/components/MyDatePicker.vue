@@ -36,6 +36,7 @@
 
 <script>
 import { parseISO } from "date-fns";
+import { formatProjectDate } from "@/services/formatProjectDate";
 
 export default {
   props: ["providedDates"],
@@ -55,6 +56,7 @@ export default {
   watch: {
     calMode(newValue, oldValue) {
       if (oldValue === undefined) return;
+
       if (newValue === "multiple") {
         this.range.start = this.date;
         this.range.end = this.date;
@@ -71,11 +73,13 @@ export default {
   },
   methods: {
     emitChange() {
+      let result;
       if (this.calMode === "single") {
-        this.$emit("change", this.date);
+        result = this.date;
       } else {
-        this.$emit("change", this.range);
+        result = this.range;
       }
+      this.$emit("change", formatProjectDate(result));
     },
   },
   created() {

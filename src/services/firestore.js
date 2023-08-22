@@ -7,9 +7,14 @@ import {
   addDoc,
   deleteDoc,
   getDoc,
+  query,
+  where,
+  orderBy,
 } from "firebase/firestore";
 import { app } from "./firebase";
 import deepCopy from "./deepCopy";
+import { datesToServer, datesFromServer } from "./formatProjectDate";
+import { format } from "date-fns";
 
 const db = getFirestore(app);
 
@@ -42,26 +47,55 @@ export async function addGearItems(items) {
   });
 }
 
-export async function getProjectsList() {
+const queries = {
+  upcoming: query(
+    collection(db, "projects"),
+    where("dateEnd", ">=", format(new Date(), "yyyy-MM-dd")),
+    orderBy("dateEnd")
+    // orderBy("dateStart")
+  ),
+  archived: query(
+    collection(db, "projects"),
+    where("dateStart", "<", format(new Date(), "yyyy-MM-dd")),
+    orderBy("dateStart", "desc")
+  ),
+};
+
+export async function getProjectsList(archiveFilter) {
   const result = [];
-  const querySnapshot = await getDocs(collection(db, "projects"));
+  const querySnapshot = await getDocs(queries[archiveFilter]);
   querySnapshot.forEach((doc) => {
-    result.push({ ...doc.data(), id: doc.id });
+    const { dateStart, dateEnd } = doc.data();
+    result.push({
+      ...doc.data(),
+      ...datesFromServer(dateStart, dateEnd),
+      id: doc.id,
+    });
   });
+
   return result;
 }
 
 export async function createProject(project) {
-  await addDoc(collection(db, "projects"), project);
+  const { dates } = project;
+  await addDoc(collection(db, "projects"), {
+    ...project,
+    ...datesToServer(dates),
+  });
 }
 
 export async function getSingleProject(id) {
   const snapshot = await getDoc(doc(db, "projects", id));
-  return { ...snapshot.data() };
+  const { dateStart, dateEnd } = snapshot.data();
+  return { ...snapshot.data(), ...datesFromServer(dateStart, dateEnd) };
 }
 
 export async function editProject(id, data) {
-  await updateDoc(doc(db, "projects", id), data);
+  const { dates } = data;
+  await updateDoc(doc(db, "projects", id), {
+    ...data,
+    ...datesToServer(dates),
+  });
 }
 
 export async function deleteProject(id) {

@@ -36,7 +36,7 @@
 
 <script>
 import { parseISO } from "date-fns";
-import { formatProjectDate } from "@/services/formatProjectDate";
+import { projectDatesIntoArray } from "@/services/formatProjectDate";
 
 export default {
   props: ["providedDates"],
@@ -79,7 +79,7 @@ export default {
       } else {
         result = this.range;
       }
-      this.$emit("change", formatProjectDate(result));
+      this.$emit("change", projectDatesIntoArray(result));
     },
   },
   created() {

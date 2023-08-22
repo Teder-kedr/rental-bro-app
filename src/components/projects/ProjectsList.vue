@@ -1,7 +1,7 @@
 <template>
-  <div v-if="isLoaded" class="pb-12">
+  <div>
     <p class="my-date-text mb-2">Filters:</p>
-    <v-btn flat class="mb-4">
+    <v-btn flat class="mb-4" :disabled="!isLoaded">
       {{ archiveFilter + " projects" }}
       <template #append>
         <v-icon>
@@ -20,9 +20,15 @@
         </v-list>
       </v-menu>
     </v-btn>
+  </div>
 
-    <template v-if="selectedList.length">
-      <div v-for="dateString of selectedList" :key="dateString" class="mb-12">
+  <div v-if="isLoaded" class="pb-12">
+    <template v-if="datesArrayFiltered.length">
+      <div
+        v-for="dateString of datesArrayFiltered"
+        :key="dateString"
+        class="mb-12"
+      >
         <p class="mt-2 my-date-text">
           {{ formatDateString(dateString) }}
         </p>
@@ -80,31 +86,40 @@ export default {
       });
       return result;
     },
-    datesUpcoming() {
-      const sorted = Object.keys(this.datesProjectsMap).sort((a, b) =>
-        a.localeCompare(b)
-      );
-      return sorted.filter(
-        (dateString) => dateString >= format(new Date(), "yyyy-MM-dd")
-      );
-    },
-    datesArchived() {
-      const sorted = Object.keys(this.datesProjectsMap).sort((a, b) =>
-        b.localeCompare(a)
-      );
-      return sorted.filter(
-        (dateString) => dateString < format(new Date(), "yyyy-MM-dd")
-      );
-    },
-    selectedList() {
-      if (this.archiveFilter === "archived") return this.datesArchived;
-      return this.datesUpcoming;
+    datesArrayFiltered() {
+      const result = Object.keys(this.datesProjectsMap);
+      return result.filter(applyFilter(this.archiveFilter));
+
+      function applyFilter(archiveFilter) {
+        return (date) => {
+          if (archiveFilter === "upcoming") {
+            return date >= format(new Date(), "yyyy-MM-dd");
+          } else {
+            return date < format(new Date(), "yyyy-MM-dd");
+          }
+        };
+      }
     },
     isScreenSmall() {
       return !this.$vuetify.display.smAndUp;
     },
   },
+  watch: {
+    archiveFilter(newValue) {
+      this.fetchList(newValue);
+    },
+  },
   methods: {
+    async fetchList(archiveFilter) {
+      this.isLoaded = false;
+      try {
+        this.projects = await getProjectsList(archiveFilter);
+      } catch (error) {
+        this.$store.dispatch("handleNewError", error.message);
+      } finally {
+        this.isLoaded = true;
+      }
+    },
     formatDateString(str) {
       const locale = this.$vuetify.locale.current === "ru" ? ru : undefined;
       const date = parseISO(str);
@@ -137,13 +152,7 @@ export default {
     },
   },
   async mounted() {
-    try {
-      this.projects = await getProjectsList();
-    } catch (error) {
-      this.$store.dispatch("handleNewError", error.message);
-    } finally {
-      this.isLoaded = true;
-    }
+    await this.fetchList(this.archiveFilter);
   },
 };
 </script>

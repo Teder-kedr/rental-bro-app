@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 const store = createStore({
   state: {
     user: null,
+    userSettings: null,
     isAuthStateReady: false,
     error: null,
     errorCount: 0,
@@ -10,6 +11,9 @@ const store = createStore({
   mutations: {
     setUser(state, payload) {
       state.user = payload;
+    },
+    setUserSettings(state, payload) {
+      state.userSettings = payload;
     },
     setAuthState(state, payload) {
       state.isAuthStateReady = payload;
@@ -23,6 +27,7 @@ const store = createStore({
   },
   actions: {
     handleNewError(context, payload) {
+      console.error(payload);
       context.commit("setError", payload);
       context.commit("incrementErrorCount");
     },

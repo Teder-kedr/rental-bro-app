@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-if="isLoaded">
     <p class="my-date-text mb-2">Filters:</p>
-    <v-btn flat class="mb-4" :disabled="!isLoaded">
+    <v-btn flat class="mb-4">
       {{ archiveFilter + " projects" }}
       <template #append>
         <v-icon>

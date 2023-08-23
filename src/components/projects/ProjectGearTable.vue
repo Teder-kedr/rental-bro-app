@@ -15,7 +15,7 @@
         class="pt-0 pt-md-2"
         :class="{ 'text-right': !isSmAndDown }"
       >
-        {{ item.priceday }} {{ currency }}
+        {{ currencify(item.priceday, currency) }}
       </v-col>
       <v-col
         cols="4"
@@ -29,7 +29,7 @@
         {{ item.qty }} pcs.
       </v-col>
       <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
-        = {{ countTotal(item.priceday, item.qty) }} {{ currency }}
+        = {{ currencify(countTotal(item.priceday, item.qty), currency) }}
       </v-col>
       <v-col>
         <v-divider />
@@ -45,7 +45,7 @@
         class="pt-0 pt-md-2"
         :class="{ 'text-right': !isSmAndDown }"
       >
-        {{ item.price ? item.price + " " + currency : "-" }}
+        {{ item.price ? currencify(item.price, currency) : "-" }}
       </v-col>
       <v-col
         cols="4"
@@ -61,7 +61,7 @@
       <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
         {{
           item.price
-            ? "= " + countTotal(item.price, item.qty) + " " + currency
+            ? "= " + currencify(countTotal(item.price, item.qty), currency)
             : "-"
         }}
       </v-col>
@@ -74,13 +74,15 @@
         <p>Total:</p>
       </v-col>
       <v-col cols="6">
-        <p class="text-right">{{ allItemsTotal }} {{ currency }}</p>
+        <p class="text-right">{{ currencify(allItemsTotal, currency) }}</p>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import currencify from "@/services/currencify";
+
 export default {
   props: ["project"],
   computed: {
@@ -107,6 +109,7 @@ export default {
     countTotal(price, qty = 1) {
       return price * qty;
     },
+    currencify,
   },
 };
 </script>

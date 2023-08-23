@@ -11,8 +11,8 @@
     >
       <v-card-title class="pb-0">Gear</v-card-title>
       <v-card-subtitle class="pb-2" style="border-bottom: 1px solid #ddd">
-        Picked items: {{ pickedItemsCount }}, total: {{ pickedItemsTotal
-        }}{{ currency }}
+        Picked items: {{ pickedItemsCount }}, total:
+        {{ currencify(pickedItemsTotal, currency) }}
       </v-card-subtitle>
       <v-btn
         flat
@@ -117,6 +117,7 @@
 <script>
 import { getGearList } from "@/services/firestore";
 import ContentLoader from "./ContentLoader.vue";
+import currencify from "@/services/currencify";
 
 export default {
   components: { ContentLoader },
@@ -253,6 +254,7 @@ export default {
       this.$emit("update:projectGearList", result);
       this.$emit("update:modelValue", false);
     },
+    currencify,
   },
 };
 </script>

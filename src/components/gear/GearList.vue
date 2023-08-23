@@ -62,7 +62,7 @@
               </span>
             </v-col>
             <v-col cols="4" sm="2" class="d-sm-flex align-center">
-              <span> {{ item.priceday }} {{ currency }} </span>
+              <span> {{ currencify(item.priceday, currency) }} </span>
             </v-col>
             <v-col cols="4" sm="2" class="d-sm-flex align-center">
               <span>{{ item.qty }} pcs. </span>
@@ -93,6 +93,7 @@ import { getGearList } from "@/services/firestore";
 import ContentLoader from "@/components/ContentLoader.vue";
 import EditGearPopup from "./EditGearPopup.vue";
 import AddGearPopup from "./AddGearPopup.vue";
+import currencify from "@/services/currencify";
 
 export default {
   components: {
@@ -162,15 +163,6 @@ export default {
       return this.$store.state.userSettings.currency;
     },
   },
-  async mounted() {
-    try {
-      this.items = await getGearList();
-    } catch (error) {
-      this.$store.dispatch("handleNewError", error.message);
-    } finally {
-      this.isLoaded = true;
-    }
-  },
   watch: {
     searchFilter() {
       this.openItems = [];
@@ -197,6 +189,16 @@ export default {
       this.itemEditing = item;
       this.isEditing = true;
     },
+    currencify,
+  },
+  async mounted() {
+    try {
+      this.items = await getGearList();
+    } catch (error) {
+      this.$store.dispatch("handleNewError", error.message);
+    } finally {
+      this.isLoaded = true;
+    }
   },
 };
 </script>

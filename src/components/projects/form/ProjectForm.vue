@@ -228,7 +228,9 @@
                 </tr>
                 <tr>
                   <th class="px-0">Total:</th>
-                  <th class="text-right">{{ gearTotal }} {{ currency }}</th>
+                  <th class="text-right">
+                    {{ currencify(gearTotal, currency) }}
+                  </th>
                 </tr>
               </tbody>
             </v-table>
@@ -303,7 +305,7 @@
               </v-btn>
             </v-row>
             <p v-if="extrasTotal !== 0" class="my-total mb-4">
-              Total: {{ extrasTotal }} {{ currency }}
+              Total: {{ currencify(extrasTotal, currency) }}
             </p>
             <v-btn
               block
@@ -367,6 +369,7 @@
 import MyDatePicker from "@/components/MyDatePicker.vue";
 import GearPicker from "@/components/GearPicker.vue";
 import { getGearList } from "@/services/firestore";
+import currencify from "@/services/currencify";
 
 export default {
   components: { MyDatePicker, GearPicker },
@@ -452,6 +455,7 @@ export default {
       if (val && val.trim() === "") return false;
       return !!val;
     },
+    currencify,
   },
   async created() {
     if (this.projectToEdit) {

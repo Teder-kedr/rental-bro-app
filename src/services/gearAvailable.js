@@ -17,6 +17,7 @@ export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
   }, {});
 
   const projects = [];
+  const processedProjectIds = new Set();
 
   // get all projects with crossing dates
   await Promise.all(
@@ -26,8 +27,9 @@ export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
         where("dateStart", "<=", dateString),
         where("dateEnd", ">=", dateString)
       );
+
       querySnapshot.forEach((doc) => {
-        if (projects.some((project) => project.id === doc.id)) {
+        if (processedProjectIds.has(doc.id)) {
           // do nothing
         } else if (currentProjId === doc.id) {
           // skip
@@ -38,11 +40,14 @@ export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
             ...datesFromServer(dateStart, dateEnd),
             id: doc.id,
           });
+
+          processedProjectIds.add(doc.id);
         }
       });
     })
   );
 
+  // subtract used items from total
   projects.forEach((project) => {
     project.gearList.forEach((item) => {
       if (result[item.id]) {
@@ -52,6 +57,5 @@ export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
   });
 
   memoizationCache.set(cacheKey, result);
-
   return result;
 }

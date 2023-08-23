@@ -62,10 +62,10 @@
               </span>
             </v-col>
             <v-col cols="4" sm="2" class="d-sm-flex align-center">
-              <span> {{ item.priceday }} ₽ </span>
+              <span> {{ item.priceday }} {{ currency }} </span>
             </v-col>
             <v-col cols="4" sm="2" class="d-sm-flex align-center">
-              <span>{{ item.qty }} шт. </span>
+              <span>{{ item.qty }} pcs. </span>
             </v-col>
           </v-row>
         </v-expansion-panel-title>
@@ -156,6 +156,10 @@ export default {
         if (a.model > b.model) return 1;
         return -1;
       });
+    },
+
+    currency() {
+      return this.$store.state.userSettings.currency;
     },
   },
   async mounted() {

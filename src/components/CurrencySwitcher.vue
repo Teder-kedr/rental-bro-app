@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-btn-toggle v-model="selOption" mandatory density="compact">
+      <v-btn-toggle v-model="selOption" mandatory divided density="compact">
         <v-btn flat value="$">$</v-btn>
 
         <v-btn flat value="€">€</v-btn>
@@ -62,9 +62,13 @@ export default {
     async selOption(newValue) {
       if (["$", "€", "₽"].includes(newValue)) {
         this.$store.dispatch("addUserSettings", { currency: newValue });
-        await updateUserSettings(this.$store.state.user.uid, {
-          currency: newValue,
-        });
+        try {
+          await updateUserSettings(this.$store.state.user.uid, {
+            currency: newValue,
+          });
+        } catch (error) {
+          this.$store.dispatch("handleNewError", error.message);
+        }
       }
     },
   },

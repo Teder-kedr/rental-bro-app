@@ -24,12 +24,15 @@ export async function initAuthState() {
 }
 
 export async function signUp(name, email, password) {
+  const DEFAULT_CURRENCY = "$";
+
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     if (res) {
       await createUserSettings(res.user.uid, {
         fullName: name,
         email,
+        currency: DEFAULT_CURRENCY,
       });
       const settings = await getUserSettings(res.user.uid);
       store.commit("setUserSettings", settings);

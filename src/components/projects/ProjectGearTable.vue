@@ -15,7 +15,7 @@
         class="pt-0 pt-md-2"
         :class="{ 'text-right': !isSmAndDown }"
       >
-        {{ item.priceday }} ₽
+        {{ item.priceday }} {{ currency }}
       </v-col>
       <v-col
         cols="4"
@@ -29,7 +29,7 @@
         {{ item.qty }} pcs.
       </v-col>
       <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
-        = {{ countTotal(item.priceday, item.qty) }} ₽
+        = {{ countTotal(item.priceday, item.qty) }} {{ currency }}
       </v-col>
       <v-col>
         <v-divider />
@@ -45,7 +45,7 @@
         class="pt-0 pt-md-2"
         :class="{ 'text-right': !isSmAndDown }"
       >
-        {{ item.price ? item.price + " ₽" : "-" }}
+        {{ item.price ? item.price + " " + currency : "-" }}
       </v-col>
       <v-col
         cols="4"
@@ -59,7 +59,11 @@
         {{ item.qty ? "* " + item.qty : "-" }}
       </v-col>
       <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
-        {{ item.price ? "= " + countTotal(item.price, item.qty) + " ₽" : "-" }}
+        {{
+          item.price
+            ? "= " + countTotal(item.price, item.qty) + " " + currency
+            : "-"
+        }}
       </v-col>
       <v-col>
         <v-divider />
@@ -70,7 +74,7 @@
         <p>Total:</p>
       </v-col>
       <v-col cols="6">
-        <p class="text-right">{{ allItemsTotal }} ₽</p>
+        <p class="text-right">{{ allItemsTotal }} {{ currency }}</p>
       </v-col>
     </v-row>
   </v-container>
@@ -91,6 +95,9 @@ export default {
           0
         )
       );
+    },
+    currency() {
+      return this.$store.state.userSettings.currency;
     },
     isSmAndDown() {
       return this.$vuetify.display.smAndDown;

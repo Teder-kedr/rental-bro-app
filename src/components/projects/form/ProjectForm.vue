@@ -228,7 +228,7 @@
                 </tr>
                 <tr>
                   <th class="px-0">Total:</th>
-                  <th class="text-right">{{ gearTotal }} ₽</th>
+                  <th class="text-right">{{ gearTotal }} {{ currency }}</th>
                 </tr>
               </tbody>
             </v-table>
@@ -303,7 +303,7 @@
               </v-btn>
             </v-row>
             <p v-if="extrasTotal !== 0" class="my-total mb-4">
-              Total: {{ extrasTotal }} ₽
+              Total: {{ extrasTotal }} {{ currency }}
             </p>
             <v-btn
               block
@@ -423,6 +423,9 @@ export default {
           return item.price * (item.qty || 1) + acc;
         } else return acc;
       }, 0);
+    },
+    currency() {
+      return this.$store.state.userSettings.currency;
     },
   },
   methods: {

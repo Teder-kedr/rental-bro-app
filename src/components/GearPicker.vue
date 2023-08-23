@@ -11,7 +11,8 @@
     >
       <v-card-title class="pb-0">Gear</v-card-title>
       <v-card-subtitle class="pb-2" style="border-bottom: 1px solid #ddd">
-        Picked items: {{ pickedItemsCount }}, total: {{ pickedItemsTotal }}₽
+        Picked items: {{ pickedItemsCount }}, total: {{ pickedItemsTotal
+        }}{{ currency }}
       </v-card-subtitle>
       <v-btn
         flat
@@ -70,7 +71,8 @@
                   {{ item.type }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                  {{ item.priceday }} ₽/day - Available: {{ item.qty }}
+                  {{ item.priceday }} {{ currency }}/day - Available:
+                  {{ item.qty }}
                 </v-list-item-subtitle>
               </v-col>
               <v-col
@@ -186,6 +188,10 @@ export default {
         if (a.model > b.model) return 1;
         return -1;
       });
+    },
+
+    currency() {
+      return this.$store.state.userSettings.currency;
     },
   },
   watch: {

@@ -45,7 +45,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12" sm="6">
-        <p class="mb-1">Price per day (₽):</p>
+        <p class="mb-1">Price per day ({{ currency }}):</p>
         <v-text-field
           :value="priceday"
           class="hide-spinners me-sm-2"
@@ -115,6 +115,9 @@ export default {
   computed: {
     typeSuggestions() {
       return this.types.slice(0, 8);
+    },
+    currency() {
+      return this.$store.state.userSettings.currency;
     },
   },
   methods: {

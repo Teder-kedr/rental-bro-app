@@ -247,6 +247,8 @@
             <GearPicker
               v-model="isGearPickerOpen"
               v-model:project-gear-list="project.gearList"
+              :date-array="project.dates"
+              :projectId="project.id"
             />
 
             <p class="my-label mt-8">Extra gear and expenses:</p>

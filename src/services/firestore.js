@@ -18,7 +18,7 @@ import { datesToServer, datesFromServer } from "./formatProjectDate";
 import { format } from "date-fns";
 import store from "@/plugins/store";
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 export async function getUserSettings(uid) {
   const snapshot = await getDoc(doc(db, "users", uid));
@@ -77,7 +77,6 @@ function getQueries() {
         collection(db, "users", store.state.user.uid, "projects"),
         where("dateEnd", ">=", format(new Date(), "yyyy-MM-dd")),
         orderBy("dateEnd")
-        // orderBy("dateStart")
       ),
       archived: query(
         collection(db, "users", store.state.user.uid, "projects"),
@@ -116,7 +115,11 @@ export async function getSingleProject(id) {
     doc(db, "users", store.state.user.uid, "projects", id)
   );
   const { dateStart, dateEnd } = snapshot.data();
-  return { ...snapshot.data(), ...datesFromServer(dateStart, dateEnd) };
+  return {
+    ...snapshot.data(),
+    ...datesFromServer(dateStart, dateEnd),
+    id: snapshot.id,
+  };
 }
 
 export async function editProject(id, data) {

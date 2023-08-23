@@ -1,0 +1,48 @@
+import { getDocs, collection, where } from "firebase/firestore";
+import { db } from "./firestore";
+import store from "@/plugins/store";
+import { datesFromServer } from "./formatProjectDate";
+
+export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
+  const result = gearList.reduce((acc, item) => {
+    acc[item.id] = item.qty;
+    return acc;
+  }, {});
+
+  const projects = [];
+
+  // get all projects with crossing dates
+  await Promise.all(
+    dateArray.map(async (dateString) => {
+      const querySnapshot = await getDocs(
+        collection(db, "users", store.state.user.uid, "projects"),
+        where("dateStart", "<=", dateString),
+        where("dateEnd", ">=", dateString)
+      );
+      querySnapshot.forEach((doc) => {
+        if (projects.some((project) => project.id === doc.id)) {
+          // do nothing
+        } else if (currentProjId === doc.id) {
+          // skip
+        } else {
+          const { dateStart, dateEnd } = doc.data();
+          projects.push({
+            ...doc.data(),
+            ...datesFromServer(dateStart, dateEnd),
+            id: doc.id,
+          });
+        }
+      });
+    })
+  );
+
+  projects.forEach((project) => {
+    project.gearList.forEach((item) => {
+      if (result[item.id]) {
+        result[item.id] -= item.qty;
+      }
+    });
+  });
+
+  return result;
+}

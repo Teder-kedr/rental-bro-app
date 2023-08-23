@@ -72,7 +72,7 @@
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   {{ item.priceday }} {{ currency }}/day - Available:
-                  {{ item.qty }}
+                  {{ availabilityMap[item.id] }}
                 </v-list-item-subtitle>
               </v-col>
               <v-col
@@ -118,13 +118,15 @@
 import { getGearList } from "@/services/firestore";
 import ContentLoader from "./ContentLoader.vue";
 import currencify from "@/services/currencify";
+import { getAvailabilityMap } from "@/services/gearAvailable";
 
 export default {
   components: { ContentLoader },
-  props: ["projectGearList", "modelValue"],
+  props: ["projectGearList", "dateArray", "projectId", "modelValue"],
   data() {
     return {
       inventoryItems: [],
+      availabilityMap: {},
       isLoaded: false,
       searchFilter: "",
       typeFilter: null,
@@ -196,8 +198,10 @@ export default {
     },
   },
   watch: {
-    async modelValue() {
-      await this.refresh();
+    async modelValue(newValue) {
+      if (newValue === true) {
+        await this.refresh();
+      }
     },
   },
   methods: {
@@ -207,7 +211,6 @@ export default {
       this.isLoaded = false;
       try {
         this.inventoryItems = await getGearList();
-        this.isLoaded = true;
         this.projectGearList.forEach((pickedItem) => {
           const theItem = this.inventoryItems.find(
             (item) => item.id === pickedItem.id
@@ -216,6 +219,12 @@ export default {
             theItem.qtyPicked = pickedItem.qty;
           }
         });
+        this.availabilityMap = await getAvailabilityMap(
+          this.inventoryItems,
+          this.dateArray,
+          this.projectId
+        );
+        this.isLoaded = true;
       } catch (error) {
         this.$store.dispatch("handleNewError", error.message);
       }

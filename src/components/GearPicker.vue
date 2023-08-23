@@ -11,7 +11,7 @@
     >
       <v-card-title class="pb-0">Gear</v-card-title>
       <v-card-subtitle class="pb-2" style="border-bottom: 1px solid #ddd">
-        Picked items: {{ pickedItemsCount }}, total:
+        Chosen items: {{ pickedItemsCount }}, total:
         {{ currencify(pickedItemsTotal, currency) }}
       </v-card-subtitle>
       <v-btn

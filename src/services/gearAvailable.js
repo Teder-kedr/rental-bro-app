@@ -1,16 +1,9 @@
-import { getDocs, collection, where } from "firebase/firestore";
+import { getDocs, collection, where, query } from "firebase/firestore";
 import { db } from "./firestore";
 import store from "@/plugins/store";
 import { datesFromServer } from "./formatProjectDate";
 
-const memoizationCache = new Map();
-
 export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
-  const cacheKey = JSON.stringify({ gearList, dateArray, currentProjId });
-  if (memoizationCache.has(cacheKey)) {
-    return memoizationCache.get(cacheKey);
-  }
-
   const result = gearList.reduce((acc, item) => {
     acc[item.id] = item.qty;
     return acc;
@@ -23,26 +16,34 @@ export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
   await Promise.all(
     dateArray.map(async (dateString) => {
       const querySnapshot = await getDocs(
-        collection(db, "users", store.state.user.uid, "projects"),
-        where("dateStart", "<=", dateString),
-        where("dateEnd", ">=", dateString)
+        query(
+          collection(db, "users", store.state.user.uid, "projects"),
+          where("dateEnd", ">=", dateString)
+        )
       );
 
       querySnapshot.forEach((doc) => {
-        if (processedProjectIds.has(doc.id)) {
-          // do nothing
-        } else if (currentProjId === doc.id) {
-          // skip
-        } else {
-          const { dateStart, dateEnd } = doc.data();
-          projects.push({
-            ...doc.data(),
-            ...datesFromServer(dateStart, dateEnd),
-            id: doc.id,
-          });
+        const { dateStart, dateEnd } = doc.data();
 
-          processedProjectIds.add(doc.id);
+        if (dateStart > dateString) {
+          // project has irrelevant date
+          return;
         }
+        if (processedProjectIds.has(doc.id)) {
+          // project has already been processed
+          return;
+        }
+        if (currentProjId === doc.id) {
+          // skip
+          return;
+        }
+
+        projects.push({
+          ...doc.data(),
+          ...datesFromServer(dateStart, dateEnd),
+          id: doc.id,
+        });
+        processedProjectIds.add(doc.id);
       });
     })
   );
@@ -56,6 +57,5 @@ export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
     });
   });
 
-  memoizationCache.set(cacheKey, result);
   return result;
 }

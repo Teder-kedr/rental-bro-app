@@ -25,9 +25,9 @@ export async function getUserSettings(uid) {
   return { ...snapshot.data() };
 }
 
-// export async function updateUserSettings(uid, data) {
-//   await updateDoc(doc(db, "users", uid), data);
-// }
+export async function updateUserSettings(uid, data) {
+  await updateDoc(doc(db, "users", uid), data);
+}
 
 export async function createUserSettings(uid, data) {
   await setDoc(doc(db, "users", uid), data);

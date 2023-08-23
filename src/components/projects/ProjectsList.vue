@@ -2,7 +2,7 @@
   <div v-if="isLoaded">
     <p class="my-date-text mb-2">Filters:</p>
     <v-btn flat class="mb-4">
-      {{ archiveFilter + " projects" }}
+      {{ archiveFilter === "archived" ? "Past" : "Upcoming" }} projects
       <template #append>
         <v-icon>
           {{ archiveFilter === "upcoming" ? "mdi-arrow-up" : "mdi-arrow-down" }}
@@ -15,7 +15,7 @@
             <v-list-item-title>Upcoming</v-list-item-title>
           </v-list-item>
           <v-list-item @click="archiveFilter = 'archived'">
-            <v-list-item-title>Archived</v-list-item-title>
+            <v-list-item-title>Past</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>

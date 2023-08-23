@@ -31,6 +31,12 @@ const store = createStore({
       context.commit("setError", payload);
       context.commit("incrementErrorCount");
     },
+    addUserSettings(context, payload) {
+      context.commit("setUserSettings", {
+        ...context.state.userSettings,
+        ...payload,
+      });
+    },
   },
 });
 

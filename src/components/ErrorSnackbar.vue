@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  TIMEOUT: 5000,
+  TIMEOUT: 7000,
 
   data() {
     return {

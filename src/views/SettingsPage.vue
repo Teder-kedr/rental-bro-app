@@ -4,6 +4,15 @@
     <div
       class="d-flex flex-column flex-sm-row justify-space-between align-sm-center"
     >
+      <p class="my-2">Change currency symbol:</p>
+      <CurrencySwitcher />
+    </div>
+
+    <v-divider class="my-4" color="grey-darken-1" />
+
+    <div
+      class="d-flex flex-column flex-sm-row justify-space-between align-sm-center"
+    >
       <p class="my-2">{{ $t("settings.langopttext") }}:</p>
       <LangSwitcher />
     </div>
@@ -16,14 +25,26 @@
       <p class="my-2">{{ $t("settings.logoutopttext") }}:</p>
       <LogoutButton />
     </div>
+
+    <v-divider class="my-4" color="grey-darken-1" />
+
+    <div class="py-2 text-grey">
+      <p v-if="user">user id: {{ user.uid }}</p>
+    </div>
   </div>
 </template>
 
 <script>
 import LogoutButton from "@/components/LogoutButton.vue";
 import LangSwitcher from "@/components/LangSwitcher.vue";
+import CurrencySwitcher from "@/components/CurrencySwitcher.vue";
 
 export default {
-  components: { LogoutButton, LangSwitcher },
+  components: { LogoutButton, LangSwitcher, CurrencySwitcher },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
 };
 </script>

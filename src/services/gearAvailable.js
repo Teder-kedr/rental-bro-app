@@ -3,7 +3,14 @@ import { db } from "./firestore";
 import store from "@/plugins/store";
 import { datesFromServer } from "./formatProjectDate";
 
+const memoizationCache = new Map();
+
 export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
+  const cacheKey = JSON.stringify({ gearList, dateArray, currentProjId });
+  if (memoizationCache.has(cacheKey)) {
+    return memoizationCache.get(cacheKey);
+  }
+
   const result = gearList.reduce((acc, item) => {
     acc[item.id] = item.qty;
     return acc;
@@ -43,6 +50,8 @@ export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
       }
     });
   });
+
+  memoizationCache.set(cacheKey, result);
 
   return result;
 }

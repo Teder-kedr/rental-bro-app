@@ -207,6 +207,7 @@ export default {
       if (newValue === true) {
         this.searchFilter = "";
         this.typeFilter = null;
+        this.inventoryItems.forEach((item) => (item.qtyPicked = 0));
         this.projectGearList.forEach((pickedItem) => {
           const theItem = this.inventoryItems.find(
             (item) => item.id === pickedItem.id

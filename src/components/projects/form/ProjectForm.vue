@@ -249,6 +249,7 @@
               v-model:project-gear-list="project.gearList"
               :date-array="project.dates"
               :projectId="project.id"
+              @emit-map="availabilityMap = $event"
             />
 
             <p class="my-label mt-8">Extra gear and expenses:</p>
@@ -398,6 +399,7 @@ export default {
       isAwaitingSubmit: false,
       inventoryLoaded: false,
       isGearPickerOpen: false,
+      availabilityMap: {},
     };
   },
   computed: {

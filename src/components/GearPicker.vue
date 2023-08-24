@@ -123,6 +123,7 @@ import { getAvailabilityMap } from "@/services/gearAvailable";
 export default {
   components: { ContentLoader },
   props: ["projectGearList", "dateArray", "projectId", "modelValue"],
+  emits: ["update:projectGearList", "update:modelValue", "emitMap"],
   data() {
     return {
       inventoryItems: [],
@@ -200,17 +201,8 @@ export default {
   watch: {
     async modelValue(newValue) {
       if (newValue === true) {
-        await this.refresh();
-      }
-    },
-  },
-  methods: {
-    async refresh() {
-      this.searchFilter = "";
-      this.typeFilter = null;
-      this.isLoaded = false;
-      try {
-        this.inventoryItems = await getGearList();
+        this.searchFilter = "";
+        this.typeFilter = null;
         this.projectGearList.forEach((pickedItem) => {
           const theItem = this.inventoryItems.find(
             (item) => item.id === pickedItem.id
@@ -219,6 +211,14 @@ export default {
             theItem.qtyPicked = pickedItem.qty;
           }
         });
+      }
+    },
+  },
+  methods: {
+    async refresh() {
+      this.isLoaded = false;
+      try {
+        this.inventoryItems = await getGearList();
         this.availabilityMap = await getAvailabilityMap(
           this.inventoryItems,
           this.dateArray,
@@ -264,6 +264,10 @@ export default {
       this.$emit("update:modelValue", false);
     },
     currencify,
+  },
+  async created() {
+    await this.refresh();
+    this.$emit("emitMap", this.availabilityMap);
   },
 };
 </script>

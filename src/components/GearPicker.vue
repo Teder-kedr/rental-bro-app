@@ -61,7 +61,8 @@
             :key="item.id"
             @click.prevent
             :class="{
-              'my-gradient': item.qtyPicked && item.qtyPicked > 0,
+              'my-gradient': myGradientRule(item),
+              'my-warning-bg': myWarningRule(item),
             }"
           >
             <v-row no-gutters>
@@ -73,6 +74,9 @@
                 <v-list-item-subtitle>
                   {{ item.priceday }} {{ currency }}/day - Available:
                   {{ availabilityMap[item.id] }}
+                  <span v-if="myWarningRule(item)" class="text-error"
+                    >- Insufficient</span
+                  >
                 </v-list-item-subtitle>
               </v-col>
               <v-col
@@ -264,6 +268,20 @@ export default {
       this.$emit("update:modelValue", false);
     },
     currencify,
+    myGradientRule(item) {
+      return (
+        item.qtyPicked &&
+        item.qtyPicked > 0 &&
+        item.qtyPicked <= this.availabilityMap[item.id]
+      );
+    },
+    myWarningRule(item) {
+      return (
+        item.qtyPicked &&
+        item.qtyPicked > 0 &&
+        item.qtyPicked > this.availabilityMap[item.id]
+      );
+    },
   },
   async created() {
     await this.refresh();
@@ -275,5 +293,8 @@ export default {
 <style scoped>
 .my-gradient {
   background: linear-gradient(90deg, hsl(286, 47%, 95%), hsl(192, 51%, 95%));
+}
+.my-warning-bg {
+  background: linear-gradient(90deg, hsl(0, 100%, 96%), hsl(19, 100%, 96%));
 }
 </style>

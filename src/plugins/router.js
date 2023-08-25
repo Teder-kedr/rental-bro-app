@@ -35,7 +35,7 @@ const routes = [
         component: EditProjectPage,
       },
       {
-        path: "new-project",
+        path: "new-project/:id?",
         name: "NewProject",
         meta: { requiresAuth: true },
         component: NewProjectPage,

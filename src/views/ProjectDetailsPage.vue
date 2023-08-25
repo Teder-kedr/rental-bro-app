@@ -18,8 +18,11 @@
       :my-inventory="myInventory"
     />
 
-    <div class="mt-8 d-flex flex-wrap justify-space-between">
+    <div
+      class="my-full-width mt-8 pb-4 d-flex flex-column align-end flex-sm-row align-sm-center flex-wrap"
+    >
       <v-btn
+        class="mb-1"
         flat
         variant="text"
         color="error"
@@ -32,7 +35,19 @@
         </template>
       </v-btn>
       <v-btn
-        class="ms-2"
+        class="mb-1 ms-sm-auto"
+        flat
+        variant="text"
+        :loading="isAwaitingDelete"
+        :to="'/new-project/' + $route.params.id"
+      >
+        Copy
+        <template #prepend>
+          <v-icon size="small">mdi-content-copy</v-icon>
+        </template>
+      </v-btn>
+      <v-btn
+        class="mb-1"
         flat
         variant="text"
         :loading="isAwaitingDelete"
@@ -141,5 +156,8 @@ export default {
 .detail-title {
   font-weight: 500;
   color: grey;
+}
+.my-full-width {
+  width: 100%;
 }
 </style>

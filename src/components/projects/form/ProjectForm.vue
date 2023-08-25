@@ -274,6 +274,7 @@
                   label="Name"
                   spellcheck="false"
                   flat
+                  hide-details
                   variant="solo"
                   density="compact"
                   class="me-sm-2"
@@ -285,6 +286,7 @@
                   label="Price for one"
                   flat
                   type="number"
+                  hide-details
                   variant="solo"
                   density="compact"
                   class="hide-spinners me-2 mx-sm-2"
@@ -298,6 +300,7 @@
                   label="Quantity"
                   flat
                   type="number"
+                  hide-details
                   variant="solo"
                   density="compact"
                   class="hide-spinners ms-2"
@@ -310,23 +313,22 @@
                 block
                 flat
                 prepend-icon="mdi-minus"
-                class="mb-4"
+                class="my-3"
                 @click="project.extras.splice(idx, 1)"
               >
                 Remove item
               </v-btn>
             </v-row>
-            <p v-if="extrasTotal !== 0" class="my-total mb-4">
-              Total: {{ currencify(extrasTotal, currency) }}
-            </p>
             <v-btn
               block
               flat
               prepend-icon="mdi-plus"
-              class="mt-2"
               @click="project.extras.push({})"
               >Add item</v-btn
             >
+            <p v-if="extrasTotal !== 0" class="my-total mt-4">
+              Total: {{ currencify(extrasTotal, currency) }}
+            </p>
           </v-window-item>
 
           <v-window-item :value="4">

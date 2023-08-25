@@ -5,7 +5,13 @@
   >
     <v-row v-for="item of project.gearList" :key="item.id">
       <v-col cols="12" md="6" class="pb-2">
-        <span style="font-weight: 500">
+        <span
+          style="font-weight: 500"
+          :class="{
+            'text-warning': availabilityMap[item.id] < item.qty,
+            'text-error crossed-out': !checkItemStillExists(item),
+          }"
+        >
           {{ item.model }}
         </span>
       </v-col>
@@ -69,7 +75,7 @@
         <v-divider />
       </v-col>
     </v-row>
-    <v-row v-if="allItemsTotal > 0">
+    <v-row v-if="allItemsTotal > 0" class="mb-2">
       <v-col cols="6">
         <p>Total:</p>
       </v-col>
@@ -77,14 +83,20 @@
         <p class="text-right">{{ currencify(allItemsTotal, currency) }}</p>
       </v-col>
     </v-row>
+
+    <ItemNotExistAlert v-if="itemNotExistAlertShown" />
+    <ItemOverbookAlert v-if="overbookAlertShown" />
   </v-container>
 </template>
 
 <script>
+import ItemNotExistAlert from "../ItemNotExistAlert.vue";
+import ItemOverbookAlert from "../ItemOverbookAlert.vue";
 import currencify from "@/services/currencify";
 
 export default {
-  props: ["project"],
+  components: { ItemNotExistAlert, ItemOverbookAlert },
+  props: ["project", "availabilityMap", "myInventory"],
   computed: {
     allItemsTotal() {
       return (
@@ -104,12 +116,46 @@ export default {
     isSmAndDown() {
       return this.$vuetify.display.smAndDown;
     },
+    overbookAlertShown() {
+      let result = false;
+      if (this.availabilityMap) {
+        this.project.gearList.forEach((item) => {
+          if (this.availabilityMap[item.id] < item.qty) {
+            result = true;
+            return;
+          }
+        });
+      }
+      return result;
+    },
+    itemNotExistAlertShown() {
+      let result = false;
+      if (this.myInventory.length) {
+        this.project.gearList.forEach((item) => {
+          if (!this.checkItemStillExists(item)) {
+            result = true;
+            return;
+          }
+        });
+      }
+      return result;
+    },
   },
   methods: {
     countTotal(price, qty = 1) {
       return price * qty;
     },
+    checkItemStillExists(item) {
+      if (!this.myInventory.length) return true;
+      return this.myInventory.find((i) => i.id === item.id);
+    },
     currencify,
   },
 };
 </script>
+
+<style scoped>
+.crossed-out {
+  text-decoration: line-through;
+}
+</style>

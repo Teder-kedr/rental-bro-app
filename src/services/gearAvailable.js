@@ -3,8 +3,8 @@ import { db } from "./firestore";
 import store from "@/plugins/store";
 import { datesFromServer } from "./formatProjectDate";
 
-export async function getAvailabilityMap(gearList, dateArray, currentProjId) {
-  const result = gearList.reduce((acc, item) => {
+export async function getAvailabilityMap(inventory, dateArray, currentProjId) {
+  const result = inventory.reduce((acc, item) => {
     acc[item.id] = item.qty;
     return acc;
   }, {});

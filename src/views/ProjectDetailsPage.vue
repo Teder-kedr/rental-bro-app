@@ -12,9 +12,13 @@
 
     <ProjectDetailsText :project="project" />
 
-    <ProjectGearTable :project="project" />
+    <ProjectGearTable
+      :project="project"
+      :availability-map="availabilityMap"
+      :my-inventory="myInventory"
+    />
 
-    <div class="mt-12 d-flex flex-wrap justify-space-between">
+    <div class="mt-8 d-flex flex-wrap justify-space-between">
       <v-btn
         flat
         variant="text"
@@ -53,7 +57,12 @@
 <script>
 import { format, parseISO } from "date-fns";
 import ru from "date-fns/locale/ru";
-import { getSingleProject, deleteProject } from "@/services/firestore";
+import {
+  getSingleProject,
+  deleteProject,
+  getGearList,
+} from "@/services/firestore";
+import { getAvailabilityMap } from "@/services/gearAvailable";
 import ContentLoader from "@/components/ContentLoader.vue";
 import ConfirmDeletePopup from "@/components/ConfirmDeletePopup.vue";
 import ProjectDetailsText from "@/components/projects/ProjectDetailsText.vue";
@@ -70,6 +79,8 @@ export default {
     return {
       isConfirmPopup: false,
       project: null,
+      availabilityMap: {},
+      myInventory: [],
       isAwaitingDelete: false,
     };
   },
@@ -112,6 +123,12 @@ export default {
   async created() {
     try {
       this.project = await getSingleProject(this.$route.params.id);
+      this.myInventory = await getGearList();
+      this.availabilityMap = await getAvailabilityMap(
+        this.myInventory,
+        this.project.dates,
+        this.project.id
+      );
     } catch (error) {
       this.$store.dispatch("handleNewError", error.message);
     }

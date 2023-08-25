@@ -296,6 +296,6 @@ export default {
   background: linear-gradient(90deg, hsl(286, 47%, 95%), hsl(192, 51%, 95%));
 }
 .my-warning-bg {
-  background: linear-gradient(90deg, hsl(0, 100%, 96%), hsl(19, 100%, 96%));
+  background: linear-gradient(90deg, hsl(350, 100%, 96%), hsl(10, 100%, 96%));
 }
 </style>

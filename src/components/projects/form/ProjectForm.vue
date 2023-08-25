@@ -214,7 +214,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item of project.gearList" :key="item.id">
+                <tr
+                  v-for="item of project.gearList"
+                  :key="item.id"
+                  :class="{
+                    'text-warning': availabilityMap[item.id] < item.qty,
+                  }"
+                >
                   <td
                     class="px-0"
                     :class="{
@@ -234,6 +240,9 @@
                 </tr>
               </tbody>
             </v-table>
+
+            <ItemNotExistAlert v-if="itemNotExistAlertShown" />
+            <ItemOverbookAlert v-if="overbookAlertShown" />
 
             <v-btn
               block
@@ -371,11 +380,18 @@
 <script>
 import MyDatePicker from "@/components/MyDatePicker.vue";
 import GearPicker from "@/components/GearPicker.vue";
+import ItemOverbookAlert from "@/components/ItemOverbookAlert.vue";
+import ItemNotExistAlert from "@/components/ItemNotExistAlert.vue";
 import { getGearList } from "@/services/firestore";
 import currencify from "@/services/currencify";
 
 export default {
-  components: { MyDatePicker, GearPicker },
+  components: {
+    MyDatePicker,
+    GearPicker,
+    ItemOverbookAlert,
+    ItemNotExistAlert,
+  },
   props: ["projectToEdit"],
   data() {
     return {
@@ -434,6 +450,30 @@ export default {
     currency() {
       return this.$store.state.userSettings.currency;
     },
+    overbookAlertShown() {
+      let result = false;
+      if (this.availabilityMap) {
+        this.project.gearList.forEach((item) => {
+          if (this.availabilityMap[item.id] < item.qty) {
+            result = true;
+            return;
+          }
+        });
+      }
+      return result;
+    },
+    itemNotExistAlertShown() {
+      let result = false;
+      if (this.myInventory) {
+        this.project.gearList.forEach((item) => {
+          if (!this.checkItemStillExists(item)) {
+            result = true;
+            return;
+          }
+        });
+      }
+      return result;
+    },
   },
   methods: {
     updateDates(newValue) {
@@ -484,7 +524,6 @@ export default {
 }
 .my-table {
   background-color: transparent;
-  margin-bottom: 1rem;
   font-size: 0.9rem;
 }
 .my-total {

@@ -35,6 +35,7 @@
         class="ms-2"
         flat
         variant="text"
+        :loading="isAwaitingDelete"
         :to="'/edit-project/' + $route.params.id"
       >
         Edit

@@ -1,6 +1,14 @@
 <template>
   <div>
     <h1 class="mb-8">Calendar</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, id!</p>
+    <MyCalendar :locale="$vuetify.locale.current" />
   </div>
 </template>
+
+<script>
+import MyCalendar from "@/components/MyCalendar.vue";
+
+export default {
+  components: { MyCalendar },
+};
+</script>

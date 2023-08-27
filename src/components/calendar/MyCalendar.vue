@@ -34,11 +34,26 @@
         :key="day"
         :day-num="day"
         :is-today="isToday(day)"
+        :is-selected="dayToDateString(day) === selectedCell"
         :events="datesProjectsMap[dayToDateString(day)]"
+        @click="selectedCell = dayToDateString(day)"
       />
       <div v-for="n in trailingCellsCount" :key="n" class="empty-cell" />
     </ul>
   </div>
+
+  <p v-if="selectedCell" class="my-4">
+    {{ selectedCell.split("-").reverse().join("-") }}
+  </p>
+  <v-expansion-panels variant="accordion" class="pb-8">
+    <v-expansion-panel
+      v-for="project of selectedDayProjects"
+      :key="project.id"
+      elevation="0"
+    >
+      <ProjectCard :project="project" />
+    </v-expansion-panel>
+  </v-expansion-panels>
 </template>
 
 <script setup>
@@ -47,6 +62,7 @@ import MyCalCell from "./MyCalCell.vue";
 import useCalendar from "./useCalendar";
 import { monthlyProjectsGetter } from "@/services/calendarApi";
 import { watch } from "vue";
+import ProjectCard from "../projects/card/ProjectCard.vue";
 
 const props = defineProps({
   locale: {
@@ -72,7 +88,11 @@ const getMonthlyProjects = monthlyProjectsGetter();
 onMounted(async () => {
   projects.value = await getMonthlyProjects(navYear.value, navMonthStr.value);
 });
+
+const selectedCell = ref(null);
+
 watch(nav, async (newValue, oldValue) => {
+  selectedCell.value = null;
   if (newValue > oldValue) {
     projects.value = await getMonthlyProjects(
       navYear.value,
@@ -95,6 +115,10 @@ const datesProjectsMap = computed(() => {
     });
   });
   return result;
+});
+
+const selectedDayProjects = computed(() => {
+  return datesProjectsMap.value[selectedCell.value] || [];
 });
 
 function next() {

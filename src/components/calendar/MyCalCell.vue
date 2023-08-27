@@ -2,6 +2,7 @@
   <li
     :class="{
       'my-today': isToday,
+      'my-selected': isSelected,
     }"
   >
     <div class="d-flex justify-end align-start">
@@ -26,11 +27,12 @@
 </template>
 
 <script setup>
-const props = defineProps(["dayNum", "isToday", "events"]);
+const props = defineProps(["dayNum", "isToday", "events", "isSelected"]);
 </script>
 
 <style scoped>
 li {
+  cursor: pointer;
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
   height: 5rem;
@@ -45,14 +47,18 @@ li {
   }
 }
 .my-today {
-  background-color: hsl(0, 100%, 96%);
+  background-color: hsl(286, 47%, 95%);
 }
 .my-chip {
+  cursor: inherit;
   font-size: 0.525rem;
 }
 @media (min-width: 600px) {
   .my-chip {
     font-size: 0.6rem;
   }
+}
+.my-selected {
+  background-color: hsl(220, 75%, 94%);
 }
 </style>

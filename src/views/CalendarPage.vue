@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import MyCalendar from "@/components/MyCalendar.vue";
+import MyCalendar from "@/components/calendar/MyCalendar.vue";
 
 export default {
   components: { MyCalendar },

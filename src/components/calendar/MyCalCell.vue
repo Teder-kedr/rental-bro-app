@@ -1,7 +1,7 @@
 <template>
   <li
     :class="{
-      'my-gradient': isToday,
+      'my-today': isToday,
     }"
   >
     <div class="d-flex justify-end align-start">
@@ -9,6 +9,7 @@
         {{ dayNum }}
       </div>
     </div>
+    <p class="pa-1"></p>
   </li>
 </template>
 
@@ -24,17 +25,14 @@ li {
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
   min-height: 5rem;
+  background-color: white;
 }
 @media (min-width: 600px) {
   li {
     min-height: 7rem;
   }
 }
-.my-gradient {
-  background: linear-gradient(
-    90deg,
-    hsla(347, 46%, 90%, 0.7),
-    hsla(329, 53%, 90%, 0.7)
-  );
+.my-today {
+  background-color: hsl(0, 100%, 95%);
 }
 </style>

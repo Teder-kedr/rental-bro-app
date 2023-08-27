@@ -42,7 +42,7 @@
     </ul>
   </div>
 
-  <p v-if="selectedCell" class="my-4">
+  <p v-if="selectedCell" class="my-date-text my-4">
     {{ selectedCell.split("-").reverse().join("-") }}
   </p>
   <v-expansion-panels variant="accordion" class="pb-8">
@@ -53,6 +53,12 @@
     >
       <ProjectCard :project="project" />
     </v-expansion-panel>
+    <p
+      v-if="selectedCell && selectedDayProjects.length === 0"
+      class="my-empty-text"
+    >
+      <em> no events </em>
+    </p>
   </v-expansion-panels>
 </template>
 
@@ -168,5 +174,13 @@ li {
 .empty-cell {
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
+}
+.my-date-text {
+  color: grey;
+  font-weight: 500;
+}
+.my-empty-text {
+  color: rgb(147, 147, 147);
+  font-weight: 400;
 }
 </style>

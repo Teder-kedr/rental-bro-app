@@ -72,8 +72,16 @@ onMounted(async () => {
   projects.value = await getMonthlyProjects(navYear.value, navMonthStr.value);
   console.log(projects.value);
 });
-watch(nav, async () => {
-  projects.value = await getMonthlyProjects(navYear.value, navMonthStr.value);
+watch(nav, async (newValue, oldValue) => {
+  if (newValue > oldValue) {
+    projects.value = await getMonthlyProjects(
+      navYear.value,
+      navMonthStr.value,
+      true
+    );
+  } else {
+    projects.value = await getMonthlyProjects(navYear.value, navMonthStr.value);
+  }
   console.log(projects.value);
 });
 

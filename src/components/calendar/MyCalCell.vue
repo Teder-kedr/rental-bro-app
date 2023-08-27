@@ -9,7 +9,7 @@
         {{ dayNum }}
       </div>
     </div>
-    <p class="pa-1"></p>
+    <p class="my-text"></p>
   </li>
 </template>
 
@@ -34,5 +34,8 @@ li {
 }
 .my-today {
   background-color: hsl(0, 100%, 95%);
+}
+.my-text {
+  font-size: 0.8rem;
 }
 </style>

@@ -41,8 +41,11 @@
 </template>
 
 <script setup>
-import useCalendar from "./useCalendar";
+import { ref, onMounted } from "vue";
 import MyCalCell from "./MyCalCell.vue";
+import useCalendar from "./useCalendar";
+import { monthlyProjectsGetter } from "@/services/calendarApi";
+import { watch } from "vue";
 
 const props = defineProps({
   locale: {
@@ -62,6 +65,17 @@ const {
   navYear,
   navMonthStr,
 } = useCalendar(props.locale);
+
+const projects = ref([]);
+const getMonthlyProjects = monthlyProjectsGetter();
+onMounted(async () => {
+  projects.value = await getMonthlyProjects(navYear.value, navMonthStr.value);
+  console.log(projects.value);
+});
+watch(nav, async () => {
+  projects.value = await getMonthlyProjects(navYear.value, navMonthStr.value);
+  console.log(projects.value);
+});
 
 function next() {
   nav.value++;
@@ -99,7 +113,6 @@ li {
   text-align: right;
 }
 .grid {
-  cursor: pointer;
   width: 100%;
   font-size: 0.9rem;
   display: grid;

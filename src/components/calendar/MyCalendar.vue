@@ -34,6 +34,7 @@
         :key="day"
         :day-num="day"
         :is-today="isToday(day)"
+        :events="datesProjectsMap[dayToDateString(day)]"
       />
       <div v-for="n in trailingCellsCount" :key="n" class="empty-cell" />
     </ul>
@@ -41,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import MyCalCell from "./MyCalCell.vue";
 import useCalendar from "./useCalendar";
 import { monthlyProjectsGetter } from "@/services/calendarApi";
@@ -70,7 +71,6 @@ const projects = ref([]);
 const getMonthlyProjects = monthlyProjectsGetter();
 onMounted(async () => {
   projects.value = await getMonthlyProjects(navYear.value, navMonthStr.value);
-  console.log(projects.value);
 });
 watch(nav, async (newValue, oldValue) => {
   if (newValue > oldValue) {
@@ -82,7 +82,19 @@ watch(nav, async (newValue, oldValue) => {
   } else {
     projects.value = await getMonthlyProjects(navYear.value, navMonthStr.value);
   }
-  console.log(projects.value);
+});
+
+const datesProjectsMap = computed(() => {
+  const result = {};
+  projects.value.forEach((project) => {
+    project.dates.forEach((date) => {
+      if (!result[date]) {
+        result[date] = [];
+      }
+      result[date].push(project);
+    });
+  });
+  return result;
 });
 
 function next() {
@@ -93,12 +105,15 @@ function prev() {
 }
 
 function isToday(displayedDay) {
-  return (
-    `${navYear.value}-${navMonthStr.value}-${String(displayedDay).padStart(
-      2,
-      "0"
-    )}` === todayString
-  );
+  return dayToDateString(displayedDay) === todayString;
+}
+
+function dayToDateString(
+  displayedDay,
+  year = navYear.value,
+  month = navMonthStr.value
+) {
+  return `${year}-${month}-${String(displayedDay).padStart(2, "0")}`;
 }
 </script>
 

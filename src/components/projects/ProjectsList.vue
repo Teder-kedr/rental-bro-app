@@ -12,10 +12,10 @@
       <v-menu activator="parent">
         <v-list>
           <v-list-item @click="archiveFilter = 'upcoming'">
-            <v-list-item-title>Upcoming</v-list-item-title>
+            <v-list-item-title>Upcoming projects</v-list-item-title>
           </v-list-item>
           <v-list-item @click="archiveFilter = 'archived'">
-            <v-list-item-title>Past</v-list-item-title>
+            <v-list-item-title>Past projects</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>

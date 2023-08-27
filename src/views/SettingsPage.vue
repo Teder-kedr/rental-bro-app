@@ -30,6 +30,7 @@
 
     <div class="py-2 text-grey">
       <p v-if="user">user id: {{ user.uid }}</p>
+      <p>app version: {{ $store.state.APP_VERSION }}</p>
     </div>
   </div>
 </template>

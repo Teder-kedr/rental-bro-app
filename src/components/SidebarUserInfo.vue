@@ -3,15 +3,15 @@
     <v-avatar class="circle gradient-background mr-3">
       <v-icon icon="mdi-account" color="black" />
     </v-avatar>
-    <span class="name-text">{{ email }}</span>
+    <span class="name-text">{{ displayName }}</span>
   </div>
 </template>
 
 <script>
 export default {
   computed: {
-    email() {
-      return this.$store.state.user.email;
+    displayName() {
+      return this.$store.state.userSettings.fullName;
     },
   },
 };

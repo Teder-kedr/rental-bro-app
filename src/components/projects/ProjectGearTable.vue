@@ -146,6 +146,7 @@ export default {
       return price * qty;
     },
     checkItemStillExists(item) {
+      // bug: doesn't work if myInventory is empty
       if (!this.myInventory.length) return true;
       return this.myInventory.find((i) => i.id === item.id);
     },

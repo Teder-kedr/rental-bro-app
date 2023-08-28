@@ -32,7 +32,7 @@
           'text-center': isSmAndDown,
         }"
       >
-        {{ item.qty }} pcs.
+        {{ item.qty }} {{ $t("projects.pcs") }}
       </v-col>
       <v-col cols="4" md="2" class="text-right pt-0 pt-md-2">
         = {{ currencify(countTotal(item.priceday, item.qty), currency) }}
@@ -77,7 +77,7 @@
     </v-row>
     <v-row v-if="allItemsTotal > 0" class="mb-2">
       <v-col cols="6">
-        <p>Total:</p>
+        <p>{{ $t("projects.form.total") }}:</p>
       </v-col>
       <v-col cols="6">
         <p class="text-right">{{ currencify(allItemsTotal, currency) }}</p>

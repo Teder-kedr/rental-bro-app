@@ -1,5 +1,8 @@
 {
   "title": "Settings",
+  "curopttext": "Currency symbol",
+  "curCustom": "custom",
+  "curSave": "save",
   "langopttext": "Change language",
   "logoutopttext": "Log out from your account",
   "logoutaction": "Log out"

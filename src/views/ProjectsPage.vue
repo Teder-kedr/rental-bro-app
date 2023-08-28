@@ -8,7 +8,7 @@
       to="new-project"
       prepend-icon="mdi-plus"
     >
-      New Project
+      {{ $t("projects.newProject") }}
     </v-btn>
     <ProjectsList />
   </div>

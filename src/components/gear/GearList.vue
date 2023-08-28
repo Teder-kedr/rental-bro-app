@@ -7,7 +7,7 @@
       prepend-icon="mdi-plus"
       @click="isAddingNew = true"
     >
-      Add new
+      {{ $t("gear.addNew") }}
     </v-btn>
     <EditGearPopup
       v-model="isEditing"
@@ -26,7 +26,7 @@
           v-model="searchFilter"
           :disabled="!items.length"
           density="compact"
-          label="Search"
+          :label="$t('gear.search')"
           clearable
           variant="outlined"
         />
@@ -37,7 +37,7 @@
           :disabled="!items.length"
           variant="outlined"
           density="compact"
-          label="Filter by type"
+          :label="$t('gear.filterByType')"
           :items="presentTypes"
           multiple
           clearable
@@ -65,7 +65,7 @@
               <span> {{ currencify(item.priceday, currency) }} </span>
             </v-col>
             <v-col cols="4" sm="2" class="d-sm-flex align-center">
-              <span>{{ item.qty }} pcs. </span>
+              <span>{{ item.qty }} {{ $t("gear.pcs") }} </span>
             </v-col>
           </v-row>
         </v-expansion-panel-title>
@@ -78,12 +78,14 @@
             variant="text"
             @click="handleEditClick(item)"
           >
-            Edit
+            {{ $t("gear.edit") }}
           </v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
-    <p v-else-if="isLoaded" class="text-center text-grey-darken-1">No items</p>
+    <p v-else-if="isLoaded" class="text-center text-grey-darken-1">
+      {{ $t("gear.noItems") }}
+    </p>
     <ContentLoader v-else />
   </v-container>
 </template>

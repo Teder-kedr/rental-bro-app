@@ -4,7 +4,7 @@
 
     <p class="mt-2">
       <span class="detail-title">
-        Date: <em>{{ daysCountText }}</em>
+        {{ $t("projects.form.date") }}: <em>{{ daysCountText }}</em>
       </span>
       <br />
       {{ datesText }}
@@ -29,7 +29,7 @@
         :loading="isAwaitingDelete"
         @click="handleDelete"
       >
-        Delete project
+        {{ $t("projects.deleteProject") }}
         <template #prepend>
           <v-icon size="small">mdi-trash-can-outline</v-icon>
         </template>
@@ -41,7 +41,7 @@
         :loading="isAwaitingDelete"
         :to="'/new-project/' + $route.params.id"
       >
-        Copy
+        {{ $t("projects.copy") }}
         <template #prepend>
           <v-icon size="small">mdi-content-copy</v-icon>
         </template>
@@ -53,7 +53,7 @@
         :loading="isAwaitingDelete"
         :to="'/edit-project/' + $route.params.id"
       >
-        Edit
+        {{ $t("projects.edit") }}
         <template #prepend>
           <v-icon size="small">mdi-pencil</v-icon>
         </template>
@@ -122,7 +122,7 @@ export default {
     },
     daysCountText() {
       if (this.project.dates.length === 1) return "";
-      return `(days total: ${this.project.dates.length})`;
+      return `(${this.$t("projects.daysTotal")}: ${this.project.dates.length})`;
     },
   },
   methods: {

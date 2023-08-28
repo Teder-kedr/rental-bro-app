@@ -28,7 +28,7 @@
         class="ms-auto"
         :to="'project/' + project.id"
       >
-        Details
+        {{ $t("projects.card.details") }}
       </v-btn>
     </v-card-actions>
   </v-expansion-panel-text>

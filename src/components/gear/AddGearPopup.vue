@@ -10,9 +10,11 @@
           @click="handleCancel"
         />
         <v-form v-model="isFormValid" @submit.prevent>
-          <v-card-title class="card-title">Add gear</v-card-title>
+          <v-card-title class="card-title">{{
+            $t("gear.addGear")
+          }}</v-card-title>
           <v-card-subtitle v-if="items.length > 1">
-            adding {{ items.length }} items
+            {{ $t("gear.adding") }} {{ items.length }} {{ $t("gear.items") }}
           </v-card-subtitle>
 
           <div v-for="item of items" :key="item.id">
@@ -33,7 +35,7 @@
                 prepend-icon="mdi-minus"
                 @click="handleSplice(items.indexOf(item))"
               >
-                Remove
+                {{ $t("gear.remove") }}
               </v-btn>
             </div>
 
@@ -48,7 +50,7 @@
               :disabled="items.length >= $options.ITEMS_LIMIT"
               @click="handleAddMore"
             >
-              Add more
+              {{ $t("gear.addMore") }}
             </v-btn>
           </div>
 
@@ -59,7 +61,7 @@
               class="ma-1 me-auto px-3"
               @click="handleCancel"
             >
-              Cancel
+              {{ $t("gear.cancel") }}
             </v-btn>
             <v-btn
               variant="outlined"
@@ -71,7 +73,7 @@
               :loading="isAwaitingResponse"
               @click="handleSubmit"
             >
-              Save
+              {{ $t("gear.save") }}
             </v-btn>
           </v-card-actions>
         </v-form>

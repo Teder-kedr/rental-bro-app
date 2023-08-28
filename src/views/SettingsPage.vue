@@ -4,7 +4,7 @@
     <div
       class="d-flex flex-column flex-sm-row justify-space-between align-sm-center"
     >
-      <p class="my-2">Currency symbol:</p>
+      <p class="my-2">{{ $t("settings.curopttext") }}:</p>
       <CurrencySwitcher />
     </div>
 

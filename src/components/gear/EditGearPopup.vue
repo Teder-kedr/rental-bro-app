@@ -10,7 +10,9 @@
           @click="handleCancel"
         />
         <v-form v-model="isFormValid" @submit.prevent>
-          <v-card-title class="card-title">Edit item</v-card-title>
+          <v-card-title class="card-title">{{
+            $t("gear.editItem")
+          }}</v-card-title>
           <v-card-subtitle>id: {{ item.id }}</v-card-subtitle>
 
           <GearForm
@@ -31,7 +33,7 @@
               :loading="isAwaitingDelete"
               @click="handleDelete"
             >
-              Delete item
+              {{ $t("gear.deleteItem") }}
             </v-btn>
             <v-btn
               variant="outlined"
@@ -39,7 +41,7 @@
               class="ma-1 px-3"
               @click="handleCancel"
             >
-              Cancel
+              {{ $t("gear.cancel") }}
             </v-btn>
             <v-btn
               variant="outlined"
@@ -50,7 +52,7 @@
               :loading="isAwaitingResponse"
               @click="handleSave"
             >
-              Save changes
+              {{ $t("gear.saveChanges") }}
             </v-btn>
           </v-card-actions>
         </v-form>

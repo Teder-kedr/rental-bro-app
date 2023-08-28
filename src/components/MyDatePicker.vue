@@ -19,13 +19,13 @@
 
     <v-radio-group v-model="calMode" class="mx-4 mt-4" style="flex-grow: 0">
       <v-radio
-        label="One day"
+        :label="$t('projects.form.oneDay')"
         inline
         value="single"
         style="width: fit-content"
       />
       <v-radio
-        label="Multiple days"
+        :label="$t('projects.form.multipleDays')"
         inline
         value="multiple"
         style="width: fit-content"

@@ -1,6 +1,6 @@
 <template>
   <v-alert type="warning" variant="tonal" class="my-alert py-3 mb-3">
-    Some items are unavailable for this date!
+    {{ $t("projects.someItemsUnavail") }}
   </v-alert>
 </template>
 

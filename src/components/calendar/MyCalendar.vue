@@ -5,7 +5,9 @@
     >
       <p class="header__title pe-6 pb-2">{{ headerTitleText }}</p>
       <div class="pb-2">
-        <v-btn flat class="me-2" @click="nav = 0">today</v-btn>
+        <v-btn flat class="me-2" @click="nav = 0">
+          {{ $t("calendar.today") }}
+        </v-btn>
         <v-btn
           size="small"
           variant="text"
@@ -57,7 +59,7 @@
       v-if="selectedCell && selectedDayProjects.length === 0"
       class="my-empty-text"
     >
-      <em> no events </em>
+      <em> {{ $t("calendar.noEvents") }} </em>
     </p>
   </v-expansion-panels>
 </template>

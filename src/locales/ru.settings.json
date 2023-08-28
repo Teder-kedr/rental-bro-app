@@ -1,5 +1,8 @@
 {
   "title": "Настройки",
+  "curopttext": "Символ валюты",
+  "curCustom": "другой",
+  "curSave": "ок",
   "langopttext": "Изменить язык",
   "logoutopttext": "Выйти из аккаунта",
   "logoutaction": "Выйти"

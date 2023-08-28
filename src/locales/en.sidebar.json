@@ -2,5 +2,6 @@
   "projects": "Projects",
   "calendar": "Calendar",
   "gear": "Gear",
-  "settings": "Settings"
+  "settings": "Settings",
+  "snackbarError": "An error occured"
 }

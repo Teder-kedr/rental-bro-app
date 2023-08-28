@@ -1,15 +1,18 @@
 <template>
   <v-card flat height="100%" color="transparent" style="border-radius: 0">
     <v-container class="pa-0">
-      <h1 class="mb-2">{{ project.title || "New project" }}</h1>
-      <p class="mb-6 my-subtext">Step {{ currentStep }} of 4</p>
+      <h1 class="mb-2">{{ project.title || $t("projects.newProject") }}</h1>
+      <p class="mb-6 my-subtext">
+        {{ $t("projects.form.step") }} {{ currentStep }}
+        {{ $t("projects.form.of") }} 4
+      </p>
       <v-form v-model="isFormValid" ref="myForm">
         <v-window v-model="currentStep" :touch="{ left: null, right: null }">
           <v-window-item :value="1">
             <p class="my-label">
-              Project title:
+              {{ $t("projects.form.projectTitle") }}:
               <span class="text-grey" style="font-weight: 400">
-                <em>(required)</em>
+                <em>({{ $t("projects.form.required") }})</em>
               </span>
             </p>
             <v-text-field
@@ -17,14 +20,14 @@
               flat
               variant="solo"
               spellcheck="false"
-              placeholder="example: Podcast recording"
+              :placeholder="$t('projects.form.egTitle')"
               :rules="[isNotEmpty]"
             />
 
             <p class="my-label">
-              Date:
+              {{ $t("projects.form.date") }}:
               <span class="text-grey" style="font-weight: 400">
-                <em>(required)</em>
+                <em>({{ $t("projects.form.required") }})</em>
               </span>
             </p>
             <MyDatePicker
@@ -32,19 +35,19 @@
               @change="updateDates"
             />
 
-            <p class="mt-sm-4 my-label">Location:</p>
+            <p class="mt-sm-4 my-label">{{ $t("projects.form.location") }}:</p>
             <v-text-field
               v-model="project.details.location"
               density="compact"
               flat
               variant="solo"
               spellcheck="false"
-              placeholder="example: Penny Lane, 24/2"
+              :placeholder="$t('projects.form.egLocation')"
             />
           </v-window-item>
 
           <v-window-item :value="2">
-            <p class="my-label">Engineer:</p>
+            <p class="my-label">{{ $t("projects.form.engineer") }}:</p>
             <v-row no-gutters>
               <v-col cols="12" sm="6">
                 <v-text-field
@@ -52,7 +55,7 @@
                   density="compact"
                   flat
                   variant="solo"
-                  label="Name"
+                  :label="$t('projects.form.name')"
                   class="me-sm-4"
                 />
               </v-col>
@@ -63,13 +66,13 @@
                   flat
                   variant="solo"
                   type="tel"
-                  label="Phone number"
+                  :label="$t('projects.form.phone')"
                   class="ms-sm-4"
                 />
               </v-col>
             </v-row>
             <p v-if="project.details.helpers.length" class="my-label">
-              Helpers:
+              {{ $t("projects.form.helpers") }}:
             </p>
             <v-row
               v-for="(person, idx) of project.details.helpers"
@@ -90,7 +93,7 @@
                   density="compact"
                   flat
                   variant="solo"
-                  label="Name"
+                  :label="$t('projects.form.name')"
                   class="me-sm-4"
                 >
                 </v-text-field>
@@ -102,7 +105,7 @@
                   flat
                   variant="solo"
                   type="tel"
-                  label="Phone number"
+                  :label="$t('projects.form.phone')"
                   class="ms-sm-4"
                 />
               </v-col>
@@ -115,7 +118,7 @@
                 class="mb-4"
                 @click="project.details.helpers.splice(idx, 1)"
               >
-                Remove helper
+                {{ $t("projects.form.removeHelper") }}
               </v-btn>
             </v-row>
 
@@ -126,10 +129,10 @@
               append-icon="mdi-account"
               @click="project.details.helpers.push({})"
             >
-              Add helper
+              {{ $t("projects.form.addHelper") }}
             </v-btn>
 
-            <p class="my-label mt-4">Contacts:</p>
+            <p class="my-label mt-4">{{ $t("projects.form.contacts") }}:</p>
             <v-row
               v-for="(person, idx) of project.details.contacts"
               :key="idx"
@@ -149,7 +152,7 @@
                   density="compact"
                   flat
                   variant="solo"
-                  label="Name"
+                  :label="$t('projects.form.name')"
                   class="me-sm-4 me-md-2"
                 >
                 </v-text-field>
@@ -161,7 +164,7 @@
                   flat
                   variant="solo"
                   type="tel"
-                  label="Phone number"
+                  :label="$t('projects.form.phone')"
                   class="ms-sm-4 ms-md-2 me-md-2"
                 />
               </v-col>
@@ -171,7 +174,7 @@
                   density="compact"
                   flat
                   variant="solo"
-                  label="Role"
+                  :label="$t('projects.form.role')"
                   class="ms-md-2"
                 />
               </v-col>
@@ -184,7 +187,7 @@
                 class="mb-4"
                 @click="project.details.contacts.splice(idx, 1)"
               >
-                Remove contact
+                {{ $t("projects.form.removeContact") }}
               </v-btn>
             </v-row>
 
@@ -195,12 +198,12 @@
               append-icon="mdi-account"
               @click="project.details.contacts.push({})"
             >
-              Add contact
+              {{ $t("projects.form.addContact") }}
             </v-btn>
           </v-window-item>
 
           <v-window-item :value="3">
-            <p class="my-label">Gear:</p>
+            <p class="my-label">{{ $t("projects.form.gear") }}:</p>
 
             <v-table
               v-if="project.gearList.length"
@@ -209,8 +212,8 @@
             >
               <thead>
                 <tr>
-                  <th class="px-0">Item</th>
-                  <th class="text-right">Qty</th>
+                  <th class="px-0">{{ $t("projects.form.item") }}</th>
+                  <th class="text-right">{{ $t("projects.form.qty") }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -233,7 +236,7 @@
                   <td class="text-right">{{ item.qty }}</td>
                 </tr>
                 <tr>
-                  <th class="px-0">Total:</th>
+                  <th class="px-0">{{ $t("projects.form.total") }}:</th>
                   <th class="text-right">
                     {{ currencify(gearTotal, currency) }}
                   </th>
@@ -248,10 +251,9 @@
               block
               flat
               prepend-icon="mdi-plus"
-              class="mt-2"
               @click="isGearPickerOpen = true"
             >
-              Add gear from my inventory
+              {{ $t("projects.form.addGearFrom") }}
             </v-btn>
             <GearPicker
               v-model="isGearPickerOpen"
@@ -261,7 +263,7 @@
               @emit-map="availabilityMap = $event"
             />
 
-            <p class="my-label mt-8">Extra gear and expenses:</p>
+            <p class="my-label mt-8">{{ $t("projects.form.extraGear") }}:</p>
             <v-row v-for="(item, idx) of project.extras" :key="idx" no-gutters>
               <v-col cols="12">
                 <p class="small-count" v-if="project.extras.length > 1">
@@ -271,19 +273,19 @@
               <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="item.name"
-                  label="Name"
+                  :label="$t('projects.form.nameNazvanie')"
                   spellcheck="false"
                   flat
                   hide-details
                   variant="solo"
                   density="compact"
-                  class="me-sm-2"
+                  class="me-sm-2 mb-3 mb-sm-0"
                 />
               </v-col>
               <v-col cols="6" sm="3">
                 <v-text-field
                   v-model="item.price"
-                  label="Price for one"
+                  :label="$t('projects.form.priceForOne')"
                   flat
                   type="number"
                   hide-details
@@ -297,7 +299,7 @@
               <v-col cols="6" sm="3">
                 <v-text-field
                   v-model="item.qty"
-                  label="Quantity"
+                  :label="$t('projects.form.quantity')"
                   flat
                   type="number"
                   hide-details
@@ -316,7 +318,7 @@
                 class="my-3"
                 @click="project.extras.splice(idx, 1)"
               >
-                Remove item
+                {{ $t("projects.form.removeItem") }}
               </v-btn>
             </v-row>
             <v-btn
@@ -324,15 +326,17 @@
               flat
               prepend-icon="mdi-plus"
               @click="project.extras.push({})"
-              >Add item</v-btn
             >
+              {{ $t("projects.form.addItem") }}
+            </v-btn>
             <p v-if="extrasTotal !== 0" class="my-total mt-4">
-              Total: {{ currencify(extrasTotal, currency) }}
+              {{ $t("projects.form.total") }}:
+              {{ currencify(extrasTotal, currency) }}
             </p>
           </v-window-item>
 
           <v-window-item :value="4">
-            <p class="my-label">Notes:</p>
+            <p class="my-label">{{ $t("projects.form.notes") }}:</p>
             <v-textarea
               v-model="project.details.notes"
               spellcheck="false"
@@ -353,15 +357,17 @@
           size="large"
           prepend-icon="mdi-arrow-left"
           @click="currentStep--"
-          >back</v-btn
         >
+          {{ $t("projects.form.back") }}
+        </v-btn>
         <v-btn
           v-if="currentStep < 4"
           size="large"
           append-icon="mdi-arrow-right"
           @click="handleNext"
-          >next</v-btn
         >
+          {{ $t("projects.form.next") }}
+        </v-btn>
         <v-btn
           v-if="currentStep === 4"
           size="large"
@@ -372,7 +378,7 @@
           :loading="isAwaitingSubmit"
           @click="handleSubmitClick"
         >
-          Submit
+          {{ $t("projects.form.submit") }}
         </v-btn>
       </v-card-actions>
     </div>
@@ -506,6 +512,9 @@ export default {
   async created() {
     if (this.projectToEdit) {
       this.project = this.projectToEdit;
+      if (this.project.details.contacts.length === 0) {
+        this.project.details.contacts.push({});
+      }
     }
     try {
       this.myInventory = await getGearList();

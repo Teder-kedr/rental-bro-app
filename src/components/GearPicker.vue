@@ -9,9 +9,10 @@
       width="80%"
       max-width="750px"
     >
-      <v-card-title class="pb-0">Gear</v-card-title>
+      <v-card-title class="pb-0">{{ $t("projects.form.gear") }}</v-card-title>
       <v-card-subtitle class="pb-2" style="border-bottom: 1px solid #ddd">
-        Chosen items: {{ pickedItemsCount }}, total:
+        {{ $t("projects.form.chosenItems") }}: {{ pickedItemsCount }},
+        {{ $t("projects.form.total") }}:
         {{ currencify(pickedItemsTotal, currency) }}
       </v-card-subtitle>
       <v-btn
@@ -21,7 +22,7 @@
         color="error"
         @click="handleClearAll"
       >
-        Remove all
+        {{ $t("projects.form.removeAll") }}
       </v-btn>
 
       <v-list v-if="isLoaded">
@@ -34,7 +35,7 @@
                 :disabled="!inventoryItems.length"
                 density="compact"
                 spellcheck="false"
-                label="Search"
+                :label="$t('projects.form.search')"
                 clearable
                 hide-details
                 variant="outlined"
@@ -47,7 +48,7 @@
                 :disabled="!inventoryItems.length"
                 variant="outlined"
                 density="compact"
-                label="Filter by type"
+                :label="$t('projects.form.filterByType')"
                 clearable
                 :items="presentTypes"
                 ref="myTypeFilterEl"
@@ -72,10 +73,13 @@
                   {{ item.type }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                  {{ item.priceday }} {{ currency }}/day - Available:
+                  {{ item.priceday }} {{ currency }}/{{
+                    $t("projects.form.day")
+                  }}
+                  - {{ $t("projects.form.available") }}:
                   {{ availabilityMap[item.id] }}
                   <span v-if="myWarningRule(item)" class="text-error"
-                    >- Insufficient</span
+                    >- {{ $t("projects.form.insufficient") }}</span
                   >
                 </v-list-item-subtitle>
               </v-col>
@@ -111,8 +115,10 @@
       <ContentLoader v-else class="mb-4 py-16" />
 
       <v-card-actions style="border-top: 1px solid #ddd">
-        <v-btn @click="handleCancel">Cancel</v-btn>
-        <v-btn class="ms-auto" @click="handleConfirm">Save</v-btn>
+        <v-btn @click="handleCancel">{{ $t("projects.form.cancel") }}</v-btn>
+        <v-btn class="ms-auto" @click="handleConfirm">{{
+          $t("projects.form.save")
+        }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

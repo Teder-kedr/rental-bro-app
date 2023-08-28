@@ -6,7 +6,9 @@
     color="error"
     multi-line
   >
-    <p><b>An error occured:</b></p>
+    <p>
+      <b>{{ $t("sidebar.snackbarError") }}:</b>
+    </p>
     {{ errorMessage }}
     <template #actions>
       <v-btn variant="text" icon="mdi-close" @click="handleClose" />

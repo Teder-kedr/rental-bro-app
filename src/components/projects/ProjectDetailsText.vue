@@ -13,7 +13,8 @@
             v-if="project.details.engineer.name || project.details.engineer.tel"
             class="mb-2"
           >
-            <span class="detail-title">Engineer:</span><br />
+            <span class="detail-title">{{ $t("projects.form.engineer") }}:</span
+            ><br />
             {{ project.details.engineer.name }}
             <span v-if="project.details.engineer.tel" class="text-tel">{{
               project.details.engineer.tel
@@ -21,7 +22,8 @@
           </p>
 
           <p v-if="project.details.helpers.length" class="mb-2">
-            <span class="detail-title">Helpers: </span><br />
+            <span class="detail-title">{{ $t("projects.form.helpers") }}: </span
+            ><br />
             <span v-for="(person, idx) of project.details.helpers" :key="idx">
               {{ person.name }}
               <span v-if="person.tel" class="text-tel">{{ person.tel }}</span
@@ -32,7 +34,9 @@
           </p>
 
           <p v-if="project.details.contacts.length" class="mb-2">
-            <span class="detail-title">Contacts: </span><br />
+            <span class="detail-title"
+              >{{ $t("projects.form.contacts") }}: </span
+            ><br />
             <span v-for="(person, idx) of project.details.contacts" :key="idx">
               <span v-if="person.name"> {{ person.name + " " }} </span>
               <span v-if="person.tel" class="text-tel"> {{ person.tel }} </span>
@@ -44,12 +48,15 @@
 
         <v-col cols="12" md="6">
           <p v-if="project.details.location" class="mb-2">
-            <span class="detail-title">Location: </span><br />
+            <span class="detail-title"
+              >{{ $t("projects.form.location") }}: </span
+            ><br />
             {{ project.details.location }}
           </p>
 
           <p v-if="project.details.notes" class="my-notes">
-            <span class="detail-title">Notes:</span><br />
+            <span class="detail-title">{{ $t("projects.form.notes") }}:</span
+            ><br />
             {{ project.details.notes }}
           </p>
         </v-col>
@@ -100,7 +107,6 @@ export default {
 }
 .text-tel:hover {
   text-decoration: underline;
-  cursor: pointer;
 }
 
 .my-notes {

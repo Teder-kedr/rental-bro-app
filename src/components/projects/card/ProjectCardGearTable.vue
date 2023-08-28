@@ -6,8 +6,8 @@
   >
     <thead>
       <tr>
-        <th class="px-0">Item</th>
-        <th class="text-right">Qty</th>
+        <th class="px-0">{{ $t("projects.form.item") }}</th>
+        <th class="text-right">{{ $t("projects.form.qty") }}</th>
       </tr>
     </thead>
     <tbody>

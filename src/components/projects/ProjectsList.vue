@@ -1,8 +1,13 @@
 <template>
   <div v-if="isLoaded">
-    <p class="my-date-text mb-2">Filters:</p>
+    <p class="my-date-text mb-2">{{ $t("projects.filters") }}:</p>
     <v-btn flat class="mb-4">
-      {{ archiveFilter === "archived" ? "Past" : "Upcoming" }} projects
+      {{
+        archiveFilter === "archived"
+          ? $t("projects.past")
+          : $t("projects.upcoming")
+      }}
+      {{ $t("projects.title") }}
       <template #append>
         <v-icon>
           {{ archiveFilter === "upcoming" ? "mdi-arrow-up" : "mdi-arrow-down" }}
@@ -12,10 +17,14 @@
       <v-menu activator="parent">
         <v-list>
           <v-list-item @click="archiveFilter = 'upcoming'">
-            <v-list-item-title>Upcoming projects</v-list-item-title>
+            <v-list-item-title>{{
+              $t("projects.upcomingProjects")
+            }}</v-list-item-title>
           </v-list-item>
           <v-list-item @click="archiveFilter = 'archived'">
-            <v-list-item-title>Past projects</v-list-item-title>
+            <v-list-item-title>{{
+              $t("projects.pastProjects")
+            }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -48,7 +57,7 @@
         </v-expansion-panels>
       </div>
     </template>
-    <p v-else class="text-grey text-center">no projects to display</p>
+    <p v-else class="text-grey text-center">{{ $t("projects.noProjects") }}</p>
   </div>
   <ContentLoader v-else class="mt-4" />
 </template>

@@ -2,5 +2,6 @@
   "projects": "Проекты",
   "calendar": "Календарь",
   "gear": "Оборудование",
-  "settings": "Настройки"
+  "settings": "Настройки",
+  "snackbarError": "Ошибка"
 }

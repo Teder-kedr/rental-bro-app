@@ -2,11 +2,11 @@
   <v-card-text>
     <v-row no-gutters>
       <v-col>
-        <p class="mb-1">Model:</p>
+        <p class="mb-1">{{ $t("gear.model") }}:</p>
         <v-text-field
           :value="model"
           spellcheck="false"
-          placeholder="example: Sennheiser MKE-2"
+          :placeholder="$t('gear.egModel')"
           density="compact"
           variant="outlined"
           :validation-value="model"
@@ -18,11 +18,11 @@
     </v-row>
     <v-row no-gutters>
       <v-col>
-        <p class="mb-1">Type:</p>
+        <p class="mb-1">{{ $t("gear.type") }}:</p>
         <v-text-field
           :value="type"
           hide-details
-          placeholder="example: lavalier mic"
+          :placeholder="$t('gear.egType')"
           density="compact"
           variant="outlined"
           :validation-value="type"
@@ -45,7 +45,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12" sm="6">
-        <p class="mb-1">Price per day ({{ currency }}):</p>
+        <p class="mb-1">{{ $t("gear.pricePerDay") }} ({{ currency }}):</p>
         <v-text-field
           :value="priceday"
           class="hide-spinners me-sm-2"
@@ -61,7 +61,7 @@
         />
       </v-col>
       <v-col cols="12" sm="6">
-        <p class="mb-1">Quantity:</p>
+        <p class="mb-1">{{ $t("gear.quantity") }}:</p>
         <v-text-field
           :value="qty"
           class="hide-spinners ms-sm-2"

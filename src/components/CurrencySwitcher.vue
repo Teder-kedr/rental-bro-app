@@ -22,7 +22,7 @@
         density="compact"
         variant="solo"
         maxlength="6"
-        placeholder="custom"
+        :placeholder="$t('settings.curCustom')"
         spellcheck="false"
       >
         <template #append>
@@ -35,7 +35,7 @@
             height="100%"
             @click="handleSaveCustomText"
           >
-            save
+            {{ $t("settings.curSave") }}
           </v-btn>
         </template>
       </v-text-field>

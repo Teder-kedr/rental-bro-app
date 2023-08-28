@@ -1,0 +1,30 @@
+{
+  "title": "Gear",
+  "addNew": "Add new",
+  "search": "Search",
+  "filterByType": "Filter by type",
+  "pcs": "pcs.",
+  "edit": "Edit",
+  "noItems": "No items",
+  "model": "Model",
+  "type": "Type",
+  "pricePerDay": "Price per day",
+  "quantity": "Quantity",
+  "deleteItem": "Delete item",
+  "cancel": "Cancel",
+  "saveChanges": "Save changes",
+  "save": "save",
+  "egModel": "example: Sennheiser MKE-2",
+  "egType": "example: lavalier mic",
+  "editItem": "Edit item",
+  "addGear": "Add gear",
+  "addMore": "Add more",
+  "remove": "Remove",
+  "adding": "adding",
+  "items": "items",
+  "confirm": {
+    "areYouSure": "Are you sure you want to delete this item from the database?",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  }
+}

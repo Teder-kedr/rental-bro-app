@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="isSidebarOpen" app>
+  <v-navigation-drawer v-model="isSidebarOpen" app :touchless="!isScreenSmall">
     <v-list active-class="gradient-background" color="white">
       <v-list-item>
         <p class="sidebar-app-title">RENTAL BRO APP</p>
@@ -50,6 +50,12 @@ export default {
     return {
       isSidebarOpen: false,
     };
+  },
+
+  computed: {
+    isScreenSmall() {
+      return this.$vuetify.display.smAndDown;
+    },
   },
 
   mounted() {

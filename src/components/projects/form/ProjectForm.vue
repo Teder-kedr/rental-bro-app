@@ -236,8 +236,8 @@
                   <td class="text-right">{{ item.qty }}</td>
                 </tr>
                 <tr>
-                  <th class="px-0">{{ $t("projects.form.total") }}:</th>
-                  <th class="text-right">
+                  <th class="px-0">
+                    {{ $t("projects.form.total") }}:
                     {{ currencify(gearTotal, currency) }}
                   </th>
                 </tr>

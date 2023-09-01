@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 
 const store = createStore({
   state: {
-    APP_VERSION: "0.9.0",
+    APP_VERSION: "0.9.1",
     user: null,
     userSettings: null,
     isAuthStateReady: false,

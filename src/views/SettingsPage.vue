@@ -31,6 +31,19 @@
     <div class="py-2 text-grey">
       <p v-if="user">user id: {{ user.uid }}</p>
       <p>app version: {{ $store.state.APP_VERSION }}</p>
+      <a
+        href="https://github.com/Teder-kedr/rental-bro-app"
+        target="_blank"
+        rel="noopener"
+      >
+        view this app on GitHub
+        <v-icon icon="mdi-open-in-new" size="x-small" />
+      </a>
+      <br />
+      <a href="https://t.me/stopthistrain" target="_blank" rel="noopener">
+        help and feedback
+        <v-icon icon="mdi-open-in-new" size="x-small" />
+      </a>
     </div>
   </div>
 </template>
@@ -49,3 +62,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+a {
+  color: inherit;
+}
+</style>

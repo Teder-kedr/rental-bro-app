@@ -2,6 +2,7 @@
   <ProjectForm
     v-if="isLoaded"
     :project-to-edit="projectToCopy"
+    :preselect-date="$route.query.date"
     @submit="submit"
   />
   <ContentLoader v-else class="mt-4" />

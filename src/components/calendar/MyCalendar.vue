@@ -44,24 +44,30 @@
     </ul>
   </div>
 
-  <p v-if="selectedCell" class="my-date-text my-4">
-    {{ selectedCell.split("-").reverse().join("-") }}
-  </p>
-  <v-expansion-panels variant="accordion" class="pb-8">
-    <v-expansion-panel
-      v-for="project of selectedDayProjects"
-      :key="project.id"
-      elevation="0"
-    >
-      <ProjectCard :project="project" />
-    </v-expansion-panel>
-    <p
-      v-if="selectedCell && selectedDayProjects.length === 0"
-      class="my-empty-text"
-    >
-      <em> {{ $t("calendar.noEvents") }} </em>
+  <div v-if="selectedCell" class="pb-8">
+    <p class="my-date-text my-4">
+      {{ selectedCell.split("-").reverse().join("-") }}
     </p>
-  </v-expansion-panels>
+    <v-expansion-panels variant="accordion">
+      <v-expansion-panel
+        v-for="project of selectedDayProjects"
+        :key="project.id"
+        elevation="0"
+      >
+        <ProjectCard :project="project" />
+      </v-expansion-panel>
+    </v-expansion-panels>
+    <div class="py-4 d-flex justify-center align-center">
+      <v-btn
+        flat
+        variant="text"
+        prepend-icon="mdi-plus"
+        :to="{ path: '/new-project', query: { date: selectedCell } }"
+      >
+        {{ $t("calendar.create") }}
+      </v-btn>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -180,9 +186,5 @@ li {
 .my-date-text {
   color: grey;
   font-weight: 500;
-}
-.my-empty-text {
-  color: rgb(147, 147, 147);
-  font-weight: 400;
 }
 </style>

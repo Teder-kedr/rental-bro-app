@@ -400,7 +400,7 @@ export default {
     ItemOverbookAlert,
     ItemNotExistAlert,
   },
-  props: ["projectToEdit"],
+  props: ["projectToEdit", "preselectDate"],
   data() {
     return {
       project: {
@@ -516,6 +516,11 @@ export default {
         this.project.details.contacts.push({});
       }
     }
+
+    if (this.preselectDate) {
+      this.project.dates = [this.preselectDate];
+    }
+
     try {
       this.myInventory = await getGearList();
     } catch (error) {

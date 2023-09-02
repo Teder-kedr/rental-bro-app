@@ -65,6 +65,7 @@
                   density="compact"
                   flat
                   variant="solo"
+                  prefix="+"
                   type="tel"
                   :label="$t('projects.form.phone')"
                   class="ms-sm-4"
@@ -104,6 +105,7 @@
                   density="compact"
                   flat
                   variant="solo"
+                  prefix="+"
                   type="tel"
                   :label="$t('projects.form.phone')"
                   class="ms-sm-4"
@@ -163,6 +165,7 @@
                   density="compact"
                   flat
                   variant="solo"
+                  prefix="+"
                   type="tel"
                   :label="$t('projects.form.phone')"
                   class="ms-sm-4 ms-md-2 me-md-2"

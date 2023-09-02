@@ -16,9 +16,10 @@
             <span class="detail-title">{{ $t("projects.form.engineer") }}:</span
             ><br />
             {{ project.details.engineer.name }}
-            <span v-if="project.details.engineer.tel" class="text-tel">{{
-              project.details.engineer.tel
-            }}</span>
+            <PhoneTooltip
+              v-if="project.details.engineer.tel"
+              :phone-number="project.details.engineer.tel"
+            />
           </p>
 
           <p v-if="project.details.helpers.length" class="mb-2">
@@ -26,8 +27,8 @@
             ><br />
             <span v-for="(person, idx) of project.details.helpers" :key="idx">
               {{ person.name }}
-              <span v-if="person.tel" class="text-tel">{{ person.tel }}</span
-              ><span v-if="idx !== project.details.helpers.length - 1"
+              <PhoneTooltip v-if="person.tel" :phone-number="person.tel" /><span
+                v-if="idx !== project.details.helpers.length - 1"
                 ><br
               /></span>
             </span>
@@ -39,7 +40,7 @@
             ><br />
             <span v-for="(person, idx) of project.details.contacts" :key="idx">
               <span v-if="person.name"> {{ person.name + " " }} </span>
-              <span v-if="person.tel" class="text-tel"> {{ person.tel }} </span>
+              <PhoneTooltip v-if="person.tel" :phone-number="person.tel" />
               <span v-if="person.role"> ({{ person.role }}) </span
               ><span v-if="project.details.contacts.length > 1"><br /></span>
             </span>
@@ -72,7 +73,10 @@
 </template>
 
 <script>
+import PhoneTooltip from "@/components/PhoneTooltip.vue";
+
 export default {
+  components: { PhoneTooltip },
   props: ["project"],
   computed: {
     allFieldsEmpty() {
@@ -101,12 +105,6 @@ export default {
 .detail-title {
   font-weight: 500;
   color: grey;
-}
-.text-tel {
-  font-weight: 500;
-}
-.text-tel:hover {
-  text-decoration: underline;
 }
 
 .my-notes {

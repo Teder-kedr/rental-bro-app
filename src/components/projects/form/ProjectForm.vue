@@ -69,6 +69,9 @@
                   type="tel"
                   :label="$t('projects.form.phone')"
                   class="ms-sm-4"
+                  @paste.prevent="
+                    handlePasteNumber(project.details.engineer, $event)
+                  "
                 />
               </v-col>
             </v-row>
@@ -109,6 +112,7 @@
                   type="tel"
                   :label="$t('projects.form.phone')"
                   class="ms-sm-4"
+                  @paste.prevent="handlePasteNumber(person, $event)"
                 />
               </v-col>
               <v-btn
@@ -169,6 +173,7 @@
                   type="tel"
                   :label="$t('projects.form.phone')"
                   class="ms-sm-4 ms-md-2 me-md-2"
+                  @paste.prevent="handlePasteNumber(person, $event)"
                 />
               </v-col>
               <v-col cols="12" md="4">
@@ -395,6 +400,7 @@ import ItemOverbookAlert from "@/components/ItemOverbookAlert.vue";
 import ItemNotExistAlert from "@/components/ItemNotExistAlert.vue";
 import { getGearList } from "@/services/firestore";
 import currencify from "@/services/currencify";
+import formatPhoneNumber from "@/services/phoneNumberFormatter";
 
 export default {
   components: {
@@ -511,6 +517,26 @@ export default {
       return !!val;
     },
     currencify,
+    handlePasteNumber(targetProperty, event) {
+      const unmodifiedText = event.clipboardData.getData("text/plain");
+      let modifiedText = unmodifiedText.trim();
+      if (modifiedText.startsWith("+")) {
+        modifiedText = modifiedText.substring(1);
+      }
+      if (
+        modifiedText.startsWith("8") &&
+        formatPhoneNumber(modifiedText).length === 11
+      ) {
+        modifiedText = "7" + modifiedText.substring(1);
+      }
+      if (
+        modifiedText.startsWith("9") &&
+        formatPhoneNumber(modifiedText).length === 10
+      ) {
+        modifiedText = "7" + modifiedText;
+      }
+      targetProperty.tel = modifiedText;
+    },
   },
   async created() {
     if (this.projectToEdit) {

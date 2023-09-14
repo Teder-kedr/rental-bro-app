@@ -39,11 +39,6 @@
         view this app on GitHub
         <v-icon icon="mdi-open-in-new" size="x-small" />
       </a>
-      <br />
-      <a href="https://t.me/stopthistrain" target="_blank" rel="noopener">
-        help and feedback
-        <v-icon icon="mdi-open-in-new" size="x-small" />
-      </a>
     </div>
   </div>
 </template>

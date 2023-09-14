@@ -35,6 +35,18 @@
       </p>
 
       <v-divider class="my-4" />
+
+      <v-btn
+        :loading="isTestLoading"
+        color="primary"
+        block
+        @click="handleTestLogIn"
+      >
+        {{ $t("login.testbtn") }}
+      </v-btn>
+
+      <v-divider class="my-4" />
+
       <div class="d-flex justify-center">
         <LangSwitcher />
       </div>
@@ -55,6 +67,7 @@ export default {
       email: null,
       password: null,
       isLoading: false,
+      isTestLoading: false,
     };
   },
   computed: {
@@ -73,6 +86,18 @@ export default {
         this.$router.push("projects");
       } catch (error) {
         this.isLoading = false;
+        this.$store.dispatch("handleNewError", error.message);
+      }
+    },
+    async handleTestLogIn() {
+      try {
+        this.isTestLoading = true;
+        const email = "teder@test.com";
+        const password = "testing123";
+        await logIn(email, password);
+        this.$router.push("projects");
+      } catch (error) {
+        this.isTestLoading = false;
         this.$store.dispatch("handleNewError", error.message);
       }
     },

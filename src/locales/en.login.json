@@ -4,5 +4,6 @@
   "password": "Password",
   "action": "Log in",
   "donthave": "Don't have an account?",
-  "signuplink": "Sign up!"
+  "signuplink": "Sign up!",
+  "testbtn": "Log In as Test User"
 }

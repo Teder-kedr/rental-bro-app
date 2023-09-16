@@ -17,14 +17,9 @@
           :label="$t('login.password')"
           type="password"
         />
-        <v-btn
-          color="primary"
-          block
-          :disabled="!form"
-          :loading="isLoading"
-          type="submit"
-          >{{ $t("login.action") }}</v-btn
-        >
+        <v-btn color="primary" block :loading="isLoading" type="submit">{{
+          $t("login.action")
+        }}</v-btn>
       </v-form>
 
       <v-divider class="my-4" />

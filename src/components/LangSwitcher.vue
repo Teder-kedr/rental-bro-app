@@ -12,7 +12,7 @@
     </template>
     <v-list>
       <v-list-item
-        v-for="lang in langs"
+        v-for="lang in LANGS"
         :key="lang.locale"
         :value="lang.locale"
         @click="changeLang(lang.locale)"
@@ -23,32 +23,24 @@
   </v-menu>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      langs: [
-        { locale: "en", title: "English" },
-        { locale: "ru", title: "Русский" },
-      ],
-    };
-  },
-  computed: {
-    currentLocale() {
-      return this.$vuetify.locale.current;
-    },
-    currentLangTitle() {
-      const langObject = this.langs.find(
-        (lang) => lang.locale === this.currentLocale
-      );
-      return langObject.title;
-    },
-  },
-  methods: {
-    changeLang(locale) {
-      localStorage.setItem("preferredLocale", locale);
-      this.$vuetify.locale.current = locale;
-    },
-  },
-};
+<script setup>
+import vuetify from "@/plugins/vuetify";
+import { computed } from "vue";
+
+const LANGS = [
+  { locale: "en", title: "English" },
+  { locale: "ru", title: "Русский" },
+];
+
+const currentLangTitle = computed(() => {
+  const currentLang = LANGS.find(
+    (lang) => lang.locale === vuetify.locale.current.value,
+  );
+  return currentLang.title;
+});
+
+function changeLang(newLocale) {
+  localStorage.setItem("preferredLocale", newLocale);
+  vuetify.locale.current.value = newLocale;
+}
 </script>

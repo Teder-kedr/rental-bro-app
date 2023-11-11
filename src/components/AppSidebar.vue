@@ -37,35 +37,17 @@
   </v-toolbar>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from "vue";
 import { useDisplay } from "vuetify";
 import SidebarUserInfo from "./SidebarUserInfo.vue";
 
-export default {
-  components: {
-    SidebarUserInfo,
-  },
+const { mobile } = useDisplay();
+const isSidebarOpen = ref(!mobile.value);
 
-  data() {
-    return {
-      isSidebarOpen: false,
-    };
-  },
-
-  computed: {
-    isScreenSmall() {
-      return this.$vuetify.display.smAndDown;
-    },
-  },
-
-  mounted() {
-    const { mobile } = useDisplay();
-
-    if (!mobile.value) {
-      this.isSidebarOpen = true;
-    }
-  },
-};
+const isScreenSmall = computed(() => {
+  return useDisplay().smAndDown;
+});
 </script>
 
 <style scoped>

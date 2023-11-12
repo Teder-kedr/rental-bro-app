@@ -7,21 +7,17 @@
     >{{ $t("settings.logoutaction") }}</v-btn
   >
 </template>
-<script>
-import { logOut } from "@/services/auth";
 
-export default {
-  data() {
-    return {
-      isLoading: false,
-    };
-  },
-  methods: {
-    async handleLogOut() {
-      this.isLoading = true;
-      await logOut();
-      this.$router.push("/login");
-    },
-  },
-};
+<script setup>
+import { ref } from "vue";
+import { logOut } from "@/services/auth";
+import router from "@/plugins/router";
+
+const isLoading = ref(false);
+
+async function handleLogOut() {
+  isLoading.value = true;
+  await logOut();
+  router.push("/login");
+}
 </script>
